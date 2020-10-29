@@ -7,3 +7,27 @@
   font-size: 2em;
   text-align: center;
 }
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+#actionbar-stage{
+  height: 50px;
+  background-color: #fff;
+  border-bottom: solid thin #dededede;
+  z-index: 3;
+  text-align: left;
+}
+
+.actionbar-button
+{
+  width: 125px;
+  height: 100%;
+  background-color: #0066cc;
+}
+.content-stage{
+  width: 100%;
+  height: 100%;
+  
+}

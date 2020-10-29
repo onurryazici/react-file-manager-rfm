@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-import { ExampleComponent } from 'react-file-manager-rfm'
+import  RFM  from 'react-file-manager-rfm'
 import 'react-file-manager-rfm/dist/index.css'
 
-const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
-}
 
-export default App
+export default class App extends Component{
+  render(){
+    const dataArray = [
+      {
+        itemName:"klasör1",
+        type:"folder",
+        extension:"n/a"
+      },
+      {
+        itemName:"klasör1",
+        type:"folder",
+        extension:"n/a"
+      },
+      {
+        itemName:"abc.txt",
+        type:"file",
+        extension:"txt"
+      }
+    ]
+
+    return(
+      <div>
+        <RFM 
+          text="Create React Library Example 😄" 
+          rfmBackgroundColor="#dedede"
+          data={dataArray}
+        />
+      </div>
+    )
+  }
+}
