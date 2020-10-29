@@ -6,6 +6,7 @@ import {FaUpload} from 'react-icons/fa'
 import 'bootstrap/dist/css/bootstrap.css';
 import { ReactComponent as Upload } from '../src/assets/svg/actionbar-icons/upload.svg'
 import { ReactComponent as Plus } from '../src/assets/svg/actionbar-icons/plus.svg'
+import Content from './components/Content';
 export default class RFM extends Component {
   static propTypes = {
     text: PropTypes.string
@@ -27,9 +28,7 @@ export default class RFM extends Component {
               <Upload style={{width:'30px',marginRight:'10px'}}/>Yükle
           </Button>
         </div>
-        <div id="content-stage">
-            
-        </div>
+        <Content data={data}/>
       </div>
     )
   }

@@ -29,5 +29,47 @@
 .content-stage{
   width: 100%;
   height: 100%;
-  
+
+}
+.contents-stage{
+  position: absolute;
+  width:100%;
+
+  top: 105px;
+  right: 0px;
+  bottom: 0px;
+  display: block;
+  overflow-y: scroll;
+}
+.contents{
+  background: #000;
+  background-color: #ffffff;
+  width:100%;
+  padding: 25px;
+  display: flex;/**/
+  flex-flow: row;/**/
+  flex-wrap: wrap;/**/
+  flex-direction: row;/**/
+  align-content: flex-start; /*  */
+}
+
+.context-menu-stage{
+  width: 180px;
+  background-color: #fff;
+  color: #111111;
+  border: solid 1px #a1a1a1;
+  box-shadow: 0px 0px 10px -20px;
+  text-align: left;
+  z-index: 4  ;
+}
+.context-menu-item{
+  border-bottom: solid thin #dedede;
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #5c5c5c;
+}
+.context-menu-item:hover{
+  background: #dedede;
+  cursor: pointer;
 }
