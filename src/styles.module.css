@@ -26,21 +26,14 @@
   height: 100%;
   background-color: #0066cc;
 }
-.content-stage{
+.contentStage{
   width: 100%;
   height: 100%;
-
-}
-.contents-stage{
-  position: absolute;
-  width:100%;
-
-  top: 105px;
-  right: 0px;
-  bottom: 0px;
+  overflow-y:scroll;
   display: block;
-  overflow-y: scroll;
+
 }
+
 .contents{
   background: #000;
   background-color: #ffffff;
@@ -72,4 +65,23 @@
 .context-menu-item:hover{
   background: #dedede;
   cursor: pointer;
+}
+
+.placemapArea{
+  width: 100%;
+  height: 60px;
+  text-align: left;
+  background-color: #fff;
+  padding: 15px;
+  line-height: 30px;
+  border-bottom: solid thin #dededede;
+  z-index: 3;
+}
+.placemapArea span{
+  font-size: 16px;
+}
+.placemapArea a{
+  text-decoration: none;
+  font-size: 16px;
+  color: #000;
 }

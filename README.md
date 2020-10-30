@@ -15,12 +15,12 @@ npm install --save react-file-manager-rfm
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-file-manager-rfm'
+import RFM from 'react-file-manager-rfm'
 import 'react-file-manager-rfm/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <RFM />
   }
 }
 ```
