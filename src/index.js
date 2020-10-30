@@ -7,6 +7,7 @@ import { ReactComponent as Upload } from '../src/assets/svg/actionbar-icons/uplo
 import { ReactComponent as Plus } from '../src/assets/svg/actionbar-icons/plus.svg'
 import Content from './components/Content';
 import Placemap from './components/Placemap';
+import FolderDetails from './components/FolderDetails';
 export default class RFM extends Component {
   static propTypes = {
     text: PropTypes.string
@@ -20,7 +21,7 @@ export default class RFM extends Component {
     }=this.props
     return (
       <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
-        <div id="actionbar-stage">
+        <div id={styles.actionbarStage}>
           <Button variant="light">
               <Plus style={{width:'30px',marginRight:'10px'}}/>Yeni
           </Button>
@@ -30,7 +31,7 @@ export default class RFM extends Component {
         </div>
         <Placemap/>
         <Content data={data}/>
-        <FolderDetails/>
+        <FolderDetails folderCount="10" fileCount="2"/>
       </div>
     )
   }

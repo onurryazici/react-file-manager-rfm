@@ -7,20 +7,20 @@ export default function Content(data) {
         <div className={styles.contentsStage}>
         <ContextMenuTrigger id="2">
         <div className={styles.contents}>
-            <Item itemName="2016" id ="7" type="folder"/>
+            <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
             <Item itemName="2016" id ="8" type="folder"/>
             <Item itemName="2016" id ="9" type="file"/>
-            <Item itemName="2016" id ="10" type="file"/>
+            <Item itemName="2016666666666666666666666" id ="10" type="file"/>
             
         </div>
         </ContextMenuTrigger>
         <ContextMenu id="2">
-        <div className="context-menu-stage">
-            <MenuItem className="context-menu-item" data={{ item: 'item 1' }}>
+        <div className={styles.contextMenuStage}>
+            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 1' }}>
                 
                 Yeni Klasör
             </MenuItem>
-            <MenuItem className="context-menu-item" data={{ item: 'item 2' }}>
+            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 2' }}>
                 Dosya Yükle
             </MenuItem>
             </div>

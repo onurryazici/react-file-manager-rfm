@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {ReactComponent as FolderSVG} from '../assets/svg/actionbar-icons/folder.svg'
-
+import styles from "../styles.module.css"
 function Folder(props){
     const folderName = props.folderName;
     return(
         <div>
-            <FolderSVG className="item-icon"/>
-            <span className="item-name">{folderName}</span>
+            <FolderSVG className={styles.itemIcon}/>
+            <div className={styles.itemName}>{folderName}</div>
         </div>
     )
 }

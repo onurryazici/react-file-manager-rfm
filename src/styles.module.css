@@ -12,7 +12,7 @@
   height: 100%;
 }
 
-#actionbar-stage{
+#actionbarStage{
   height: 50px;
   background-color: #fff;
   border-bottom: solid thin #dededede;
@@ -38,7 +38,7 @@
   background: #000;
   background-color: #ffffff;
   width:100%;
-  padding: 25px;
+  padding: 15px;
   display: flex;/**/
   flex-flow: row;/**/
   flex-wrap: wrap;/**/
@@ -46,7 +46,7 @@
   align-content: flex-start; /*  */
 }
 
-.context-menu-stage{
+.contextMenuStage{
   width: 180px;
   background-color: #fff;
   color: #111111;
@@ -55,7 +55,7 @@
   text-align: left;
   z-index: 4  ;
 }
-.context-menu-item{
+.contextMenuItem{
   border-bottom: solid thin #dedede;
   padding: 10px;
   padding-left: 20px;
@@ -84,4 +84,44 @@
   text-decoration: none;
   font-size: 16px;
   color: #000;
+}
+
+.folderDetails{
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  height: 30px;
+  border-top: solid thin #dedede;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  font-size: 13px;
+  line-height: 30px;
+  padding-left: 15px;
+}
+
+.itemBlock{
+  position: relative;
+  text-align: center;
+  width: 145px;
+  height: 185px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+  padding: 5px;
+  background: #fff;
+}
+.itemIcon{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.itemName{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
