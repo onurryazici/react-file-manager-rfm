@@ -8,6 +8,7 @@ import { ReactComponent as Plus } from '../src/assets/svg/actionbar-icons/plus.s
 import Content from './components/Content';
 import Placemap from './components/Placemap';
 import FolderDetails from './components/FolderDetails';
+import Actionbar from './components/Actionbar';
 export default class RFM extends Component {
   static propTypes = {
     text: PropTypes.string
@@ -20,18 +21,13 @@ export default class RFM extends Component {
       itemColorParam,
     }=this.props
     return (
-      <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
-        <div id={styles.actionbarStage}>
-          <Button variant="light">
-              <Plus style={{width:'30px',marginRight:'10px'}}/>Yeni
-          </Button>
-          <Button variant="light">
-              <Upload style={{width:'30px',marginRight:'10px'}}/>Yükle
-          </Button>
+      <div className={styles.testContainer}>
+        <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
+          <Actionbar/>
+          <Placemap/>
+          <Content data={data}/>
+          <FolderDetails folderCount="10" fileCount="2"/>
         </div>
-        <Placemap/>
-        <Content data={data}/>
-        <FolderDetails folderCount="10" fileCount="2"/>
       </div>
     )
   }
