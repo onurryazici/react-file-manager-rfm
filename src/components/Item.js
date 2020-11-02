@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
-import Folder from './Folder';
-import File from './File';
+import Folder from './folder';
+import File from './file';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 function Item(props){

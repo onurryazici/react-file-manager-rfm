@@ -30,11 +30,29 @@
   
 }
 
-.actionbar-button
+.actionbarButton
 {
-  width: 125px;
+  
   height: 100%;
+  float: left;
 }
+
+.actionbarButton:hover
+{
+  background: #dedede;
+}
+.actionbarIcon{
+  width: 30px;
+  height: 30px;
+  float: left;
+  line-height: 10px;
+}
+.actionbarText{
+  float: left;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
 .contentStage{
   width: 100%;
   height: 100%;

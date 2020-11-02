@@ -1,6 +1,6 @@
 import React from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
-import Item from './Item'
+import Item from './item'
 import styles from '../styles.module.css'
 export default function Content(data) {
     return (
