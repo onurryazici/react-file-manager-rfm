@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import { Button } from 'react-bootstrap'
 import styles from '../styles.module.css'
 export default class Placemap extends Component {
     render(){
         return(
             <div className={styles.placemapArea}>
-                <a>2019</a>
+                <a><Button variant="light">2019</Button></a>
                 <span> {">"} </span>
-                <a>Onur</a>
+                <a><Button variant="light">Onur</Button></a>
                 <span> {">"} </span>
-                <a>Fotoğraflar</a>
+                <a><Button variant="light">Fotoğraflar</Button></a>
             </div>
         )
         

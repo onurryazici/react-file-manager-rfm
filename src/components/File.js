@@ -4,6 +4,7 @@ import {ReactComponent as TxtSVG} from '../assets/svg/extensions/txt.svg'
 import {ReactComponent as UnknownExtensionSVG} from '../assets/svg/extensions/unknown-extension.svg'
 import {ReactComponent as DocxSVG} from '../assets/svg/extensions/docx.svg'
 import styles from '../styles.module.css'
+import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel} from 'react-icons/fa'
 function File(props){
     const fileId = props.fileId;
     const fileName = props.fileName;
@@ -21,12 +22,17 @@ function iconChooser( extension)
 {
     switch(extension)
     {
-        case '.pdf':
-            return <PdfSVG className={styles.itemIcon} style={{width:'70%'}}/>
         case '.txt':
-            return <TxtSVG className={styles.itemIcon}/>
+            return <FaFileAlt className={styles.itemIcon} color="#1c96a9" style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
+        case 'docx' || '.doc':
+            return <FaFileWord color="#0066cc" className={styles.itemIcon} style={{width:'110px', height:"110px",marginLeft:"11px"}} />
+        case '.pdf':
+            return <FaFilePdf color="#d13131" className={styles.itemIcon} style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
+        case 'xlsx':
+            return <FaFileExcel color="#1e7e34" className={styles.itemIcon} style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
         default:
-            return <UnknownExtensionSVG  className={styles.itemIcon} style={{width:'110px', height:"110px",textAlign:"center"}}/>;
+            return <FaFile color="#777777" className={styles.itemIcon} style={{width:'110px', height:"110px",marginLeft:"11px"}}/>;
+
     }
 }
 

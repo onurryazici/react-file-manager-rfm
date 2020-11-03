@@ -18,17 +18,18 @@ export default class RFM extends Component {
       text,
       data,
       rfmBackgroundColor,
+      rfmBorderColor,
       itemColorParam,
     }=this.props
     return (
-      <div className={styles.testContainer}>
+
         <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
           <Actionbar/>
           <Placemap/>
           <Content data={data}/>
           <FolderDetails folderCount="10" fileCount="2"/>
         </div>
-      </div>
+    
     )
   }
 }

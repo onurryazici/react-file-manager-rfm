@@ -1,6 +1,6 @@
 {
   "name": "react-file-manager-rfm",
-  "version": "0.0.27",
+  "version": "1.0.30",
   "description": "Made with create-react-library",
   "author": "onurryazici",
   "license": "MIT",
@@ -56,5 +56,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "react-icons": "^3.11.0"
+  }
 }
