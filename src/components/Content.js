@@ -11,60 +11,44 @@ export default function Content(data) {
             <div className={styles.contents}>
                 <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
                 <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
+                <Item itemName="2016" id ="8" type="folder"/>
                 <Item itemName="2016" id ="8" type="folder"/>
                 <Item itemName="2016.pdf" id ="12" type="file"/>
                 <Item itemName="2016.docx" id ="11" type="file"/>
                 <Item itemName="2016.xlsx" id ="11" type="file"/>
                 <Item itemName="2016.txt" id ="11" type="file"/>
                 <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
-                <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
-                <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
-                <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
-                <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
-                <Item itemName="20166666666666666666666666" id ="7" type="folder"/>
-                <Item itemName="2016" id ="8" type="folder"/>
-                <Item itemName="2016.pdf" id ="12" type="file"/>
-                <Item itemName="2016.docx" id ="11" type="file"/>
-                <Item itemName="2016.xlsx" id ="11" type="file"/>
-                <Item itemName="2016.txt" id ="11" type="file"/>
-                <Item itemName="2016" id ="9" type="file"/>
-                <Item itemName="2016666666666666666666666" id ="10" type="file"/>
+
             </div>
             </ContextMenuTrigger>
             <ContextMenu id="2">

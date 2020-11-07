@@ -14,18 +14,15 @@ function Item(props){
     return(
       <div>
         <ContextMenuTrigger id="1">
-          <Button variant="light" className={styles.itemBlock} onClick={()=>{alert(itemId)}}>
-  
+          <Button variant="light" className={styles.itemBlock} onClick={()=>{onItemSelected()}}>
             {isFolder
                 ? <Folder folderName={itemName}/>
                 : <File fileName={itemName} />
               
             }
-              
           </Button>
         </ContextMenuTrigger>
-  
-  
+
         <ContextMenu id="1">
           <div className={styles.contextMenuStage}>
             <MenuItem className={styles.contextMenuItem} data={{ item: 'item 1' }}>

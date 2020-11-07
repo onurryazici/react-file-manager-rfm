@@ -3,12 +3,13 @@ import {Button, Modal,Form } from 'react-bootstrap'
 import {ReactComponent as Plus} from '../../assets/svg/actionbar-icons/plus.svg'
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../../styles.module.css'
+import { FaFolderPlus, FaPlusCircle } from 'react-icons/fa';
 function CreateFolderModal(){
   const [modalShow, setModalShow] = React.useState(false);
   return (
     <div>
       <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                <div className={styles.actionbarIcon}><Plus/></div>
+                <div className={styles.actionbarIcon}><FaPlusCircle color="#28a745"/></div>
                 <div className={styles.actionbarText}>Yeni klasör</div>
       </Button>
 
