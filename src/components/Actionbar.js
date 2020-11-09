@@ -1,10 +1,8 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import { ReactComponent as Upload } from '../assets/svg/actionbar-icons/upload.svg'
-import { ReactComponent as Plus} from '../assets/svg/actionbar-icons/plus.svg'
 import styles from '../styles.module.css'
-import CreateFolderModal from './modals/createFolderModal';
-import style from 'bootstrap/dist/css/bootstrap.css';
+import CreateFolderModal from '../modals/createFolderModal';
+import 'bootstrap/dist/css/bootstrap.css';
 import { FaChevronCircleUp } from 'react-icons/fa';
 function Actionbar() {
     return (

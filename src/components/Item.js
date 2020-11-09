@@ -18,7 +18,6 @@ function Item(props){
             {isFolder
                 ? <Folder folderName={itemName}/>
                 : <File fileName={itemName} />
-              
             }
           </Button>
         </ContextMenuTrigger>

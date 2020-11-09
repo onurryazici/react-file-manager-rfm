@@ -1,8 +1,7 @@
 import React, { useState} from 'react'
 import {Button, Modal,Form } from 'react-bootstrap'
-import {ReactComponent as Plus} from '../../assets/svg/actionbar-icons/plus.svg'
 import 'bootstrap/dist/css/bootstrap.css';
-import styles from '../../styles.module.css'
+import styles from '../styles.module.css'
 import { FaFolderPlus, FaPlusCircle } from 'react-icons/fa';
 function CreateFolderModal(){
   const [modalShow, setModalShow] = React.useState(false);
