@@ -6,7 +6,7 @@ import Content from './components/content';
 import Placemap from './components/placemap';
 import FolderDetails from './components/folderDetails';
 import Actionbar from './components/actionbar';
-import { UserProvider } from '../example/src/context';
+import { RfmProvider } from '../example/src/context';
 export default class RFM extends Component {
   static propTypes = {
     text: PropTypes.string
@@ -20,14 +20,14 @@ export default class RFM extends Component {
       itemColorParam,
     }=this.props
     return (
-      <UserProvider>
+      <RfmProvider>
         <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
           <Actionbar/>
           <Placemap/>
           <Content data={data}/>
           <FolderDetails folderCount="10" fileCount="2"/>
         </div>
-      </UserProvider>
+      </RfmProvider>
     )
   }
 }

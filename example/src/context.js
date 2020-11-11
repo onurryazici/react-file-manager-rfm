@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
-const UserContext = React.createContext();
+const RfmContext = React.createContext();
 
 const reducer = (state,action)=>{
     switch(action.type){
         case "DELETE_USER":
             return {
                 ...state,
-                users:state.users.filter(user => action.payload !== user.id)
-            } 
+                rfmItems:state.rfmItems.filter(item => action.payload !== item.id)
+            }
+        case "SELECT_ITEM":
+            return alert("OKKK")
+            
         default:
             return state;
     }
 }
 
-export class UserProvider extends Component {
+export class RfmProvider extends Component {
     state={
-        users:[
+        rfmItems:[
         {
             id:1,
             itemName:"onur",
@@ -34,13 +37,13 @@ export class UserProvider extends Component {
     render() { 
 
         return (
-            <UserContext.Provider value={this.state}>
+            <RfmContext.Provider value={this.state}>
                 {this.props.children}
-            </UserContext.Provider>
+            </RfmContext.Provider>
         )
     }
 }
 
-const UserConsumer = UserContext.Consumer;
+const RfmConsumer = RfmContext.Consumer;
 
-export default UserConsumer;
+export default RfmConsumer;

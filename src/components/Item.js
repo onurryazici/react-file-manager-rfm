@@ -5,21 +5,31 @@ import Folder from './folder';
 import File from './file';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
+import RfmConsumer from '../../example/src/context';
+
 function Item(props){
     const itemId   = props.id;
     const itemName = props.itemName;
     const itemType = props.type;
     const isFolder = (itemType==="folder") ? true : false;
-    
     return(
       <div>
         <ContextMenuTrigger id="1">
-          <Button variant="light" className={styles.itemBlock} onClick={()=>{onItemSelected()}}>
-            {isFolder
-                ? <Folder folderName={itemName}/>
-                : <File fileName={itemName} />
+          <RfmConsumer>
+          {
+            value=>{
+              const {dispatch} = value;  
+              return (
+                <Button variant="light" className={styles.itemBlock} onClick={()=>onItemSelected(itemId,dispatch)}>
+                  {isFolder
+                      ? <Folder folderName={itemName}/>
+                      : <File fileName={itemName} />
+                  }
+                </Button>
+              )
             }
-          </Button>
+          }
+        </RfmConsumer>
         </ContextMenuTrigger>
 
         <ContextMenu id="1">
@@ -48,4 +58,11 @@ function Item(props){
     )
   }
   
-  export default Item;
+export default Item;
+
+
+function onItemSelected (itemId,dispatch)  {
+    const id =itemId;
+    dispatch({type:"SELECT_ITEM",payload:id});
+    
+}

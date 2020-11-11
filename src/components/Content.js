@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import Item from './item'
 import styles from '../styles.module.css'
-import UserConsumer  from '../../example/src/context'
+import RfmConsumer from '../../example/src/context'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 export default class Content extends Component {
@@ -11,13 +11,13 @@ export default class Content extends Component {
             <div className={styles.contentStage}>
                 <ContextMenuTrigger id="2">
                     <div className={styles.contents}>
-                    <UserConsumer>
+                    <RfmConsumer>
                     {
                         value => {
                             console.log(value)
-                            const {users} = value;
+                            const {rfmItems} = value;
                             return(
-                                users.map(item => {
+                                rfmItems.map(item => {
                                 return (
                                     <Item 
                                         key = {item.id}
@@ -30,7 +30,7 @@ export default class Content extends Component {
                             )
                         }
                     }
-                    </UserConsumer>    
+                    </RfmConsumer>    
                     </div>
                 </ContextMenuTrigger>
                 <ContextMenu id="2">
