@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 const RfmContext = React.createContext();
 
 const reducer = (state,action)=>{
@@ -9,8 +9,13 @@ const reducer = (state,action)=>{
                 rfmItems:state.rfmItems.filter(item => action.payload !== item.id)
             }
         case "SELECT_ITEM":
-            return alert("OKKK")
-            
+            return {
+                isItemSelected:true
+            }
+        case "LEAVE_ITEM":
+            return {
+                isItemSelected:false
+            }
         default:
             return state;
     }
@@ -30,12 +35,12 @@ export class RfmProvider extends Component {
             type:"file"
         },
         ],
+        isItemSelected:false,
         dispatch:action=>{
             this.setState(state=> reducer(state,action))
         }
     }
     render() { 
-
         return (
             <RfmContext.Provider value={this.state}>
                 {this.props.children}

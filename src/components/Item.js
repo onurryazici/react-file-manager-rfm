@@ -20,11 +20,12 @@ function Item(props){
             value=>{
               const {dispatch} = value;  
               return (
-                <Button variant="light" className={styles.itemBlock} onClick={()=>onItemSelected(itemId,dispatch)}>
-                  {isFolder
-                      ? <Folder folderName={itemName}/>
-                      : <File fileName={itemName} />
-                  }
+                <Button variant="light" className={styles.itemBlock} 
+                      onClick={()=>onItemSelected(itemId,dispatch)}>
+                      {isFolder
+                          ? <Folder folderName={itemName}/>
+                          : <File fileName={itemName} />
+                      }
                 </Button>
               )
             }
