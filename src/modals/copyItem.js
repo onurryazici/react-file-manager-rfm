@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
-function ShareItemModal(){
+function CopyItem(){
     const [modalShow, setModalShow] = React.useState(false);
     return (
       <div>
@@ -35,4 +35,4 @@ function ShareItemModal(){
       </div>
     );
   }
-export default ShareItemModal;
+export default CopyItem;

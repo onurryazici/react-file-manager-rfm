@@ -21,7 +21,8 @@ function Item(props){
               const {dispatch} = value;  
               return (
                 <Button variant="light" className={styles.itemBlock} 
-                      onClick={()=>onItemSelected(itemId,dispatch)}>
+                      onClick={()=>onItemSelected(itemId,dispatch)}
+                      onBlur={()=>onItemLeave(dispatch)}>
                       {isFolder
                           ? <Folder folderName={itemName}/>
                           : <File fileName={itemName} />
@@ -65,5 +66,7 @@ export default Item;
 function onItemSelected (itemId,dispatch)  {
     const id =itemId;
     dispatch({type:"SELECT_ITEM",payload:id});
-    
+}
+function onItemLeave (dispatch)  {
+  dispatch({type:"LEAVE_ITEM",payload:""});
 }
