@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef,useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import Folder from './folder';
@@ -6,13 +6,20 @@ import File from './file';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 import RfmConsumer from '../../example/src/context';
-
+import classNames from 'classnames'
 function Item(props){
     const itemId   = props.id;
     const itemName = props.itemName;
     const itemType = props.type;
     const isFolder = (itemType==="folder") ? true : false;
     const elementReference = useRef(null);
+    const [itemSelected, setitemSelected] = useState(false)
+
+
+    function onItemSelected (itemId,dispatch,element)  {
+      itemSelected ? setitemSelected(false) : setitemSelected(true)
+      dispatch({type:"SELECT_ITEM",payload:itemId});
+    }
     return(
       <div>
         <ContextMenuTrigger id="1">
@@ -21,12 +28,8 @@ function Item(props){
             value=>{
               const {dispatch} = value;  
               return (
-                <div className={styles.itemBlock} 
-                      ref={elementReference}
-                      onClick={()=>{
-                        onItemSelected(itemId,dispatch,elementReference)
-                      }}
-                      
+                <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
+                      onClick={()=>onItemSelected(itemId,dispatch,elementReference)}
                       onBlur={()=>onItemLeave(dispatch)}>
                       {isFolder
                           ? <Folder folderName={itemName}/>
@@ -68,11 +71,8 @@ function Item(props){
 export default Item;
 
 
-function onItemSelected (itemId,dispatch,element)  {
-  alert(element.current.className)
-    const id =itemId;
-    dispatch({type:"SELECT_ITEM",payload:id});
-}
+
 function onItemLeave (dispatch)  {
+  Item.setitemSelected(false)
   dispatch({type:"LEAVE_ITEM",payload:""});
 }

@@ -9,7 +9,6 @@ export default class Placemap extends Component {
                 <a><Button variant="light"><FaCaretRight/> 2019</Button></a>
                 <a><Button variant="light"><FaCaretRight/> Onur</Button></a>
                 <a><Button variant="light"><FaCaretRight/> Fotoğraflar</Button></a>
-                
             </div>
         )
         

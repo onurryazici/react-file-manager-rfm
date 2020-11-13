@@ -10,7 +10,9 @@ const reducer = (state,action)=>{
             }
         case "SELECT_ITEM":
             return {
-                isItemSelected:true
+                ...state,
+                isItemSelected:true,
+                selectedItemCount:selectedItemCount+1
             }
         case "LEAVE_ITEM":
             return {
@@ -36,6 +38,7 @@ export class RfmProvider extends Component {
         },
         ],
         isItemSelected:false,
+        selectedItemCount:0,
         dispatch:action=>{
             this.setState(state=> reducer(state,action))
         }
