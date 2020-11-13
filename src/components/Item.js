@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import Folder from './folder';
@@ -12,6 +12,7 @@ function Item(props){
     const itemName = props.itemName;
     const itemType = props.type;
     const isFolder = (itemType==="folder") ? true : false;
+    const elementReference = useRef(null);
     return(
       <div>
         <ContextMenuTrigger id="1">
@@ -20,14 +21,18 @@ function Item(props){
             value=>{
               const {dispatch} = value;  
               return (
-                <Button variant="light" className={styles.itemBlock} 
-                      onClick={()=>onItemSelected(itemId,dispatch)}
+                <div className={styles.itemBlock} 
+                      ref={elementReference}
+                      onClick={()=>{
+                        onItemSelected(itemId,dispatch,elementReference)
+                      }}
+                      
                       onBlur={()=>onItemLeave(dispatch)}>
                       {isFolder
                           ? <Folder folderName={itemName}/>
                           : <File fileName={itemName} />
                       }
-                </Button>
+                </div>
               )
             }
           }
@@ -63,7 +68,8 @@ function Item(props){
 export default Item;
 
 
-function onItemSelected (itemId,dispatch)  {
+function onItemSelected (itemId,dispatch,element)  {
+  alert(element.current.className)
     const id =itemId;
     dispatch({type:"SELECT_ITEM",payload:id});
 }

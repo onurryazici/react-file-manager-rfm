@@ -53,16 +53,15 @@
   margin-left: 5px;
 }
 
-.contentStage{
+#contentStage{
   width: 100%;
-  height: calc(100% - 134px);
+  height: calc(100% - 115px);
   overflow-y:scroll;
   display: block;
   position: relative;
   background-color: #fff;
 }
-
-.contents{
+#contents{
   background-color: #ffffff;
   width:100%;
   min-height: 100%;
@@ -104,14 +103,14 @@
 }
 .placemapArea{
   width: 100%;
-  height: 60px;
+  height: 40px;
   text-align: left;
   background-color: #fff;
-  padding: 15px;
+
   line-height: 30px;
   border-bottom: solid thin #dededede;
   z-index: 3;
-  top: 45px;
+  top: 50px;
 
 }
 .placemapArea span{
@@ -149,6 +148,12 @@
   background: #fff;
   overflow: hidden;
   border: solid thin #dedede;
+}
+.itemBlock:hover{
+  background: #dedede;
+}
+.itemBlockActive{
+  background: #dedede;
 }
 .itemIcon{
   width: 100%;

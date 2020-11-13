@@ -8,9 +8,9 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 export default class Content extends Component {
     render() {
         return (
-            <div className={styles.contentStage} >
+            <div id={styles.contentStage} >
                 <ContextMenuTrigger id="2">
-                    <div className={styles.contents}>
+                    <div id={styles.contents}>
                     <RfmConsumer>
                     {
                         value => {

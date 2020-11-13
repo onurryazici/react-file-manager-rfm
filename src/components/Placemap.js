@@ -6,11 +6,10 @@ export default class Placemap extends Component {
     render(){
         return(
             <div className={styles.placemapArea}>
-                <a><Button variant="light">2019</Button></a>
-                <span> <FaCaretRight/> </span>
-                <a><Button variant="light">Onur</Button></a>
-                <span> <FaCaretRight/> </span>
-                <a><Button variant="light">Fotoğraflar</Button></a>
+                <a><Button variant="light"><FaCaretRight/> 2019</Button></a>
+                <a><Button variant="light"><FaCaretRight/> Onur</Button></a>
+                <a><Button variant="light"><FaCaretRight/> Fotoğraflar</Button></a>
+                
             </div>
         )
         
