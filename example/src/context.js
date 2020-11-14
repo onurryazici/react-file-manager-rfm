@@ -1,23 +1,28 @@
 import React, { Component, useState } from 'react'
 const RfmContext = React.createContext();
 
+const actions = {
+    DELETE_USER:"DELETE_USER",
+    SELECT_ITEM:"SELECT_ITEM",
+    LEAVE_ITEM:"LEAVE_ITEM"
+}
 const reducer = (state,action)=>{
     switch(action.type){
-        case "DELETE_USER":
+        case actions.DELETE_USER:
             return {
                 ...state,
                 rfmItems:state.rfmItems.filter(item => action.payload !== item.id)
-            }
-        case "SELECT_ITEM":
+            };
+        case actions.SELECT_ITEM:
             return {
-                ...state,
-                isItemSelected:true,
-                selectedItemCount:selectedItemCount+1
-            }
-        case "LEAVE_ITEM":
+                ...state, 
+                selectedItemCount:state.selectedItemCount + 1
+            };
+        case actions.LEAVE_ITEM:
             return {
-                isItemSelected:false
-            }
+                ...state, 
+                selectedItemCount:state.selectedItemCount - 1,
+            };
         default:
             return state;
     }
@@ -35,9 +40,7 @@ export class RfmProvider extends Component {
             id:2,
             itemName:"onur.txt",
             type:"file"
-        },
-        ],
-        isItemSelected:false,
+        },],
         selectedItemCount:0,
         dispatch:action=>{
             this.setState(state=> reducer(state,action))

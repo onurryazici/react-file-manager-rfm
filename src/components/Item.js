@@ -16,14 +16,20 @@ function Item(props){
     const [itemSelected, setitemSelected] = useState(false)
 
 
-    function onItemSelected (itemId,dispatch,element)  {
+    function onItemSelected (itemId,dispatch)  {
       if(itemSelected){
-        setitemSelected(false) 
-        dispatch({type:"SELECT_ITEM",payload:itemId});
+        setitemSelected(false)
+        dispatch({type:"LEAVE_ITEM",payload:itemId});
       }
       else{
-        setitemSelected(true)
+        setitemSelected(true) 
+        dispatch({type:"SELECT_ITEM",payload:itemId});
+        
       }
+    }
+    function onItemLeave (dispatch)  {
+     /* setitemSelected(false)
+      dispatch({type:"LEAVE_ITEM",payload:""});*/
     }
     return(
       <div>
@@ -37,7 +43,7 @@ function Item(props){
                       onClick={()=>onItemSelected(itemId,dispatch,elementReference)}
                       onBlur={()=>onItemLeave(dispatch)}>
                       {isFolder
-                          ? <Folder folderName={itemName}/>
+                          ? <Folder folderName={itemName}/> 
                           : <File fileName={itemName} />
                       }
                 </div>
@@ -77,7 +83,3 @@ export default Item;
 
 
 
-function onItemLeave (dispatch)  {
-  Item.setitemSelected(false)
-  dispatch({type:"LEAVE_ITEM",payload:""});
-}

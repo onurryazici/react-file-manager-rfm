@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import { Button, Form, Modal } from "react-bootstrap";
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaChevronCircleRight } from "react-icons/fa";
 import styles from '../styles.module.css'
 function MoveItemModal(){
     const [modalShow, setModalShow] = React.useState(false);
     return (
       <div>
         <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaArrowAltCircleRight color="#4cbd97"/></div>
+                  <div className={styles.actionbarIcon}><FaChevronCircleRight color="#4abc96"/></div>
                   <div className={styles.actionbarText}>Taşı</div>
         </Button>
   

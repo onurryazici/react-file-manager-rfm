@@ -2,13 +2,13 @@ import React, { useState} from 'react'
 import {Button, Modal,Form } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
-import { FaFolderPlus, FaPlusCircle } from 'react-icons/fa';
+import { FaCircle, FaPen, FaPenSquare } from 'react-icons/fa';
 function RenameItemModal(){
   const [modalShow, setModalShow] = React.useState(false);
   return (
     <div>
       <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                <div className={styles.actionbarIcon}><FaPlusCircle color="#28a745"/></div>
+                <div className={styles.actionbarIcon}><FaPenSquare color="#28a745"/></div>
                 <div className={styles.actionbarText}>Yeniden adlandır</div>
       </Button>
 

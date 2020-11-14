@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaArrowAltCircleRight, FaGgCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
 function ShareItemModal(){
@@ -8,7 +8,7 @@ function ShareItemModal(){
     return (
       <div>
         <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaArrowAltCircleRight color="#4cbd97"/></div>
+                  <div className={styles.actionbarIcon}><FaGgCircle color="#25b7d3"/></div>
                   <div className={styles.actionbarText}>Paylaş</div>
         </Button>
   

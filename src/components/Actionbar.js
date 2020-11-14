@@ -10,9 +10,9 @@ function Actionbar() {
             <RfmConsumer>
             {
                 value =>{
-                    const {isItemSelected} = value;
+                    const {selectedItemCount} = value;
                     return (
-                        (isItemSelected)
+                        (selectedItemCount>0)
                             ? <OnItemSelectedView/>
                             : <OnStartView/>
                     )

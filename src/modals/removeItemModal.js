@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaArrowAltCircleRight, FaTimesCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
 function RemoveItemModal(){
@@ -8,7 +8,7 @@ function RemoveItemModal(){
     return (
       <div>
         <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaArrowAltCircleRight color="#4cbd97"/></div>
+                  <div className={styles.actionbarIcon}><FaTimesCircle color="#e04f5f"/></div>
                   <div className={styles.actionbarText}>Sil</div>
         </Button>
   

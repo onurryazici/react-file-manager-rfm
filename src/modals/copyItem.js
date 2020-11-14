@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaStumbleuponCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
 function CopyItem(){
@@ -8,8 +8,8 @@ function CopyItem(){
     return (
       <div>
         <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaArrowAltCircleRight color="#4cbd97"/></div>
-                  <div className={styles.actionbarText}>Paylaş</div>
+                  <div className={styles.actionbarIcon}><FaStumbleuponCircle color="#ab91ea"/></div>
+                  <div className={styles.actionbarText}>Kopyala</div>
         </Button>
   
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >

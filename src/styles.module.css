@@ -1,5 +1,7 @@
 /* add css module styles here (optional) */
-
+body{
+  font-family: Centur;
+}
 .test {
   margin: 2em;
   padding: 0.5em;
@@ -148,12 +150,18 @@
   background: #fff;
   overflow: hidden;
   border: solid thin #dedede;
+  -moz-user-select: none; 
+  -webkit-user-select: none; 
+  -ms-user-select:none; 
+  user-select:none;
+  -o-user-select:none;
 }
 .itemBlock:hover{
-  background: #dedede;
+  background: #cbdef1;
 }
 .itemBlockActive{
   background: #c6daeb;
+  border: solid thin #0066cc;
 }
 .itemIcon{
   width: 100%;
