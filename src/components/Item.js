@@ -17,8 +17,13 @@ function Item(props){
 
 
     function onItemSelected (itemId,dispatch,element)  {
-      itemSelected ? setitemSelected(false) : setitemSelected(true)
-      dispatch({type:"SELECT_ITEM",payload:itemId});
+      if(itemSelected){
+        setitemSelected(false) 
+        dispatch({type:"SELECT_ITEM",payload:itemId});
+      }
+      else{
+        setitemSelected(true)
+      }
     }
     return(
       <div>
