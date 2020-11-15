@@ -24,7 +24,6 @@ function Item(props){
       else{
         setitemSelected(true) 
         dispatch({type:"SELECT_ITEM",payload:itemId});
-        
       }
     }
     function onItemLeave (dispatch)  {
@@ -41,7 +40,8 @@ function Item(props){
               return (
                 <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
                       onClick={()=>onItemSelected(itemId,dispatch,elementReference)}
-                      onBlur={()=>onItemLeave(dispatch)}>
+                      onContextMenu={()=>onItemSelected(itemId,dispatch,elementReference)}
+                      >
                       {isFolder
                           ? <Folder folderName={itemName}/> 
                           : <File fileName={itemName} />

@@ -1,6 +1,7 @@
 /* add css module styles here (optional) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
 body{
-  font-family: Centur;
+  font-family: 'Montserrat', sans-serif;
 }
 .test {
   margin: 2em;
@@ -22,6 +23,7 @@ body{
   height: 100%;
   position: absolute;
   border: solid thin #dedede;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #actionbarStage{
@@ -57,7 +59,7 @@ body{
 
 #contentStage{
   width: 100%;
-  height: calc(100% - 115px);
+  height: calc(100% - 124px);
   overflow-y:scroll;
   display: block;
   position: relative;
@@ -129,19 +131,24 @@ body{
   width: 100%;
   text-align: left;
   background: #fff;
-  height: 30px;
+  height: 40px;
   border-top: solid thin #dedede;
   bottom: 0px;
   right: 0px;
-  font-size: 13px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 37px;
   padding-left: 15px;
+  -moz-user-select: none; 
+  -webkit-user-select: none; 
+  -ms-user-select:none; 
+  user-select:none;
+  -o-user-select:none;
 }
 
 .itemBlock{
   position: relative;
   text-align: center;
-  width: 145px;
+  width: 140px;
   height: 155px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -170,9 +177,8 @@ body{
   align-items: center;
 }
 .itemName{
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  width: 93%;
+  margin-right: 5px;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;

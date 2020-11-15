@@ -6,15 +6,26 @@ import Content from './components/content';
 import Placemap from './components/placemap';
 import FolderDetails from './components/folderDetails';
 import Actionbar from './components/actionbar';
-import { RfmProvider } from '../example/src/context';
+import RfmConsumer, { RfmProvider } from '../example/src/context';
 export default class RFM extends Component {
   static propTypes = {
     text: PropTypes.string
   }
   render() {
+    const data=[
+      {
+        id:1,
+        itemName:"onurwwwwwwwwwwwwwwwwww",
+        type:"folder"
+      },
+      {
+        id:2,
+        itemName:"onur.txt",
+        type:"file"
+      },
+    ]
     const {
       text,
-      data,
       rfmBackgroundColor,
       rfmBorderColor,
       itemColorParam,
