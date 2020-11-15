@@ -15,15 +15,15 @@ class Content extends Component{
                     {
                         value => {
                             const {rfmItems} = value;
-                            alert(JSON.stringify(rfmItems));
-                            
+                            //alert("in Content.js : " + JSON.stringify(rfmItems));
                             return rfmItems.map(item => {
                                  return (
                                     <Item 
                                         key = {item.id}
                                         id = {item.id}
                                         itemName = {item.itemName}
-                                        type={item.type}                              
+                                        type={item.type} 
+                                        extension={item.extension}                                  
                                     />
                                 )
                             })

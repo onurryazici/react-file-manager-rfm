@@ -16,13 +16,12 @@ export default class RFM extends Component {
 
     return (
       <RfmProvider>
-        
         <div className={styles.container}>
           <RfmConsumer>
             {
               value=>{
                   const {dispatch} = value;
-                  return dispatch({type:"SET_DATA",payload:[data]});
+                  (setRFM(dispatch,data));
               }
             }
           </RfmConsumer>
@@ -34,4 +33,8 @@ export default class RFM extends Component {
       </RfmProvider>
     )
   }
+}
+
+function setRFM(dispatch,data){
+  dispatch({type:"SET_DATA",payload:data});
 }

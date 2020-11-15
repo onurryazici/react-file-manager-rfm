@@ -13,7 +13,7 @@ const reducer = (state,action)=>{
             return{
                 ...state,
                 tag:"setdata",
-                rfmItems:JSON.parse(JSON.stringify(action.payload))
+                rfmItems:action.payload,
             };
         case actions.DELETE_USER:
             return {
