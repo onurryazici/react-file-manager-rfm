@@ -8,27 +8,25 @@ export default class App extends Component{
   render(){
     const dataArray = [
       {
+        id:1,
         itemName:"klasör1",
         type:"folder",
-        extension:"n/a"
       },
       {
+        id:2,
         itemName:"klasör1",
         type:"folder",
-        extension:"n/a"
       },
       {
+        id:3,
         itemName:"abc.txt",
-        type:"file",
-        extension:"txt"
+        type:"file", 
       }
     ]
 
     return(
       <div>
         <RFM 
-          text="Create React Library Example 😄" 
-          rfmBackgroundColor="#dedede"
           data={dataArray}
         />
       </div>

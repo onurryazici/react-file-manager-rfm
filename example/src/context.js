@@ -10,11 +10,10 @@ const actions = {
 const reducer = (state,action)=>{
     switch(action.type){
         case actions.SET_DATA:
-            alert("as")
             return{
                 ...state,
                 tag:"setdata",
-                rfmItems:action.payload.slice(0)
+                rfmItems:JSON.parse(JSON.stringify(action.payload))
             };
         case actions.DELETE_USER:
             return {

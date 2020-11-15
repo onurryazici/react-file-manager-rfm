@@ -9,30 +9,23 @@ import Actionbar from './components/actionbar';
 import RfmConsumer, { RfmProvider } from '../example/src/context';
 export default class RFM extends Component {
   static propTypes = {
-    text: PropTypes.string
+    data: PropTypes.array
   }
   render() {
-    const data=[
-      {
-        id:1,
-        itemName:"onurwwwwwwwwwwwwwwwwww",
-        type:"folder"
-      },
-      {
-        id:2,
-        itemName:"onur.txt",
-        type:"file"
-      },
-    ]
-    const {
-      text,
-      rfmBackgroundColor,
-      rfmBorderColor,
-      itemColorParam,
-    }=this.props
+    const { data } = this.props;
+
     return (
       <RfmProvider>
-        <div className={styles.container} style={{backgroundColor:rfmBackgroundColor}}>
+        
+        <div className={styles.container}>
+          <RfmConsumer>
+            {
+              value=>{
+                  const {dispatch} = value;
+                  return dispatch({type:"SET_DATA",payload:[data]});
+              }
+            }
+          </RfmConsumer>
           <Actionbar/>
           <Placemap/>
           <Content data={data}/>

@@ -5,32 +5,25 @@ import styles from '../styles.module.css'
 import RfmConsumer from '../../example/src/context'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-function Content(props) {
+class Content extends Component{
+    render(){
         return (
             <div id={styles.contentStage} >
                 <ContextMenuTrigger id="2">
                     <div id={styles.contents} >
                     <RfmConsumer>
                     {
-                        value => { 
-                            
-                            
-                            return 
-                        },
                         value => {
-          
-                            //alert(JSON.stringify(this.props.data))
-                            const {rfmItems,dispatch} = value
-                            //rfmItems= (this.props.data)
-                            //alert(JSON.stringify(rfmItems))
-                            //dispatch({type:"SELECT_ITEM",payload:0});
-                            rfmItems.map(item => {
+                            const {rfmItems} = value;
+                            alert(JSON.stringify(rfmItems));
+                            
+                            return rfmItems.map(item => {
                                  return (
                                     <Item 
                                         key = {item.id}
                                         id = {item.id}
                                         itemName = {item.itemName}
-                                        type={item.type}                                    
+                                        type={item.type}                              
                                     />
                                 )
                             })
@@ -51,5 +44,6 @@ function Content(props) {
                 </ContextMenu>
             </div>     
         )
+    }
 }
 export default Content;

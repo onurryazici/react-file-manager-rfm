@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
-import {ReactComponent as PdfSVG}from '../assets/svg/extensions/pdf.svg'
-import {ReactComponent as TxtSVG} from '../assets/svg/extensions/txt.svg'
-import {ReactComponent as UnknownExtensionSVG} from '../assets/svg/extensions/unknown-extension.svg'
-import {ReactComponent as DocxSVG} from '../assets/svg/extensions/docx.svg'
 import styles from '../styles.module.css'
 import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel} from 'react-icons/fa'
 function File(props){
     const fileId = props.fileId;
     const fileName = props.fileName;
-    const extension = fileName.substr(fileName.length - 4);
+    const extension = fileName.substr(fileName.length - 4); // Ya peki tek harfli dosya olursa? BUM..
     
     return(
         <div>
