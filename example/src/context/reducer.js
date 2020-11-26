@@ -1,14 +1,23 @@
-import React, { Component, useState } from 'react'
-const RfmContext = React.createContext();
+import {Actions} from './actions';
 
-const actions = {
-    SET_DATA:"SET_DATA",
-    DELETE_USER:"DELETE_USER",
-    SELECT_ITEM:"SELECT_ITEM",
-    LEAVE_ITEM:"LEAVE_ITEM"
+export function reducer (state,action){
+   switch(action.type){
+        case Actions.INCREASE_COUNTER:
+           state.counter = state.counter + 1;
+           return {...state}
+           
+        case Actions.DECREASE_COUNTER:
+            state.counter = state.counter - 1
+            return {...state}
+        case Actions.SET_DATA:
+            state.counter = 100;
+            return {...state}
+        default:
+            return state
+   }
 }
-const reducer = (state,action)=>{
-    switch(action.type){
+
+/* switch(action.type){
         case actions.SET_DATA:
             return{
                 ...state,
@@ -35,28 +44,4 @@ const reducer = (state,action)=>{
             };
         default:
             return state;
-    }
-}
-
-export class RfmProvider extends Component {
-    state={
-        rfmItems:[],
-        selectedItemCount:0,
-        fileCount:0,
-        tag:"",
-        dispatch:action=>{
-            this.setState(state=> reducer(state,action))
-        }
-    }
-    render() { 
-        return (
-            <RfmContext.Provider value={this.state}>
-                {this.props.children}
-            </RfmContext.Provider>
-        )
-    }
-}
-
-const RfmConsumer = RfmContext.Consumer;
-
-export default RfmConsumer;
+    }*/

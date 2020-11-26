@@ -5,7 +5,6 @@ import Folder from './folder';
 import File from './file';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
-import RfmConsumer from '../../example/src/context';
 import classNames from 'classnames'
 function Item(props){
     const itemId   = props.id;
@@ -33,7 +32,7 @@ function Item(props){
     return(
       <div>
         <ContextMenuTrigger id="1">
-          <RfmConsumer>
+         {/*} <RfmConsumer>
           {
             value=>{
               const {dispatch} = value;  
@@ -50,7 +49,7 @@ function Item(props){
               )
             }
           }
-        </RfmConsumer>
+        </RfmConsumer>*/}
         </ContextMenuTrigger>
 
         <ContextMenu id="1">

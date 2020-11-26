@@ -1,10 +1,9 @@
 import React from 'react'
-import RfmConsumer from '../../example/src/context';
 import styles from '../styles.module.css'
 function FolderDetails(props){
         return(
             <div className={styles.folderDetails}>
-                <RfmConsumer>
+               {/*} <RfmConsumer>
                 {
                     value=>{
                         const {selectedItemCount} = value;
@@ -17,7 +16,7 @@ function FolderDetails(props){
                 }
                 
                  
-                 </RfmConsumer>
+            </RfmConsumer>*/}
             </div>
         )
 }

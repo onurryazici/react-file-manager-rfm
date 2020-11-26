@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import Item from './item'
 import styles from '../styles.module.css'
-import RfmConsumer from '../../example/src/context'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 class Content extends Component{
@@ -11,7 +10,7 @@ class Content extends Component{
             <div id={styles.contentStage} >
                 <ContextMenuTrigger id="2">
                     <div id={styles.contents} >
-                    <RfmConsumer>
+                    {/*<RfmConsumer>
                     {
                         value => {
                             const {rfmItems} = value;
@@ -29,7 +28,7 @@ class Content extends Component{
                             })
                         }
                     }
-                    </RfmConsumer>    
+                </RfmConsumer> */}   
                     </div>
                 </ContextMenuTrigger>
                 <ContextMenu id="2">

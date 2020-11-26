@@ -1,40 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
 import styles from './styles.module.css'
-import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.css';
 import Content from './components/content';
 import Placemap from './components/placemap';
 import FolderDetails from './components/folderDetails';
 import Actionbar from './components/actionbar';
-import RfmConsumer, { RfmProvider } from '../example/src/context';
-export default class RFM extends Component {
-  static propTypes = {
-    data: PropTypes.array
-  }
-  render() {
-    const { data } = this.props;
+import test from './components/testCC'
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
 
-    return (
-      <RfmProvider>
-        <div className={styles.container}>
-          <RfmConsumer>
-            {
-              value=>{
-                  const {dispatch} = value;
-                  (setRFM(dispatch,data));
-              }
-            }
-          </RfmConsumer>
-          <Actionbar/>
+
+
+
+
+const RFM = () => {
+  const myCounter = useSelector(state => state.counter)
+  const dispatch = useDispatch()
+  return (
+    <div>
+      <h2>{myCounter}</h2>
+      <Button value="Increase" onClick={()=>dispatch({type:"INCREASE_COUNTER"})}/>
+      <Button value="Increase" onClick={()=>dispatch({type:"DECREASE_COUNTER"})}/>
+      <test></test>
+      <div className={styles.container}>
+        <Actionbar/>
           <Placemap/>
-          <Content data={data}/>
+          <Content/>
           <FolderDetails folderCount="10" fileCount="2"/>
         </div>
-      </RfmProvider>
-    )
-  }
+    </div>
+  )
 }
-
-function setRFM(dispatch,data){
-  dispatch({type:"SET_DATA",payload:data});
-}
+export default RFM;
