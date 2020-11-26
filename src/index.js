@@ -20,7 +20,7 @@ const RFM = () => {
     <div>
       <h2>{myCounter}</h2>
       <Button value="Increase" onClick={()=>dispatch({type:"INCREASE_COUNTER"})}/>
-      <Button value="Increase" onClick={()=>dispatch({type:"DECREASE_COUNTER"})}/>
+      <Button value="Decrease" onClick={()=>dispatch({type:"DECREASE_COUNTER"})}/>
       <test></test>
       <div className={styles.container}>
         <Actionbar/>
