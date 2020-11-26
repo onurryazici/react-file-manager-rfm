@@ -5,7 +5,6 @@ export function reducer (state,action){
         case Actions.INCREASE_COUNTER:
            state.counter = state.counter + 1;
            return {...state}
-           
         case Actions.DECREASE_COUNTER:
             state.counter = state.counter - 1
             return {...state}
