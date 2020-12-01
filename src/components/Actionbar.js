@@ -3,21 +3,16 @@ import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import OnItemSelectedView from '../views/onItemSelectedView';
 import OnStartView from '../views/onStartView';
-function Actionbar() {
+import { useSelector } from 'react-redux';
+const Actionbar = () => {
+    const selectedItemCount = useSelector(state => state.selectedItemCount);
     return (
-        <div id={styles.actionbarStage}>
-           {/*} <RfmConsumer>
-            {
-                value =>{
-                    const {selectedItemCount} = value;
-                    return (
-                        (selectedItemCount>0)
-                            ? <OnItemSelectedView/>
-                            : <OnStartView/>
-                    )
-                }
-            }
-            </RfmConsumer>*/}
+        <div id={styles.actionbarStage}>   
+        {
+            (selectedItemCount>0)
+                ? <OnItemSelectedView/>
+                : <OnStartView/>
+        }
         </div>
     )
 }

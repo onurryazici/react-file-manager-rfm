@@ -1,3 +1,4 @@
 export const initialState = {
-    counter:0,
+    location:'',
+    selectedItemCount:0
 }
