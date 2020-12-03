@@ -1,14 +1,26 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import Item from './item'
 import styles from '../styles.module.css'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { useSelector } from 'react-redux';
-import fs from 'fs'
+import axios from 'axios';
+const fs = require('fs');
 const Content = () => {
+    const [Items, setItems] = useState(null);
     const currentLocation = useSelector(state => state.location);
-    const testFolder = 'C:/Users/onurr/Desktop/Staj';
-    const fileNames = fs.readdirSync(testFolder);
+    alert("Current Location" + currentLocation); 
+    axios.get("http://localhost:3030/getDirectory",
+    {
+        params:{
+            location:currentLocation,
+            username:"onur"
+        }
+    }).then(response=>{
+        console.log("RESP : " + response)
+    })
+    
+    
     
     return (
         <div id={styles.contentStage} >

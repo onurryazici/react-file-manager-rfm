@@ -58,6 +58,7 @@
     "dist"
   ],
   "dependencies": {
+    "axios": "^0.21.0",
     "classnames": "^2.2.6",
     "fs": "0.0.1-security",
     "prop-types": "^15.7.2",

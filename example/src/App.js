@@ -11,7 +11,7 @@ const App = () =>{
     return(
       <Provider store={store}>
         <RFM 
-          location="/"
+          location="/home/onur"
         />
       </Provider>
     )
