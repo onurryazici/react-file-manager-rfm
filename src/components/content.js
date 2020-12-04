@@ -6,19 +6,24 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 const fs = require('fs');
-const Content = () => {
+function Content() {
     const [Items, setItems] = useState(null);
     const currentLocation = useSelector(state => state.location);
-    alert("Current Location" + currentLocation); 
-    axios.get("http://localhost:3030/getDirectory",
-    {
-        params:{
-            location:currentLocation,
-            username:"onur"
-        }
-    }).then(response=>{
-        console.log("RESP : " + response)
-    })
+    const encrypted = encodeURIComponent(currentLocation);
+    const username = "onur";
+    try{
+        let response = axios.get("http://192.168.1.159:3030/getDirectory",
+            {
+                params:{
+                    location:encrypted,
+                    username:"onur"
+                }
+            });
+        console.log(response);
+    }
+    catch(err){
+        alert("error " + err);
+    }
     
     
     
