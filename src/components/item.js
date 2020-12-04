@@ -6,14 +6,15 @@ import File from './file';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 import classNames from 'classnames'
+import { useSelector } from 'react-redux';
 function Item(props){
-    const itemId   = props.id;
-    const itemName = props.itemName;
+    const itemName = props.name;
     const itemType = props.type;
+    const extension = props.extension;
     const isFolder = (itemType==="folder") ? true : false;
     const elementReference = useRef(null);
     const [itemSelected, setitemSelected] = useState(false)
-
+    const currentLocation = useSelector(state => state.currentLocation);
 
     function onItemSelected (itemId,dispatch)  {
       if(itemSelected){
@@ -25,31 +26,22 @@ function Item(props){
         dispatch({type:"SELECT_ITEM",payload:itemId});
       }
     }
-    function onItemLeave (dispatch)  {
+    function onItemLeave ()  {
      /* setitemSelected(false)
       dispatch({type:"LEAVE_ITEM",payload:""});*/
     }
     return(
       <div>
         <ContextMenuTrigger id="1">
-         {/*} <RfmConsumer>
-          {
-            value=>{
-              const {dispatch} = value;  
-              return (
-                <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
-                      onClick={()=>onItemSelected(itemId,dispatch,elementReference)}
-                      onContextMenu={()=>onItemSelected(itemId,dispatch,elementReference)}
-                      >
-                      {isFolder
-                          ? <Folder folderName={itemName}/> 
-                          : <File fileName={itemName} />
-                      }
-                </div>
-              )
-            }
-          }
-        </RfmConsumer>*/}
+          <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
+              onClick={()=>onItemSelected()}
+              onContextMenu={()=>onItemSelected()}>
+              {isFolder
+                ? <Folder folderName={itemName}/> 
+                : <File fileName={itemName} />
+              }
+          </div>
+              
         </ContextMenuTrigger>
 
         <ContextMenu id="1">
