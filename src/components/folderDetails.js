@@ -1,24 +1,28 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
-function FolderDetails(props){
-        return(
-            <div className={styles.folderDetails}>
-               {/*} <RfmConsumer>
-                {
-                    value=>{
-                        const {selectedItemCount} = value;
-                        return(
-                            (selectedItemCount>0)
-                            ? selectedItemCount + " öğe seçildi" 
-                            : props.folderCount + "klasör - " + props.fileCount + " Dosya"
-                        )
-                    }
+function FolderDetails(){
+    const selectedItemCount = useSelector(state => state.selectedItemCount);
+    const directoryItems = useSelector(state => state.directoryItems);
+    return(
+        
+        <div className={styles.folderDetails}>
+           {/*} <RfmConsumer>
+            {
+                value=>{
+                    const {selectedItemCount} = value;
+                    return(
+                        (selectedItemCount>0)
+                        ? selectedItemCount + " öğe seçildi" 
+                        : props.folderCount + "klasör - " + props.fileCount + " Dosya"
+                    )
                 }
-                
-                 
-            </RfmConsumer>*/}
-            </div>
-        )
+            }
+            
+             
+        </RfmConsumer>*/}
+        </div>
+    )
 }
 
 export default FolderDetails;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {ReactComponent as FolderSVG} from '../assets/svg/actionbar-icons/folder.svg'
+import {ReactComponent as FolderSVG} from '../../example/public/assets/svg/actionbar-icons/folder.svg'
 import styles from "../styles.module.css"
 function Folder(props){
     const folderName = props.folderName;

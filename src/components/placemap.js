@@ -1,16 +1,24 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
-import { FaAngleRight, FaCaretRight } from 'react-icons/fa'
+import { FaAngleRight, FaArrowRight, FaCaretRight, FaChevronRight } from 'react-icons/fa'
+import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
-export default class Placemap extends Component {
-    render(){
-        return(
-            <div className={styles.placemapArea}>
-                <a><Button variant="light"><FaCaretRight/> 2019</Button></a>
-                <a><Button variant="light"><FaCaretRight/> Onur</Button></a>
-                <a><Button variant="light"><FaCaretRight/> Fotoğraflar</Button></a>
-            </div>
-        )
-        
-    }
+function Placemap() {
+    const currentLocation = useSelector(state => state.location);
+    const splittedPlacemaps = currentLocation.split('/');
+    
+    return(
+        <div className={styles.placemapArea}>
+            {
+                splittedPlacemaps.map((item)=>{
+                    if(item==="")
+                        return <a><Button variant="link"> Drive</Button></a>
+                    else 
+                        return <a> <FaChevronRight/> <Button variant="link">{item}</Button></a>
+                })
+            }
+            <div>s</div>
+        </div>
+    )    
 }
+export default Placemap;

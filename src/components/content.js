@@ -5,33 +5,33 @@ import styles from '../styles.module.css'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import loadingAnim from '../assets/images/loading.gif';
 function Content() {
     const [Items, setItems] = useState([]);
     const [Loading, setLoading] = useState(true);
     const currentLocation = useSelector(state => state.location);
+
     const encryptedLocation = Buffer.from(currentLocation).toString('base64');
     const username = "onur";
     useEffect(() => {
-        axios.get("http://192.168.43.229:3030/api/getDirectory",{
+        axios.get("http://192.168.1.159:3030/api/getDirectory",{
             params:{
                 location:encryptedLocation,
                 username:"onur"
             }})
         .then((response)=>{
-            setItems(response.data.items);
             setLoading(false);
+            ////// DİSPATCH SET ITEMS BURAYA YAZILACAK + redux-thunk araştırılacak
+            setItems(response.data.items);
         });
     },
     [currentLocation]
     );
-        
+
     if(Loading)
     {
         return (
             <div id={styles.contentStage}>
                 <div id={styles.loadingItem}>
-                    <img src={loadingAnim}/>
                 </div>
             </div>
         )
@@ -40,7 +40,6 @@ function Content() {
     {
         return (
             <div id={styles.contentStage} >
-                
                 <ContextMenuTrigger id="2">
                     <div id={styles.contents} >
                         {Items.length > 0 ? 
@@ -51,7 +50,7 @@ function Content() {
                                         name = {item.name}
                                         type={item.type} 
                                         extension={item.extension}/>
-                                    )
+                                )
                             })
                             :""
                         }

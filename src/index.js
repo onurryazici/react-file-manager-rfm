@@ -17,7 +17,7 @@ const RFM = (props) => {
       <Actionbar/>
       <Placemap/>
       <Content/>
-      <FolderDetails folderCount="10" fileCount="2"/>
+      <FolderDetails/>
     </div>
   )
 }

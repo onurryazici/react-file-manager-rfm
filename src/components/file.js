@@ -4,7 +4,7 @@ import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel} from 'react-ico
 function File(props){
     const fileId = props.fileId;
     const fileName = props.fileName;
-    const extension = fileName.substr(fileName.length - 4); // Ya peki tek harfli dosya olursa? BUM..
+    const extension = props.extension;
     
     return(
         <div>
