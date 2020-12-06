@@ -39,21 +39,19 @@ function Item(props){
       if(event.ctrlKey)
       {
         if(!exist)
-          dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
+          dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
       }
       else
       {
         dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS, null);
-        dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
-        //console.log("ADD SELECTED END");
-        console.log("SELECTED ITEMS " +selectedItems);
+        dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
       }
     }
     function onItemContextMenu(event, name){
       var exist = selectedItems.indexOf(name)=== -1 ? false : true;
       if(!exist){
         dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
-        dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
+        dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
       }
     }
     return(

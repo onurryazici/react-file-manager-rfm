@@ -7,6 +7,11 @@ function FolderDetails(){
     return(
         
         <div className={styles.folderDetails}>
+            {
+                selectedItemCount > 0
+                    ? selectedItemCount + " öğe seçildi."
+                    : ""
+            }
            {/*} <RfmConsumer>
             {
                 value=>{
