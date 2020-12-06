@@ -1,4 +1,4 @@
-import React, { useRef,useState } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
 import Folder from './folder';
@@ -14,29 +14,54 @@ function Item(props){
     const extension = props.extension;
 
     const [itemSelected, setitemSelected] = useState(false);
-
-    const currentLocation   = useSelector(state => state.currentLocation);
-    const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const dispatch          = useDispatch();
 
+    useEffect(() => {
+      let exist = selectedItems.indexOf(itemName) === -1 ? false : true;
+      if (exist){
+        setitemSelected(true);
+      }
+      else{
+        setitemSelected(false);///ara
+      }
+    },
+    [selectedItems]
+    );
+
+    function dispatchInvoker(typeValue,payloadValue)
+    {
+        return dispatch({type:typeValue, payload:payloadValue});
+    }
+    
     function onItemSelected (event,name){
+      var exist = selectedItems.indexOf(name) === -1 ? false : true;
       if(event.ctrlKey)
       {
-
+        if(!exist)
+          dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
       }
-        ()=>{dispatch({type:Actions.CLEAR_SELECTED_ITEMS, payload:itemName});}
-        ()=>{dispatch({type:Actions.SET_SELECTED_ITEMS, payload:itemName});}
-      
-      console.log("SELECTED ITEMS " +selectedItems);
-      
+      else
+      {
+        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS, null);
+        dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
+        //console.log("ADD SELECTED END");
+        console.log("SELECTED ITEMS " +selectedItems);
+      }
+    }
+    function onItemContextMenu(event, name){
+      var exist = selectedItems.indexOf(name)=== -1 ? false : true;
+      if(!exist){
+        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
+        dispatchInvoker(Actions.ADD_SELECTED_ITEMS,name);
+      }
     }
     return(
       <div>
         <ContextMenuTrigger id="1">
           <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
               onClick={(event)=>onItemSelected(event,itemName)}
-              onContextMenu={()=>onItemSelected()}>
+              onContextMenu={(event)=>onItemContextMenu(event,itemName)}>
               {(itemType==="folder")
                 ? <Folder folderName={itemName}/> 
                 : <File fileName={itemName} extension={extension}/>

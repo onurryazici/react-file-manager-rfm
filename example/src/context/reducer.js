@@ -5,20 +5,29 @@ export function reducer (state,action){
         case Actions.SET_LOCATION:
            state.location = action.payload;
            return {...state}
-        case Actions.DECREASE_COUNTER:
-            state.counter = action.payload;
-            return {...state}
         case Actions.CLEAR_SELECTED_ITEMS:
-            
             return{
                 ...state,
-                selectedItems:[...state.selectedItems,"clear"]
+                selectedItems:[]
             }
         case Actions.ADD_SELECTED_ITEMS:
             //state.selectedItems.concat(action.payload);
             return {
                 ...state,
-                selectedItems:[...state.selectedItems,"add"]
+                selectedItems:[...state.selectedItems,action.payload]
+            }
+        case Actions.REMOVE_SELECTED_ITEM:
+            return {
+                ...state,
+                selectedItems:[
+                    ...state.selectedItems.slice(0,action.payload),
+                    ...state.selectedItems.slice(action.payload + 1)
+                ]
+            }
+        case Actions.SET_DIRECTORY_ITEMS:
+            return {
+                ...state,
+                directoryItems:action.payload
             }
         case Actions.SET_DATA:
             state.counter = 100;

@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
 import Item from './item'
 import styles from '../styles.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import { Actions } from '../../example/src/context/actions';
 function Content() {
-    const [Items, setItems] = useState([]);
     const [Loading, setLoading] = useState(true);
-    const currentLocation = useSelector(state => state.location);
-
-    const encryptedLocation = Buffer.from(currentLocation).toString('base64');
+    const currentLocation       = useSelector(state => state.location);
+    const directoryItems        = useSelector(state => state.directoryItems);
+    const dispatch              = useDispatch();
+    const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
     const username = "onur";
     useEffect(() => {
         axios.get("http://192.168.1.159:3030/api/getDirectory",{
@@ -20,13 +21,11 @@ function Content() {
             }})
         .then((response)=>{
             setLoading(false);
-            ////// DİSPATCH SET ITEMS BURAYA YAZILACAK + redux-thunk araştırılacak
-            setItems(response.data.items);
+            dispatch({type:Actions.SET_DIRECTORY_ITEMS,payload:response.data.items});
         });
     },
     [currentLocation]
     );
-
     if(Loading)
     {
         return (
@@ -42,8 +41,8 @@ function Content() {
             <div id={styles.contentStage} >
                 <ContextMenuTrigger id="2">
                     <div id={styles.contents} >
-                        {Items.length > 0 ? 
-                            Items.map((item)=>{
+                        {directoryItems.length > 0 ? 
+                            directoryItems.map((item)=>{
                                 return (
                                     <Item 
                                         key = {item.name}
@@ -71,3 +70,4 @@ function Content() {
     }
 }
 export default Content;
+

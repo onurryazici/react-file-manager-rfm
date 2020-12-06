@@ -1,5 +1,5 @@
 export const initialState = {
-    location:'',
+    location:"",
     selectedItems:[],
     selectedItemCount:0,
     directoryItems:[],
