@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './styles.module.css'
 import Content from './components/content';
 import Placemap from './components/placemap';
@@ -8,10 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../example/src/context/actions';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const RFM = (props) => {
-  //const myCounter = useSelector(state => state.counter);
+function RFM(props){
   const dispatch = useDispatch();
-  dispatch({type:Actions.SET_LOCATION, payload:props.location});
+
+  function dispatchInvoker(typeValue, payloadValue) {
+    return dispatch({type:typeValue, payload: payloadValue});
+  }
+  useEffect(() => {
+    dispatchInvoker(Actions.SET_LOCATION, props.location);
+    dispatchInvoker(Actions.SET_SHOW_HIDDEN_FILES, props.showHiddenFiles);
+  }, []);
+  
   return (
     <div className={styles.container}>
       <Actionbar/>
@@ -22,3 +29,4 @@ const RFM = (props) => {
   )
 }
 export default RFM;
+

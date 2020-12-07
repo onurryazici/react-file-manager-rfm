@@ -32,6 +32,11 @@ export function reducer (state,action){
                 ...state,
                 directoryItems:action.payload
             }
+        case Actions.SET_SHOW_HIDDEN_FILES:
+            return {
+                ...state,
+                showHiddenFiles:action.payload
+            }
         default:
             return state
    }

@@ -14,6 +14,7 @@ function Item(props){
     const extension = props.extension;
 
     const [itemSelected, setitemSelected] = useState(false);
+    const currentLocation   = useSelector(state => state.location);
     const selectedItems     = useSelector(state => state.selectedItems);
     const dispatch          = useDispatch();
 
@@ -32,8 +33,7 @@ function Item(props){
     function dispatchInvoker(typeValue,payloadValue)
     {
         return dispatch({type:typeValue, payload:payloadValue});
-    }
-    
+    }   
     function onItemSelected (event,name){
       var exist = selectedItems.indexOf(name) === -1 ? false : true;
       if(event.ctrlKey)
@@ -54,12 +54,22 @@ function Item(props){
         dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
       }
     }
+    function onItemDoubleClick(name,type){
+        // if it is file then what you do?
+        if(type==="folder"){
+          let newLocation = currentLocation + "/" + name;
+          dispatchInvoker(Actions.SET_LOCATION,newLocation);
+          dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
+        }
+    }
     return(
       <div>
         <ContextMenuTrigger id="1">
           <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
               onClick={(event)=>onItemSelected(event,itemName)}
-              onContextMenu={(event)=>onItemContextMenu(event,itemName)}>
+              onContextMenu={(event)=>onItemContextMenu(event,itemName)}
+              onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}
+              >
               {(itemType==="folder")
                 ? <Folder folderName={itemName}/> 
                 : <File fileName={itemName} extension={extension}/>
