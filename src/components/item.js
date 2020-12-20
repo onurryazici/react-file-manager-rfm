@@ -8,6 +8,7 @@ import styles from '../styles.module.css'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../example/src/context/actions';
+
 function Item(props){
     const itemName  = props.name;
     const itemType  = props.type;
@@ -24,7 +25,7 @@ function Item(props){
         setitemSelected(true);
       }
       else{
-        setitemSelected(false);///ara
+        setitemSelected(false);
       }
     },
     [selectedItems]
@@ -55,7 +56,6 @@ function Item(props){
       }
     }
     function onItemDoubleClick(name,type){
-        // if it is file then what you do?
         if(type==="folder"){
           let newLocation = currentLocation + "/" + name;
           dispatchInvoker(Actions.SET_LOCATION,newLocation);
@@ -78,23 +78,23 @@ function Item(props){
         </ContextMenuTrigger>
         <ContextMenu id="1">
           <div className={styles.contextMenuStage}>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 1' }}>
-              Paylaş
+            <MenuItem data={{ item: 'item 1' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}} >Paylaş</button>
             </MenuItem>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 2' }}>
-              İndir
+            <MenuItem data={{ item: 'item 2' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>İndir</button>
             </MenuItem>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 3' }}>
-              Şuraya Taşı
+            <MenuItem data={{ item: 'item 3' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Şuraya taşı</button>
             </MenuItem>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 4' }}>
-              Yeniden Adlandır
+            <MenuItem data={{ item: 'item 4' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Yeniden adlandır</button>
             </MenuItem>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 5' }}>
-              Sil
+            <MenuItem data={{ item: 'item 5' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Sil</button>
             </MenuItem>
-            <MenuItem className={styles.contextMenuItem} data={{ item: 'item 6' }}>
-              Ayrıntılar
+            <MenuItem data={{ item: 'item 6' }}>
+              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Ayrıntılar</button>
             </MenuItem>
           </div>
         </ContextMenu>

@@ -11,7 +11,7 @@ const App = () =>{
     return(
       <Provider store={store}>
         <RFM 
-          location="/home/onur"
+          location="/home/main"
           showHiddenFiles="no"
         />
       </Provider>

@@ -1,10 +1,14 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { FaArrowAltCircleRight, FaTimesCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 
 function RemoveItemModal(){
     const [modalShow, setModalShow] = React.useState(false);
+    const selectedItemCount = useSelector(state => state.selectedItemCount);
+    const selectedItems     = useSelector(state => state.selectedItems);
+    const item = "deneme";
     return (
       <div>
         <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
@@ -15,16 +19,15 @@ function RemoveItemModal(){
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-              Yeni Klasör
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-          <Form>
-            <Form.Group controlId="formFolderName">
-              <Form.Control type="text" placeholder="Adsız Klasör" autoComplete="false"  />
-            </Form.Group>
-          </Form>
+            {
+              selectedItemCount > 0 
+                ? "Seçili " + selectedItemCount + " öğeyi silmek istediğinize emin misiniz?"
+                : item + " öğe silinecektir onaylıyor musunuz?"
+            }
           </p>
         </Modal.Body>
         <Modal.Footer>

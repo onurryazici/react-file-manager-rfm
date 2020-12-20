@@ -92,15 +92,18 @@ body{
 
 }
 .contextMenuItem{
-  border-bottom: solid thin #dedede;
+  border:none;
+  background-color: white;
   padding: 10px;
   padding-left: 20px;
   font-size: 13px;
-  color: #5c5c5c;
+  color: #414141;
+  width: 100%;
+  text-align: left;
+  outline: 0;
 }
 .contextMenuItem:hover{
   background: #dedede;
-  cursor: pointer;
 }
 .reactContextMenuWrapper{
   height: 100%;

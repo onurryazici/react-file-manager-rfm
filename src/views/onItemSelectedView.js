@@ -18,7 +18,7 @@ function OnItemSelectedView() {
         return dispatch({type:typeValue, payload:payloadValue});
     }
     function clearSelection(){
-        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS);////// NOT WORKING
+        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS);
     }
     return (
         <div>
@@ -26,8 +26,8 @@ function OnItemSelectedView() {
             <RemoveItemModal/>
             <MoveItemModal />
             <CopyItem/>
-            <RenameItemModal/>
-            <Button variant="link" onclick={()=>clearSelection()}>Seçimi temizle</Button>
+            {selectedItemCount === 1 ? <RenameItemModal/> : ""}
+            <Button variant="link" onClick={()=>clearSelection()}>Seçimi temizle</Button>
         </div>
     )
 }

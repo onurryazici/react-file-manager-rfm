@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { FaAngleRight, FaArrowRight, FaCaretRight, FaChevronRight } from 'react-icons/fa'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Actions } from '../../example/src/context/actions';
 import styles from '../styles.module.css'
 function Placemap() {
-    const currentLocation = useSelector(state => state.location);
-    //const splittedPlacemaps = currentLocation.split('/');
-    
+    var currentLocation = useSelector(state => state.location) + '';
+    //const username = useSelector(state => state.username);
+    var splittedPlacemaps = currentLocation.split('/');
+    //const home = "/home/" + username + "/" + userKey;
+    const dispatch = useDispatch();
+    function changeCurrentLocation(key) {
+        var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
+        var newLocation = reducedLocationArray.join('/');
+        dispatch({type:Actions.SET_LOCATION,payload: newLocation});
+    }
+
     return(
         <div className={styles.placemapArea}>
             {
-                /*splittedPlacemaps.map((item)=>{
+                splittedPlacemaps.map((item, key)=>{
                     if(item==="")
-                        return <a><Button variant="link"> Drive</Button></a>
+                        return <a key={key}><Button variant="link" onClick={()=>changeCurrentLocation(key)}> Drive</Button></a>
                     else 
-                        return <a> <FaChevronRight/> <Button variant="link">{item}</Button></a>
-                })*/
+                        return <a key={key}> <FaChevronRight/> <Button variant="link" onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                })
             }
             <div>s</div>
         </div>
