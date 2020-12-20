@@ -15,21 +15,21 @@ function RenameItemModal(){
       <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-            Yeni Klasör
+            Yeniden adlandır
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
         <Form>
           <Form.Group controlId="formFolderName">
-            <Form.Control type="text" placeholder="Adsız Klasör" autoComplete="false"  />
+            <Form.Control type="text" placeholder="..." autoComplete="false"  />
           </Form.Group>
         </Form>
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={()=>setModalShow(false)} variant="outline-dark">Close</Button>
-        <Button onClick={()=>setModalShow(false)} variant="warning">Oluştur</Button>
+        <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
+        <Button onClick={()=>setModalShow(false)} variant="success">Yeniden adlandır</Button>
       </Modal.Footer>
     </Modal>
     </div>

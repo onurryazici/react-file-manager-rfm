@@ -28,7 +28,7 @@ function CreateFolderModal(){
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={()=>setModalShow(false)} variant="outline-dark">Close</Button>
+        <Button onClick={()=>setModalShow(false)} variant="outline-dark">Kapat</Button>
         <Button onClick={()=>setModalShow(false)} variant="warning">Oluştur</Button>
       </Modal.Footer>
     </Modal>

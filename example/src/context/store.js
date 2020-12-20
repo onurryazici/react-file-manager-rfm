@@ -1,4 +1,5 @@
 export const initialState = {
+    loading:true,
     location:"",          // Aktif olarak bulunan konumun adresi
     selectedItems:[],     // Seçilen öğeler
     selectedItemCount:0,  // Seçilen öğe sayısı 

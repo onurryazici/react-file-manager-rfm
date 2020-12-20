@@ -3,8 +3,11 @@ import { Actions } from './actions';
 export function reducer (state,action){
    switch(action.type){
         case Actions.SET_LOCATION:
-           state.location = action.payload;
-           return {...state}
+            state.location = action.payload;
+            return {...state}
+        case Actions.SET_LOADING:
+            state.loading = action.payload;
+            return {...state}
         case Actions.CLEAR_SELECTED_ITEMS:
             return{
                 ...state,

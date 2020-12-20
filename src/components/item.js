@@ -57,6 +57,7 @@ function Item(props){
     }
     function onItemDoubleClick(name,type){
         if(type==="folder"){
+          dispatchInvoker(Actions.SET_LOADING,true);
           let newLocation = currentLocation + "/" + name;
           dispatchInvoker(Actions.SET_LOCATION,newLocation);
           dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);

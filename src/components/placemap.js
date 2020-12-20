@@ -10,20 +10,26 @@ function Placemap() {
     var splittedPlacemaps = currentLocation.split('/');
     //const home = "/home/" + username + "/" + userKey;
     const dispatch = useDispatch();
+    function dispatchInvoker(typeValue,payloadValue)
+    {
+        return dispatch({type:typeValue, payload:payloadValue});
+    }
     function changeCurrentLocation(key) {
+        dispatchInvoker(Actions.SET_LOADING,true);
         var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
         var newLocation = reducedLocationArray.join('/');
-        dispatch({type:Actions.SET_LOCATION,payload: newLocation});
+        dispatchInvoker(Actions.SET_LOCATION,newLocation);
+        
     }
 
     return(
         <div className={styles.placemapArea}>
             {
-                splittedPlacemaps.map((item, key)=>{
-                    if(item==="")
+                splittedPlacemaps.map((item, key) => {
+                    if(item === "")
                         return <a key={key}><Button variant="link" onClick={()=>changeCurrentLocation(key)}> Drive</Button></a>
                     else 
-                        return <a key={key}> <FaChevronRight/> <Button variant="link" onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                        return <a key={key}><FaChevronRight/><Button variant="link" onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
                 })
             }
             <div>s</div>
