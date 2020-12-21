@@ -5,19 +5,18 @@ function FolderDetails(){
     let selectedItemCount = useSelector(state => state.selectedItemCount);
     let directoryItems    = useSelector(state => state.directoryItems);
     let loading           = useSelector(state => state.loading);
-    let fileCount = 0;
-    let folderCount = 0;
+    let fileCount         = 0;
+    let folderCount       = 0;
 
-    directoryItems.filter(item => (item.type==="file") ? fileCount++ : "");
+    directoryItems.filter(item => (item.type==="file")   ? fileCount++   : "");
     directoryItems.filter(item => (item.type==="folder") ? folderCount++ : "");
 
     var message = "";
 
     if(folderCount > 0){
         message = folderCount + " klasör";
-
-    if(fileCount > 0)
-        message = message + " - " + fileCount + " dosya";
+        if(fileCount > 0)
+            message = message + " - " + fileCount + " dosya";
     }
     else if (fileCount > 0 && folderCount === 0){
         message = fileCount + " dosya"
