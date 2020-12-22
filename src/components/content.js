@@ -21,7 +21,7 @@ function Content() {
     }
 
     useEffect(() => {
-        axios.get("http://192.168.1.159:3030/api/getDirectory",{
+        axios.get("http://localhost:3030/api/getDirectory",{
             params:{
                 location:encryptedLocation,
                 username:username,

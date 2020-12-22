@@ -8,6 +8,7 @@ import styles from '../styles.module.css'
 import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../example/src/context/actions';
+import RenameItemModal from '../modals/renameItemModal';
 
 function Item(props){
     const itemName  = props.name;
@@ -63,6 +64,9 @@ function Item(props){
           dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
         }
     }
+    function handleClick(e, data) {
+      console.log(data.foo);
+    }
     return(
       <div>
         <ContextMenuTrigger id="1">
@@ -77,27 +81,35 @@ function Item(props){
               }
           </div>
         </ContextMenuTrigger>
+        <ContextMenu id="1" className={styles.contextMenuStage}>
+          
         <ContextMenu id="1">
-          <div className={styles.contextMenuStage}>
-            <MenuItem data={{ item: 'item 1' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}} >Paylaş</button>
-            </MenuItem>
-            <MenuItem data={{ item: 'item 2' }}>
+        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
+          ContextMenu Item 1
+        </MenuItem>
+        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
+          ContextMenu Item 2
+        </MenuItem>
+        <MenuItem divider />
+        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
+          ContextMenu Item 3
+        </MenuItem>
+      </ContextMenu>
+           {/* <MenuItem data={{ item: 'item 2' }}>
               <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>İndir</button>
             </MenuItem>
             <MenuItem data={{ item: 'item 3' }}>
               <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Şuraya taşı</button>
             </MenuItem>
-            <MenuItem data={{ item: 'item 4' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Yeniden adlandır</button>
+            <MenuItem data={{ item: 'item 4' }} >
+              <RenameItemModal onClick={()=>alert("")}/>
             </MenuItem>
             <MenuItem data={{ item: 'item 5' }}>
               <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Sil</button>
             </MenuItem>
             <MenuItem data={{ item: 'item 6' }}>
               <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Ayrıntılar</button>
-            </MenuItem>
-          </div>
+            </MenuItem>*/}
         </ContextMenu>
       </div>
     )
