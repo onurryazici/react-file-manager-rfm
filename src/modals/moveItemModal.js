@@ -2,15 +2,24 @@ import React, {useState} from 'react'
 import { Button, Form, Modal } from "react-bootstrap";
 import { FaChevronCircleRight } from "react-icons/fa";
 import styles from '../styles.module.css'
-function MoveItemModal(){
+function MoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
+    const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
       <div>
-        <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+        {
+            isContextMenuButton 
+              ?
+                <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+                  <div style={{fontSize:'14px'}}>Taşı</div>
+                </Button>
+              :
+                <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
                   <div className={styles.actionbarIcon}><FaChevronCircleRight color="#4abc96"/></div>
                   <div className={styles.actionbarText}>Taşı</div>
-        </Button>
-  
+                </Button>
+        }
+
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">

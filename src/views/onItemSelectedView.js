@@ -22,11 +22,11 @@ function OnItemSelectedView() {
     }
     return (
         <div>
-            <ShareItemModal/>
-            <RemoveItemModal/>
-            <MoveItemModal />
+            <ShareItemModal isContextMenuButton="no"/>
+            <RemoveItemModal isContextMenuButton="no"/>
+            <MoveItemModal isContextMenuButton="no"/>
             <CopyItem/>
-            {selectedItemCount === 1 ? <RenameItemModal/> : ""}
+            {selectedItemCount === 1 ? <RenameItemModal isContextMenuButton="no"/> : ""}
             <Button variant="link" onClick={()=>clearSelection()}>Seçimi temizle</Button>
         </div>
     )

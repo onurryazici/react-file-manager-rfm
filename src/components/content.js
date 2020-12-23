@@ -47,7 +47,7 @@ function Content() {
     {
         return (
             <div id={styles.contentStage} >
-                <ContextMenuTrigger id="2">
+                <ContextMenuTrigger id="mainTrigger">
                     <div id={styles.contents} >
                         {directoryItems.length > 0 ? 
                             directoryItems.map((item)=>{
@@ -63,7 +63,7 @@ function Content() {
                         }
                     </div>
                 </ContextMenuTrigger>
-                <ContextMenu id="2">
+                <ContextMenu id="mainTrigger">
                     <div className={styles.contextMenuStage}>
                         <MenuItem data={{ item: 'item 1' }}>
                             <button type="button" class={styles.contextMenuItem}>Yeni Klasör</button>

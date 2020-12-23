@@ -3,14 +3,24 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { FaArrowAltCircleRight, FaGgCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
-function ShareItemModal(){
+function ShareItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
+    const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
       <div>
-        <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaGgCircle color="#25b7d3"/></div>
-                  <div className={styles.actionbarText}>Paylaş</div>
-        </Button>
+        {
+          isContextMenuButton
+            ?
+              <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+                  <div style={{fontSize:'14px'}}>Paylaş</div>
+              </Button>
+            :
+              <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+                <div className={styles.actionbarIcon}><FaGgCircle color="#25b7d3"/></div>
+                <div className={styles.actionbarText}>Paylaş</div>
+              </Button>
+        }
+        
   
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
         <Modal.Header closeButton>

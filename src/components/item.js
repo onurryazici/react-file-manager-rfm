@@ -9,7 +9,9 @@ import classNames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../example/src/context/actions';
 import RenameItemModal from '../modals/renameItemModal';
-
+import RemoveItemModal from '../modals/removeItemModal';
+import ShareItemModal from '../modals/shareItemModal';
+import MoveItemModal from '../modals/moveItemModal';
 function Item(props){
     const itemName  = props.name;
     const itemType  = props.type;
@@ -65,11 +67,11 @@ function Item(props){
         }
     }
     function handleClick(e, data) {
-      console.log(data.foo);
+      alert("oko")
     }
     return(
       <div>
-        <ContextMenuTrigger id="1">
+        <ContextMenuTrigger id={itemName}>
           <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
               onClick={(event)=>onItemSelected(event,itemName)}
               onContextMenu={(event)=>onItemContextMenu(event,itemName)}
@@ -81,18 +83,25 @@ function Item(props){
               }
           </div>
         </ContextMenuTrigger>
-        <ContextMenu id="1" className={styles.contextMenuStage}>
+        <ContextMenu id={itemName} className={styles.contextMenuStage}>
           
-        <ContextMenu id="1">
-        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
-          ContextMenu Item 1
+        <MenuItem>
+          <ShareItemModal isContextMenuButton="yes"/>
         </MenuItem>
-        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
-          ContextMenu Item 2
+        <MenuItem data={{foo: 'bar'}} className={styles.contextMenuItem} onClick={handleClick}>
+          İndir
         </MenuItem>
-        <MenuItem divider />
-        <MenuItem data={{foo: 'bar'}} onClick={handleClick}>
-          ContextMenu Item 3
+        <MenuItem>
+          <MoveItemModal isContextMenuButton="yes"/>
+        </MenuItem>
+        <MenuItem>
+          <RenameItemModal isContextMenuButton="yes"/>
+        </MenuItem>
+        <MenuItem>
+          <RemoveItemModal isContextMenuButton="yes"/>
+        </MenuItem>
+        <MenuItem data={{foo: 'bar'}} className={styles.contextMenuItem} onClick={handleClick}>
+        Ayrıntılar
         </MenuItem>
       </ContextMenu>
            {/* <MenuItem data={{ item: 'item 2' }}>
@@ -110,7 +119,6 @@ function Item(props){
             <MenuItem data={{ item: 'item 6' }}>
               <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Ayrıntılar</button>
             </MenuItem>*/}
-        </ContextMenu>
       </div>
     )
   }

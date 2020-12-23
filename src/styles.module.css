@@ -37,7 +37,8 @@ body{
 
 .actionbarButton
 {
-  
+  border:0px;
+  background-color: #ffffff;
   height: 44px;
   float: left;
 }
@@ -82,13 +83,13 @@ body{
   height: 100%;
 }
 .contextMenuStage{
-  width: 180px;
+  width: 182px;
   background-color: #fff;
   color: #111111;
   border: solid 1px #a1a1a1;
   box-shadow: 0px 0px 10px -20px;
   text-align: left;
-  z-index: 9 ;
+  z-index: 4 ;
 
 }
 .contextMenuItem{
@@ -98,12 +99,10 @@ body{
   padding-left: 20px;
   font-size: 13px;
   color: #414141;
-  width: 100%;
+  width: 180px;
   text-align: left;
   outline: 0;
-}
-.contextMenuItem:hover{
-  background: #dedede;
+  border-radius: 0px;
 }
 .reactContextMenuWrapper{
   height: 100%;
