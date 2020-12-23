@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight, FaTimesCircle } from 'react-icons/fa';
+import { Button, Modal } from 'react-bootstrap';
+import { FaTimesCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 

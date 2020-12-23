@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {ReactComponent as FolderSVG} from '../../example/public/assets/svg/actionbar-icons/folder.svg'
 import styles from "../styles.module.css"
 function Folder(props){

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight, FaGgCircle } from 'react-icons/fa';
+import {  FaGgCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
 function ShareItemModal(props){

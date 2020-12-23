@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Button, Modal } from 'react-bootstrap';
-import { FaGgCircle, FaInfoCircle } from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 function ItemDetailModal(props) {
     const [modalShow, setModalShow] = React.useState(false);

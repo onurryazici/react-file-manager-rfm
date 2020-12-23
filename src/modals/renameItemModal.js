@@ -1,8 +1,8 @@
-import React, { useState} from 'react'
+import React from 'react'
 import {Button, Modal,Form } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
-import { FaCircle, FaPen, FaPenSquare } from 'react-icons/fa';
+import { FaPenSquare } from 'react-icons/fa';
 function RenameItemModal(props){
   const [modalShow, setModalShow] = React.useState(false);
   const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
