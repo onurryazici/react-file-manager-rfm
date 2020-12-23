@@ -3,26 +3,36 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { FaStumbleuponCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
 
-function CopyItem(){
+function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
+    const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
       <div>
-        <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                  <div className={styles.actionbarIcon}><FaStumbleuponCircle color="#ab91ea"/></div>
-                  <div className={styles.actionbarText}>Kopyala</div>
-        </Button>
+        {
+          isContextMenuButton
+            ?
+              <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+                  <div style={{fontSize:'14px'}}>Kopya oluştur</div>
+              </Button>
+            :
+            <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+                <div className={styles.actionbarIcon}><FaStumbleuponCircle color="#ab91ea"/></div>
+                <div className={styles.actionbarText}>Kopya oluştur</div>
+            </Button>
+        } 
+        
   
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-              Yeni Klasör
+              Kopyasını oluştur
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-          <Form>
+          <Form autoComplete="off">
             <Form.Group controlId="formFolderName">
-              <Form.Control type="text" placeholder="Adsız Klasör" autoComplete="false"  />
+              <Form.Control type="text" placeholder="Adsız Klasör"  />
             </Form.Group>
           </Form>
           </p>
@@ -35,4 +45,4 @@ function CopyItem(){
       </div>
     );
   }
-export default CopyItem;
+export default CopyItemModal;

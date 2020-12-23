@@ -32,7 +32,7 @@ function RenameItemModal(props){
       </Modal.Header>
       <Modal.Body>
         <p>
-        <Form>
+        <Form autoComplete="off">
           <Form.Group controlId="formFolderName">
             <Form.Control type="text" placeholder="..." autoComplete="false"  />
           </Form.Group>

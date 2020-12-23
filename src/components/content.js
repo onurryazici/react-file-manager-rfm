@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu'
+import React, { useEffect } from 'react'
+import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { Actions } from '../../example/src/context/actions';
+import { DispatchCaller } from '../helper/global';
 import Item from './item'
 import styles from '../styles.module.css'
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import { Actions } from '../../example/src/context/actions';
-import { Button } from 'react-bootstrap';
+
 function Content() {
     const loading               = useSelector(state => state.loading);
     const currentLocation       = useSelector(state => state.location);
@@ -15,10 +17,7 @@ function Content() {
     const dispatch              = useDispatch();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
     const username = "main";
-    function dispatchInvoker(typeValue,payloadValue)
-    {
-        return dispatch({type:typeValue, payload:payloadValue});
-    }
+
 
     useEffect(() => {
         axios.get("http://localhost:3030/api/getDirectory",{
@@ -28,8 +27,8 @@ function Content() {
                 showHiddenFiles:showHiddenFilesValue
             }})
         .then((response)=>{
-            dispatchInvoker(Actions.SET_LOADING,false);
-            dispatchInvoker(Actions.SET_DIRECTORY_ITEMS,response.data.items);
+            DispatchCaller(dispatch,Actions.SET_LOADING,false);
+            DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
         })
     },
     [currentLocation]
@@ -49,26 +48,24 @@ function Content() {
             <div id={styles.contentStage} >
                 <ContextMenuTrigger id="mainTrigger">
                     <div id={styles.contents} >
-                        {directoryItems.length > 0 ? 
-                            directoryItems.map((item)=>{
-                                return (
-                                    <Item 
+                        {directoryItems.length > 0 
+                            ? 
+                                directoryItems.map((item)=>{
+                                    return (<Item 
                                         key = {item.name}
                                         name = {item.name}
                                         type={item.type} 
-                                        extension={item.extension}/>
-                                )
-                            })
+                                        extension={item.extension}/>)})
                             :""
                         }
                     </div>
                 </ContextMenuTrigger>
                 <ContextMenu id="mainTrigger">
                     <div className={styles.contextMenuStage}>
-                        <MenuItem data={{ item: 'item 1' }}>
-                            <button type="button" class={styles.contextMenuItem}>Yeni Klasör</button>
+                        <MenuItem>
+                            <CreateFolderModal isContextMenuButton="yes"/>
                         </MenuItem>
-                        <MenuItem ydata={{ item: 'item 2' }}>
+                        <MenuItem>
                             <button type="button" class={styles.contextMenuItem}>Dosya yükle</button>
                         </MenuItem>
                     </div>

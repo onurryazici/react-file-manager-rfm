@@ -1,17 +1,21 @@
-import React, { useEffect, useRef,useState } from 'react'
-import { Button } from 'react-bootstrap'
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu'
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
+import { Actions } from '../../example/src/context/actions';
 import Folder from './folder';
 import File from './file';
-import 'bootstrap/dist/css/bootstrap.css';
-import styles from '../styles.module.css'
 import classNames from 'classnames'
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../../example/src/context/actions';
 import RenameItemModal from '../modals/renameItemModal';
 import RemoveItemModal from '../modals/removeItemModal';
 import ShareItemModal from '../modals/shareItemModal';
 import MoveItemModal from '../modals/moveItemModal';
+import ItemDetailModal from '../modals/itemDetailModal';
+import { DispatchCaller } from '../helper/global';
+import 'bootstrap/dist/css/bootstrap.css';
+import styles from '../styles.module.css'
+import CopyItemModal from '../modals/copyItemModal';
+
 function Item(props){
     const itemName  = props.name;
     const itemType  = props.type;
@@ -34,36 +38,33 @@ function Item(props){
     [selectedItems]
     );
 
-    function dispatchInvoker(typeValue,payloadValue)
-    {
-        return dispatch({type:typeValue, payload:payloadValue});
-    }   
+     
     function onItemSelected (event,name){
       var exist = selectedItems.indexOf(name) === -1 ? false : true;
       if(event.ctrlKey)
       {
         if(!exist)
-          dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
+          DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
       }
       else
       {
-        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS, null);
-        dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
+        DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
+        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
       }
     }
     function onItemContextMenu(event, name){
       var exist = selectedItems.indexOf(name)=== -1 ? false : true;
       if(!exist){
-        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
-        dispatchInvoker(Actions.ADD_SELECTED_ITEM,name);
+        DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
+        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
       }
     }
     function onItemDoubleClick(name,type){
         if(type==="folder"){
-          dispatchInvoker(Actions.SET_LOADING,true);
+          DispatchCaller(dispatch,Actions.SET_LOADING,true);
           let newLocation = currentLocation + "/" + name;
-          dispatchInvoker(Actions.SET_LOCATION,newLocation);
-          dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS,null);
+          DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
+          DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
         }
     }
     function handleClick(e, data) {
@@ -84,41 +85,30 @@ function Item(props){
           </div>
         </ContextMenuTrigger>
         <ContextMenu id={itemName} className={styles.contextMenuStage}>
-          
         <MenuItem>
-          <ShareItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem data={{foo: 'bar'}} className={styles.contextMenuItem} onClick={handleClick}>
-          İndir
+            <ShareItemModal isContextMenuButton="yes"/>
         </MenuItem>
         <MenuItem>
-          <MoveItemModal isContextMenuButton="yes"/>
+            <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
+                <div style={{fontSize:'14px'}}>İndir</div>
+            </Button>
         </MenuItem>
         <MenuItem>
-          <RenameItemModal isContextMenuButton="yes"/>
+            <CopyItemModal isContextMenuButton="yes"/>
+        </MenuItem>
+        <MenuItem>
+            <MoveItemModal isContextMenuButton="yes"/>
+        </MenuItem>
+        <MenuItem>
+            <RenameItemModal isContextMenuButton="yes"/>
         </MenuItem>
         <MenuItem>
           <RemoveItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem data={{foo: 'bar'}} className={styles.contextMenuItem} onClick={handleClick}>
-        Ayrıntılar
+            </MenuItem>
+        <MenuItem>
+            <ItemDetailModal isContextMenuButton="yes"/>
         </MenuItem>
       </ContextMenu>
-           {/* <MenuItem data={{ item: 'item 2' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>İndir</button>
-            </MenuItem>
-            <MenuItem data={{ item: 'item 3' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Şuraya taşı</button>
-            </MenuItem>
-            <MenuItem data={{ item: 'item 4' }} >
-              <RenameItemModal onClick={()=>alert("")}/>
-            </MenuItem>
-            <MenuItem data={{ item: 'item 5' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Sil</button>
-            </MenuItem>
-            <MenuItem data={{ item: 'item 6' }}>
-              <button type="button" className={styles.contextMenuItem} onClick={()=>{}}>Ayrıntılar</button>
-            </MenuItem>*/}
       </div>
     )
   }

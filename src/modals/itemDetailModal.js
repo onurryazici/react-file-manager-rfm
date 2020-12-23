@@ -1,9 +1,8 @@
 import React from 'react'
-import { Button, Form, Modal } from 'react-bootstrap';
-import { FaArrowAltCircleRight, FaGgCircle } from 'react-icons/fa';
+import { Form, Button, Modal } from 'react-bootstrap';
+import { FaGgCircle, FaInfoCircle } from 'react-icons/fa';
 import styles from '../styles.module.css'
-
-function ShareItemModal(props){
+function ItemDetailModal(props) {
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
@@ -12,18 +11,20 @@ function ShareItemModal(props){
           isContextMenuButton
             ?
               <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
-                  <div style={{fontSize:'14px'}}>Paylaş</div>
+                  <div style={{fontSize:'14px'}}>Ayrıntılar</div>
               </Button>
             :
               <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
-                <div className={styles.actionbarIcon}><FaGgCircle color="#25b7d3"/></div>
-                <div className={styles.actionbarText}>Paylaş</div>
+                <div className={styles.actionbarIcon}><FaInfoCircle color="#ff9933"/></div>
+                <div className={styles.actionbarText}>Ayrıntılar</div>
               </Button>
         }
+        
+  
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-              Paylaş
+            Ayrıntılar
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -38,11 +39,10 @@ function ShareItemModal(props){
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
-          <Button onClick={()=>setModalShow(false)} variant="info">Paylaş</Button>
+          <Button onClick={()=>setModalShow(false)} variant="outline-dark">Kapat</Button>
         </Modal.Footer>
       </Modal>
       </div>
     );
-  }
-export default ShareItemModal;
+}
+export default ItemDetailModal;

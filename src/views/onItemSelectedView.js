@@ -7,9 +7,10 @@ import ShareItemModal from '../modals/shareItemModal'
 import RemoveItemModal from '../modals/removeItemModal'
 import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
-import CopyItem from '../modals/copyItem';
+import CopyItemModal from '../modals/copyItemModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../../example/src/context/actions';
+import ItemDetailModal from '../modals/itemDetailModal';
 function OnItemSelectedView() {
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const dispatch = useDispatch();
@@ -25,8 +26,9 @@ function OnItemSelectedView() {
             <ShareItemModal isContextMenuButton="no"/>
             <RemoveItemModal isContextMenuButton="no"/>
             <MoveItemModal isContextMenuButton="no"/>
-            <CopyItem/>
+            <CopyItemModal/>
             {selectedItemCount === 1 ? <RenameItemModal isContextMenuButton="no"/> : ""}
+            {selectedItemCount === 1 ? <ItemDetailModal isContextMenuButton="no"/> : ""}
             <Button variant="link" onClick={()=>clearSelection()}>Seçimi temizle</Button>
         </div>
     )
