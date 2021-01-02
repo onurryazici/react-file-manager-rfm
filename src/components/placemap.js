@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../../example/src/context/actions';
+import { Actions } from '../context/actions';
 import styles from '../styles.module.css'
 import { DispatchCaller } from '../helper/global';
 function Placemap() {

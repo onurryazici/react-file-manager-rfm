@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
-import { Actions } from '../../example/src/context/actions';
+import { Actions } from '../context/actions';
 import Folder from './folder';
 import File from './file';
 import classNames from 'classnames'

@@ -9,7 +9,7 @@ import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
 import CopyItemModal from '../modals/copyItemModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../../example/src/context/actions';
+import { Actions } from '../context/actions';
 import ItemDetailModal from '../modals/itemDetailModal';
 function OnItemSelectedView() {
     const selectedItemCount = useSelector(state => state.selectedItemCount);

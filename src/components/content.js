@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu';
 import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../../example/src/context/actions';
+import { Actions } from '../context/actions';
 import { DispatchCaller } from '../helper/global';
 import Item from './item'
 import styles from '../styles.module.css'
