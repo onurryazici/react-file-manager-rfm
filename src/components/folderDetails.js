@@ -27,7 +27,7 @@ function FolderDetails(){
     return(
         <div className={styles.folderDetails}>
             {
-                loading ?  "Yükleniyor..." :
+                loading ?  <div id={styles.detailLoadingSpinner}>Loading...</div> :
                     selectedItemCount > 0
                         ? selectedItemCount + " öğe seçildi."
                         : message

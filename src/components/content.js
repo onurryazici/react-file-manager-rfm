@@ -37,7 +37,8 @@ function Content() {
     {
         return (
             <div id={styles.contentStage}>
-                <div id={styles.loadingItem}>
+                <div id={styles.loadingSpinner}>
+                  loading
                 </div>
             </div>
         )
