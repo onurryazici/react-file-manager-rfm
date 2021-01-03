@@ -4,6 +4,9 @@ export function reducer (state,action){
         case Actions.SET_LOCATION:
             state.location = action.payload;
             return {...state}
+        case Actions.SET_ERROR:
+            state.hasError = action.payload;
+            return {...state}
         case Actions.SET_LOADING:
             state.loading = action.payload;
             return {...state}
@@ -39,6 +42,7 @@ export function reducer (state,action){
                 ...state,
                 showHiddenFiles:action.payload
             }
+        
         default:
             return state
    }

@@ -8,9 +8,11 @@ import styles from '../styles.module.css'
 import axios from 'axios';
 import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import { FaCloudversify } from 'react-icons/fa';
 
 function Content() {
     const loading               = useSelector(state => state.loading);
+    const rfmError              = useSelector(state => state.error);
     const currentLocation       = useSelector(state => state.location);
     const directoryItems        = useSelector(state => state.directoryItems);
     const showHiddenFilesValue  = useSelector(state => state.showHiddenFiles);
@@ -20,20 +22,28 @@ function Content() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:3030/api/getDirectory",{
+        axios.get("http://192.168.252.128:3030/api/getDirectory",{
             params:{
                 location:encryptedLocation,
                 username:username,
                 showHiddenFiles:showHiddenFilesValue
             }})
         .then((response)=>{
+            console.log(response);
             DispatchCaller(dispatch,Actions.SET_LOADING,false);
             DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
         })
     },
     [currentLocation]
     );
-    if(loading)
+    if(rfmError){
+        <div id={styles.contentStage}>
+                
+                  Hata var
+                
+            </div>
+    }
+    else if(loading)
     {
         return (
             <div id={styles.contentStage}>
@@ -57,7 +67,7 @@ function Content() {
                                         name = {item.name}
                                         type={item.type} 
                                         extension={item.extension}/>)})
-                            :""
+                            : ""
                         }
                     </div>
                 </ContextMenuTrigger>

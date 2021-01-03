@@ -5,5 +5,6 @@ export const initialState = {
     selectedItemCount:0,  // Seçilen öğe sayısı 
     directoryItems:[],    // Aktif olarak bulunan konumdaki öğeler
     showHiddenFiles:"no", // Gizli dosyaların gösterimi 
-    refreshRequest:false  // Aynı konuma tekrar tıklanırsa  
+    refreshRequest:false,  // Aynı konuma tekrar tıklanırsa  
+    hasError:false,
 }

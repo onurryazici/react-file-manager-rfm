@@ -12,6 +12,8 @@ const RFM = (props) =>{
       <Provider store={store}>
         <RFM_Core
           location={props.location}
+          username="main"
+          password="qweqweasd"
         />
       </Provider>
     )
