@@ -6,7 +6,7 @@ function Folder(props){
     const folderName = props.folderName;
     return(
         <div>
-            <FaFolder className={styles.itemIcon}/>
+            <FaFolder className={styles.itemIcon} style={{color:"#f7b600"}}/>
             <div className={styles.itemName}>{folderName}</div>
         </div>
     )

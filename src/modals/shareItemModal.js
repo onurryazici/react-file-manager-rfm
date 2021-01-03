@@ -27,7 +27,7 @@ function ShareItemModal(props){
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
+          <br/>
           <Form autoComplete="off">
             <Form.Group controlId="formFolderName">
             <Form.Label>Paylaşmak istediğiniz kullanıcının adını giriniz.</Form.Label>
@@ -35,7 +35,7 @@ function ShareItemModal(props){
               <Form.Control type="text" placeholder="Kullanıcı adı" autoComplete="false"  />
             </Form.Group>
           </Form>
-          </p>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>

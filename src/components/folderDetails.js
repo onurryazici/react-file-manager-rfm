@@ -4,12 +4,12 @@ import styles from '../styles.module.css'
 function FolderDetails(){
     let selectedItemCount = useSelector(state => state.selectedItemCount);
     let directoryItems    = useSelector(state => state.directoryItems);
-    let loading           = useSelector(state => state.loading);
+    let loading           = false;
     let fileCount         = 0;
     let folderCount       = 0;
 
-    directoryItems.filter(item => (item.type==="file")   ? fileCount++   : "");
-    directoryItems.filter(item => (item.type==="folder") ? folderCount++ : "");
+    directoryItems !== undefined ? directoryItems.filter(item => (item.type==="file")   ? fileCount++   : "") : "";
+    directoryItems !== undefined ? directoryItems.filter(item => (item.type==="directory") ? folderCount++ : "") : "";
 
     var message = "";
 

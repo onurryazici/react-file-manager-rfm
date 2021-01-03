@@ -20,10 +20,11 @@ function RFM_Core(props){
         .then((response)=>{
             if(response.data === Messages.LOGIN_SUCCESSFULL){
                 DispatchCaller(dispatch,Actions.SET_LOADING,false);
+                console.log(props.location + " wwww")
+                DispatchCaller(dispatch,Actions.SET_LOCATION,props.location);
                 DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
             }
         }).catch((err)=>{
-          console.log("bir hata var");
           DispatchCaller(dispatch,Actions.SET_ERROR, true);
           DispatchCaller(dispatch,Actions.SET_LOADING, false);
         });

@@ -60,9 +60,10 @@ function Item(props){
       }
     }
     function onItemDoubleClick(name,type){
-        if(type==="folder"){
+        if(type==="directory"){
           DispatchCaller(dispatch,Actions.SET_LOADING,true);
           let newLocation = currentLocation + "/" + name;
+          console.log(currentLocation+ "yy");//////////////////////////////////////// BURADA EKSİK VAR
           DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
           DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
         }
@@ -78,7 +79,7 @@ function Item(props){
               onContextMenu={(event)=>onItemContextMenu(event,itemName)}
               onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}
               >
-              {(itemType==="folder")
+              {(itemType==="directory")
                 ? <Folder folderName={itemName}/> 
                 : <File fileName={itemName} extension={extension}/>
               }

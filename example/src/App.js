@@ -5,7 +5,7 @@ import 'react-file-manager-rfm/dist/index.css';
 const App = () =>{
     return(
         <RFM 
-          location="/home/main"
+          location="/"
           showHiddenFiles="no"
         />
     )

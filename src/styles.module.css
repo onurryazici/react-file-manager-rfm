@@ -173,8 +173,10 @@ body{
   border: solid thin #0066cc;
 }
 .itemIcon{
-  width: 100%;
+  width: 95%;
   height: 100%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   align-items: center;
 }
@@ -291,7 +293,10 @@ body{
 }
 
 #contentMessage {
-  width:250px;
+  width: 25em;
+  height: 10em;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
+  margin-top: 45px;
 }
