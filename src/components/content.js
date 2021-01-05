@@ -8,7 +8,7 @@ import styles from '../styles.module.css'
 import axios from 'axios';
 import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import { FaCloudversify, FaDizzy } from 'react-icons/fa';
+import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 
 function Content() {

@@ -16,11 +16,10 @@ function RFM_Core(props){
     Axios.post("http://192.168.252.128:3030/api/userAuthentication",{
                 username:props.username,
                 password:props.password,
-            })
+        })
         .then((response)=>{
-            if(response.data === Messages.LOGIN_SUCCESSFULL){
+            if(response.data.message === Messages.LOGIN_SUCCESSFULL){
                 DispatchCaller(dispatch,Actions.SET_LOADING,false);
-                console.log(props.location + " wwww")
                 DispatchCaller(dispatch,Actions.SET_LOCATION,props.location);
                 DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
             }

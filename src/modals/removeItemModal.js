@@ -8,7 +8,7 @@ function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
-    const item = "deneme";
+    const item = "deneme";/////////////// DEĞİŞECEK
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
       <div>

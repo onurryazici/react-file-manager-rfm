@@ -17,14 +17,14 @@ import styles from '../styles.module.css'
 import CopyItemModal from '../modals/copyItemModal';
 
 function Item(props){
-    const itemName  = props.name;
-    const itemType  = props.type;
-    const extension = props.extension;
+    var itemName  = props.name;
+    var itemType  = props.type;
+    var extension = props.extension;
 
-    const [itemSelected, setitemSelected] = useState(false);
-    const currentLocation   = useSelector(state => state.location);
-    const selectedItems     = useSelector(state => state.selectedItems);
-    const dispatch          = useDispatch();
+    var [itemSelected, setitemSelected] = useState(false);
+    var currentLocation   = useSelector(state => state.location);
+    var selectedItems     = useSelector(state => state.selectedItems);
+    var dispatch          = useDispatch();
 
     useEffect(() => {
       let exist = selectedItems.indexOf(itemName) === -1 ? false : true;
@@ -62,8 +62,8 @@ function Item(props){
     function onItemDoubleClick(name,type){
         if(type==="directory"){
           DispatchCaller(dispatch,Actions.SET_LOADING,true);
-          let newLocation = currentLocation + "/" + name;
-          console.log(currentLocation+ "yy");//////////////////////////////////////// BURADA EKSİK VAR
+          var newLocation = currentLocation + "/" + name;
+          console.log(newLocation+ "yy");//////////////////////////////////////// BURADA EKSİK VAR
           DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
           DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
         }
