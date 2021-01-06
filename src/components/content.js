@@ -35,7 +35,7 @@ function Content() {
             DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
         })
         .catch((err)=>{
-            console.log("bir hata oluştu")
+            console.log("bir hata oluştu"+err)
         })
     },
     [currentLocation]
