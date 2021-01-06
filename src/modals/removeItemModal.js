@@ -1,15 +1,45 @@
+import axios from 'axios';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Actions } from '../context/actions';
+import { DispatchCaller } from '../helper/global';
+import { Messages } from '../helper/message';
 import styles from '../styles.module.css'
 
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
+    const dispatch          = useDispatch();
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
-    const item = "deneme";/////////////// DEĞİŞECEK
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
+
+    function RemoveItem(){
+      setModalShow(false);
+        axios.get("http://192.168.252.128:3030/api/removeItem",{
+          params:{
+            "items[]":Buffer.from(selectedItems).toString('base64')
+          }
+        })
+        .then((response)=>{
+          if(response.data.message === Messages.ITEM_REMOVE_SUCCESS){
+              DispatchCaller(dispatch,Actions.SET_LOADING,false);
+              alert("silindi");
+          }
+          else if(response.data.message === Messages.DIRECTORY_ALREADY_EXISTS){
+            setErrorMessage("Zaten var");
+          }
+          else if(response.data.message === Messages.SESSION_NOT_STARTED){
+            /// redirect to login page
+            alert("redirect to login");
+          }
+        }).catch((err)=>{
+        DispatchCaller(dispatch,Actions.SET_ERROR, true);
+        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+        });
+      
+    }
     return (
       <div>
         {
@@ -33,15 +63,15 @@ function RemoveItemModal(props){
         <Modal.Body>
           <p>
             {
-              selectedItemCount > 0 
+              selectedItemCount > 1 
                 ? "Seçili " + selectedItemCount + " öğeyi silmek istediğinize emin misiniz?"
-                : item + " öğe silinecektir onaylıyor musunuz?"
+                : selectedItems[0] + " öğesi silinecektir onaylıyor musunuz?"
             }
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
-          <Button onClick={()=>setModalShow(false)} variant="danger">Sil</Button>
+          <Button onClick={()=>RemoveItem()} variant="danger">Sil</Button>
         </Modal.Footer>
       </Modal>
       </div>

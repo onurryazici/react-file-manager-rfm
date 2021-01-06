@@ -38,6 +38,10 @@ function CreateFolderModal(props){
         else if(response.data.message === Messages.DIRECTORY_ALREADY_EXISTS){
           setErrorMessage("Zaten var");
         }
+        else if(response.data.message === Messages.SESSION_NOT_STARTED){
+          /// redirect to login page
+          alert("redirect to login");
+        }
       }).catch((err)=>{
       DispatchCaller(dispatch,Actions.SET_ERROR, true);
       DispatchCaller(dispatch,Actions.SET_LOADING, false);

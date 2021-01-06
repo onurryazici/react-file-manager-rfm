@@ -23,7 +23,8 @@ function Content() {
 
 
     useEffect(() => {
-        axios.get("http://192.168.252.128:3030/api/getDirectory",{
+        if(encryptedLocation !== ""){
+            axios.get("http://192.168.252.128:3030/api/getDirectory",{
             params:{
                 location:encryptedLocation,
                 username:username,
@@ -37,6 +38,7 @@ function Content() {
         .catch((err)=>{
             console.log("bir hata oluştu"+err)
         })
+        }
     },
     [currentLocation]
     );
