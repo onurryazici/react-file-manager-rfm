@@ -10,6 +10,7 @@ import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
+import NotificationContainer from 'react-notifications/lib/NotificationContainer';
 
 function Content() {
     const loading               = useSelector(state => state.loading);
@@ -100,10 +101,11 @@ function Content() {
                             <CreateFolderModal isContextMenuButton="yes"/>
                         </MenuItem>
                         <MenuItem>
-                            <button type="button" class={styles.contextMenuItem}>Dosya yükle</button>
+                            <button type="button" className={styles.contextMenuItem}>Dosya yükle</button>
                         </MenuItem>
                     </div>
                 </ContextMenu>
+                <NotificationContainer></NotificationContainer>
             </div>     
         )
     }

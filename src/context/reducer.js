@@ -25,7 +25,7 @@ export function reducer (state,action){
             //state.selectedItems.concat(action.payload);
             return {
                 ...state,
-                selectedItems:[...state.selectedItems,action.payload],
+                selectedItems:state.selectedItems.concat(action.payload),
                 selectedItemCount: state.selectedItemCount + 1
             }
         case Actions.REMOVE_SELECTED_ITEM:

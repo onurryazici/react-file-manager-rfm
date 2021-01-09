@@ -9,7 +9,7 @@ function FolderDetails(){
     let folderCount       = 0;
 
     directoryItems !== undefined ? directoryItems.filter(item => (item.type==="file")   ? fileCount++   : "") : "";
-    directoryItems !== undefined ? directoryItems.filter(item => (item.type==="directory") ? folderCount++ : "") : "";
+    directoryItems !== undefined ? directoryItems.filter(item => (item.type==="directory" || item.type==="symbolic") ? folderCount++ : "") : "";
 
     var message = "";
 

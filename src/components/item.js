@@ -20,6 +20,22 @@ function Item(props){
     var itemName  = props.name;
     var itemType  = props.type;
     var extension = props.extension;
+    var size      = props.size;
+    var read      = props.read;
+    var write     = props.write;
+    var lastAccessTime = props.lastAccessTime;
+    var lastModifyTime = props.lastModifyTime;
+    var itemObject={
+      name:itemName,
+      type:itemType, 
+      extension:extension,
+      size:size,
+      read:read,
+      write:write,
+      lastAccessTime:lastAccessTime,
+      lastModifyTime:lastModifyTime,
+    }
+
 
     var [itemSelected, setitemSelected] = useState(false);
     var currentLocation   = useSelector(state => state.location);
@@ -27,36 +43,36 @@ function Item(props){
     var dispatch          = useDispatch();
 
     useEffect(() => {
-      let exist = selectedItems.indexOf(itemName) === -1 ? false : true;
+      let exist = selectedItems.some((element)=>{return element.name===itemName});
       if (exist){
         setitemSelected(true);
       }
       else{
         setitemSelected(false);
       }
-    },
-    [selectedItems]
-    );
-
+    },[selectedItems]);
      
-    function onItemSelected (event,name){
-      var exist = selectedItems.indexOf(name) === -1 ? false : true;
+    function onItemSelected (event,nameParam){
+      var exist = selectedItems.some((element)=>{return element.name === nameParam});
       if(event.ctrlKey)
       {
-        if(!exist)
-          DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
+        if(!exist){
+          
+          DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
+        }
       }
-      else
+      else 
       {
         DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
-        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
+        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
       }
+      
     }
-    function onItemContextMenu(event, name){
-      var exist = selectedItems.indexOf(name)=== -1 ? false : true;
+    function onItemContextMenu(event, nameParam){
+      var exist = selectedItems.some((element)=>{return element.name === nameParam});
       if(!exist){
         DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
-        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,name);
+        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
       }
     }
     function onItemDoubleClick(name,type){
@@ -80,7 +96,7 @@ function Item(props){
               onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}
               >
               {(itemType==="directory")
-                ? <Folder folderName={itemName}/> 
+                ? <Folder folderName={itemName} folderType={itemType}/> 
                 : <File fileName={itemName} extension={extension}/>
               }
           </div>

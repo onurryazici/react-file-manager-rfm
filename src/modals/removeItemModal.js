@@ -5,40 +5,58 @@ import { FaTimesCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import { DispatchCaller } from '../helper/global';
-import { Messages } from '../helper/message';
 import styles from '../styles.module.css'
-
+import { Messages } from '../helper/message';
+import 'react-notifications/lib/notifications.css';
+import { NotificationManager} from 'react-notifications';
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const dispatch          = useDispatch();
+    const currentLocation   = useSelector(state => state.location);
+    const directoryItems    = useSelector(state => state.directoryItems);
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
 
-    function RemoveItem(){
+    function RemoveItem() {
       setModalShow(false);
+      let encryptedItems=[];
+      let removedItems=[];
+      let cantRemove=[];
+      
+      for(let i=0; i<selectedItems.length;i++){
+        if(selectedItems[i].write===false)
+          cantRemove.push(selectedItems[i].name);
+        else{
+          encryptedItems.push(Buffer.from(selectedItems[i].name).toString('base64'));
+          removedItems.push(selectedItems[i].name);
+        }
+      }
+      
+      if(encryptedItems.length > 0)
+      {
         axios.get("http://192.168.252.128:3030/api/removeItem",{
           params:{
-            "items[]":Buffer.from(selectedItems).toString('base64')
+            "items":encryptedItems,
+            location:Buffer.from(currentLocation).toString('base64')
           }
-        })
-        .then((response)=>{
-          if(response.data.message === Messages.ITEM_REMOVE_SUCCESS){
-              DispatchCaller(dispatch,Actions.SET_LOADING,false);
-              alert("silindi");
-          }
-          else if(response.data.message === Messages.DIRECTORY_ALREADY_EXISTS){
-            setErrorMessage("Zaten var");
-          }
-          else if(response.data.message === Messages.SESSION_NOT_STARTED){
-            /// redirect to login page
-            alert("redirect to login");
-          }
-        }).catch((err)=>{
-        DispatchCaller(dispatch,Actions.SET_ERROR, true);
-        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+        }).then((response)=>{
+            if(response.data.statu === true) {
+              var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
+              DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
+              DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,reduced);
+              NotificationManager.success('Silme işlemi başarılı');
+            }
+            else
+              NotificationManager.error(response.data.message);
+        }).catch(()=>{
+            DispatchCaller(dispatch,Actions.SET_ERROR, true);
+            DispatchCaller(dispatch,Actions.SET_LOADING, false);
         });
-      
+      }
+      if(cantRemove.length > 0){
+        NotificationManager.error(cantRemove, 'Silmek için yetkiniz yok');
+      }
     }
     return (
       <div>
@@ -65,9 +83,10 @@ function RemoveItemModal(props){
             {
               selectedItemCount > 1 
                 ? "Seçili " + selectedItemCount + " öğeyi silmek istediğinize emin misiniz?"
-                : selectedItems[0] + " öğesi silinecektir onaylıyor musunuz?"
+                : (selectedItems.length > 0) && (selectedItems[0].name) + " öğesi silinecektir onaylıyor musunuz?" 
             }
           </p>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
