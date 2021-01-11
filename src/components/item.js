@@ -19,6 +19,7 @@ import CopyItemModal from '../modals/copyItemModal';
 function Item(props){
     var itemName  = props.name;
     var itemType  = props.type;
+    var itemOwner = props.owner;
     var extension = props.extension;
     var size      = props.size;
     var read      = props.read;
@@ -28,6 +29,7 @@ function Item(props){
     var itemObject={
       name:itemName,
       type:itemType, 
+      owner:itemOwner,
       extension:extension,
       size:size,
       read:read,

@@ -76,21 +76,13 @@ function RenameItemModal(props) {
     <div>
       {isContextMenuButton ? 
       (
-        <Button
-          variant='light'
-          className={styles.contextMenuItem}
-          onClick={() => setModalShow(true)}
-        >
+        <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
           <div style={{ fontSize: '14px' }}>Yeniden adlandır</div>
         </Button>
-      ) 
+      )
       :
       (
-          <Button
-            variant='light'
-            className={styles.actionbarButton}
-            onClick={() => setModalShow(true)}
-          >
+          <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)}>
             <div className={styles.actionbarIcon}>
               <FaPenSquare color='#28a745' />
             </div>
@@ -98,13 +90,7 @@ function RenameItemModal(props) {
           </Button>
       )}
 
-      <Modal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        size='s'
-        aria-labelledby='contained-modal-title-vcenter'
-        centered
-      >
+      <Modal show={modalShow} onHide={() => setModalShow(false)} size='s' aria-labelledby='contained-modal-title-vcenter' centered >
         <Modal.Header closeButton>
           <Modal.Title id='contained-modal-title-vcenter'>
             Yeniden adlandır
@@ -114,12 +100,7 @@ function RenameItemModal(props) {
           <Modal.Body>
             <p>
               <Form.Group role='form' controlId='formFolderName'>
-                <Form.Control
-                  type='text'
-                  placeholder='Adsız Klasör'
-                  name='folderName'
-                  onChange={(e) => onKeyPress(e.target)}
-                />
+                <Form.Control type='text' placeholder='Adsız Klasör' name='folderName' onChange={(e) => onKeyPress(e.target)} />
                 <br />
                 {newItemName.length > 0 && !isAcceptable ? (
                   <Alert variant='danger'>
@@ -128,9 +109,10 @@ function RenameItemModal(props) {
                     </p>
                   </Alert>
                 ) 
-                : (
+                : 
+                (
                     ''
-                  )}
+                )}
               </Form.Group>
             </p>
           </Modal.Body>
@@ -139,22 +121,16 @@ function RenameItemModal(props) {
               Vazgeç
             </Button>
 
-            {isAcceptable ? (
-              <Button
-                as='input'
-                type='submit'
-                value='Yeniden adlandır'
-                variant='success'
-              />
-            ) : (
-                <Button
-                  as='input'
-                  type='submit'
-                  value='Yeniden adlandır'
-                  variant='success'
-                  disabled
-                />
-              )}
+            {
+              isAcceptable ? 
+              (
+                <Button as='input' type='submit' value='Yeniden adlandır'  variant='success' />
+              ) 
+              : 
+              (
+                  <Button as='input' type='submit' value='Yeniden adlandır' variant='success' disabled />
+              )
+            }
           </Modal.Footer>
         </form>
       </Modal>

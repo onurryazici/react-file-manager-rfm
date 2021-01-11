@@ -84,6 +84,7 @@ function Content() {
                                         key = {item.name}
                                         name = {item.name}
                                         type={item.type} 
+                                        owner={item.owner}
                                         extension={item.extension}
                                         size={item.size}
                                         read={item.read}
