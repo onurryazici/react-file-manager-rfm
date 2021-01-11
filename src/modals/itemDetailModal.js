@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button, Modal, Row, Col, Container, Table } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaCross, FaInfoCircle, FaTimesCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 function ItemDetailModal(props) {
@@ -15,8 +15,8 @@ function ItemDetailModal(props) {
     const [read, setRead]   = useState("");
     const [write, setWrite] = useState("");
     const [lastAccessTime, setLastAccessTime] = useState("");
-    const [lastModifyTime, setLastModifyTime]   = useState("");
-    const [sharedUsers, setSharedUsers]           = useState("");
+    const [lastModifyTime, setLastModifyTime] = useState("");
+    const [sharedUsers, setSharedUsers]       = useState("");
 
     function ItemDetail(){
         setModalShow(true)
@@ -32,7 +32,7 @@ function ItemDetailModal(props) {
     }
 
     return (
-      <div>
+      <div className={styles.noselect}>
         {
           isContextMenuButton
             ?
@@ -86,6 +86,14 @@ function ItemDetailModal(props) {
                    <tr>
                      <td>En son erişilme</td>
                      <td>{lastAccessTime} </td>
+                   </tr>
+                   <tr>
+                     <td>Okuma</td>
+                     <td>{read ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
+                   </tr>
+                   <tr>
+                     <td>Yazma</td>
+                     <td>{write ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
                    </tr>
                  </tbody>
                </Table>

@@ -51,7 +51,7 @@ function CreateFolderModal(props){
     }
   }
   return (
-    <div>
+    <div className={styles.noselect}>
       {
         isContextMenuButton
           ?

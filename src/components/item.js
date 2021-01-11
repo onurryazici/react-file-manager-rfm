@@ -95,12 +95,12 @@ function Item(props){
           <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
               onClick={(event)=>onItemSelected(event,itemName)}
               onContextMenu={(event)=>onItemContextMenu(event,itemName)}
-              onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}
-              >
+              onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}>
               {(itemType==="file")
                 ? <File fileName={itemName} extension={extension}/>
                 : <Folder folderName={itemName} folderType={itemType}/> 
               }
+              <span className={styles.tooltiptext}>{itemName}</span>
           </div>
         </ContextMenuTrigger>
         <ContextMenu id={itemName} className={styles.contextMenuStage}>

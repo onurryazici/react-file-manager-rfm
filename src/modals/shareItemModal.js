@@ -7,7 +7,7 @@ function ShareItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
-      <div>
+      <div className={styles.noselect}>
         {
           isContextMenuButton
             ?

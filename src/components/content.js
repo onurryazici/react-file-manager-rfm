@@ -74,7 +74,7 @@ function Content() {
     else
     {
         return (
-            <div id={styles.contentStage} >
+            <div id={styles.contentStage} className={styles.noselect} >
                 <ContextMenuTrigger id="mainTrigger">
                     <div id={styles.contents} >
                         { directoryItems !== undefined && directoryItems.length > 0 

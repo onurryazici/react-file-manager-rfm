@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import { DispatchCaller } from '../helper/global';
 import styles from '../styles.module.css'
-import { Messages } from '../helper/message';
 import 'react-notifications/lib/notifications.css';
 import { NotificationManager} from 'react-notifications';
 function RemoveItemModal(props){
@@ -59,7 +58,7 @@ function RemoveItemModal(props){
       }
     }
     return (
-      <div>
+      <div className={styles.noselect}>
         {
           isContextMenuButton 
             ?

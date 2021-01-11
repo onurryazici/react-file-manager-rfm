@@ -61,7 +61,7 @@ body{
 #contentStage{
   width: 100%;
   height: calc(100% - 124px);
-  overflow-y:scroll;
+  overflow-y:auto;
   display: block;
   position: relative;
   background-color: #fff;
@@ -159,11 +159,6 @@ body{
   background: #fff;
   overflow: hidden;
   border: solid thin #dedede;
-  -moz-user-select: none; 
-  -webkit-user-select: none; 
-  -ms-user-select:none; 
-  user-select:none;
-  -o-user-select:none;
 }
 .itemBlock:hover{
   background: #cbdef1;
@@ -187,10 +182,32 @@ body{
   text-overflow: ellipsis;
   overflow: hidden;
   position: absolute;
-  bottom:5px
+  bottom:5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+.itemBlock .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: fixed;
+  overflow: visible;
+  margin-top:10px;
+  margin-left:10px;
+  z-index: 899999;
+  overflow: auto;
   
 }
 
+.itemBlock:hover .tooltiptext {
+  visibility: visible;
+  transition-delay: 1s;
+}
 
 #loadingSpinner,
 #loadingSpinner:after {
@@ -308,4 +325,36 @@ body{
     width: 25px;
     height: 25px;
     background: #fff;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border:solid thin #dedede;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius:5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

@@ -73,7 +73,7 @@ function RenameItemModal(props) {
     }
   }
   return (
-    <div>
+    <div className={styles.noselect}>
       {isContextMenuButton ? 
       (
         <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
