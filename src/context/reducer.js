@@ -22,7 +22,6 @@ export function reducer (state,action){
                 selectedItemCount:0
             }
         case Actions.ADD_SELECTED_ITEM:
-            //state.selectedItems.concat(action.payload);
             return {
                 ...state,
                 selectedItems:state.selectedItems.concat(action.payload),
@@ -47,7 +46,23 @@ export function reducer (state,action){
                 ...state,
                 showHiddenFiles:action.payload
             }
-        
+        case Actions.RENAME_ITEM:
+            return {
+                ...state,
+                directoryItems:state.directoryItems.map((item,i)=> 
+                    item.name === action.payload.oldName 
+                    ? {...item, name:action.payload.newName} 
+                    : {...item} 
+                    )
+                }
+            /*return state.directoryItems.map((item,index)=>{
+                if(item.name===action.payload.oldName){
+                    return {
+                        ...item,
+                        name:action.payload.newName
+                    }
+                }
+            })*/
         default:
             return state
    }

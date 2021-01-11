@@ -300,3 +300,12 @@ body{
   text-align: center;
   margin-top: 45px;
 }
+.itemMiniIcon{
+  position: absolute;
+    top: 84px;
+    right: 10px;
+    border-radius: 25px;
+    width: 25px;
+    height: 25px;
+    background: #fff;
+}

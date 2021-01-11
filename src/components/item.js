@@ -95,9 +95,9 @@ function Item(props){
               onContextMenu={(event)=>onItemContextMenu(event,itemName)}
               onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}
               >
-              {(itemType==="directory")
-                ? <Folder folderName={itemName} folderType={itemType}/> 
-                : <File fileName={itemName} extension={extension}/>
+              {(itemType==="file")
+                ? <File fileName={itemName} extension={extension}/>
+                : <Folder folderName={itemName} folderType={itemType}/> 
               }
           </div>
         </ContextMenuTrigger>

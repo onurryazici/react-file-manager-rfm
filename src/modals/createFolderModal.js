@@ -9,46 +9,47 @@ import Axios from 'axios';
 import { Messages } from '../helper/message';
 import { Actions } from '../context/actions';
 import { useState } from 'react';
-
+import { NotificationManager } from 'react-notifications';
 function CreateFolderModal(props){
-  const [modalShow, setModalShow]       = React.useState(false);
-  const isContextMenuButton             = props.isContextMenuButton === "yes" ? true : false;
-  const [ErrorMessage, setErrorMessage] = useState("");
-
-  const dispatch          = useDispatch();
-  const currentLocation   = useSelector(state => state.location);
-  const encryptedLocation = currentLocation !== undefined && currentLocation !== "" ? Buffer.from(currentLocation).toString('base64') : "";
   const [DirectoryName, setDirectoryName] = useState("");
+  const [modalShow, setModalShow] = React.useState(false);
+  const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
+  const dispatch            = useDispatch();
+  const currentLocation     = useSelector(state => state.location);
+  const encryptedLocation   = currentLocation !== undefined && currentLocation !== "" ? Buffer.from(currentLocation).toString('base64') : "";
+  const directoryItems      = useSelector(state => state.directoryItems);
 
 
   function CreateFolder(event) {
     event.preventDefault();
-    if(DirectoryName !== "" && DirectoryName.trim(' ').length > 0){
-      Axios.get("http://192.168.252.128:3030/api/createDirectory",{
-        params:{
-          location:encryptedLocation,
-          dirname:Buffer.from(DirectoryName).toString('base64')
-        }
-      })
-      .then((response)=>{
-        if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
-            DispatchCaller(dispatch,Actions.SET_LOADING,false);
-            DispatchCaller(dispatch,Actions.ADD_DIRECTORY_ITEM,response.data.item);
-        }
-        else if(response.data.message === Messages.DIRECTORY_ALREADY_EXISTS){
-          setErrorMessage("Zaten var");
-        }
-        else if(response.data.message === Messages.SESSION_NOT_STARTED){
-          /// redirect to login page
-          alert("redirect to login");
-        }
-      }).catch((err)=>{
-      DispatchCaller(dispatch,Actions.SET_ERROR, true);
-      DispatchCaller(dispatch,Actions.SET_LOADING, false);
-      });
+    var exist = directoryItems.filter((element) => element.name===DirectoryName).length > 0 ? true : false;
+
+    if(!exist){
+      if(DirectoryName.trim(' ').length > 0){
+        Axios.get("http://192.168.252.128:3030/api/createDirectory",{
+          params:{
+            location:encryptedLocation,
+            dirname:Buffer.from(DirectoryName).toString('base64')
+          }
+        })
+        .then((response)=>{
+          if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
+              DispatchCaller(dispatch,Actions.SET_LOADING,false);
+              DispatchCaller(dispatch,Actions.ADD_DIRECTORY_ITEM,response.data.item);
+              NotificationManager.success("Dizin oluşturuldu");
+          }
+          else
+                NotificationManager.error(response.data.message);
+        }).catch((err)=>{
+        DispatchCaller(dispatch,Actions.SET_ERROR, true);
+        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+        });
+      }
+    }
+    else{
+      NotificationManager.warning("Bu dizin zaten mevcut");
     }
   }
-
   return (
     <div>
       {
@@ -78,14 +79,18 @@ function CreateFolderModal(props){
                 placeholder="Adsız Klasör" 
                 name="folderName" 
                 onChange={(e)=>setDirectoryName(e.target.value)}
-                /><br/>
-            {ErrorMessage!=="" ? ErrorMessage : ""}
+                />
           </Form.Group>
        
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
-        <Button as="input" type="submit" value="Submit" variant="warning" />{' '}
+        
+        {
+          DirectoryName!==""
+          ? <Button as="input" type="submit" value="Oluştur" variant="success" />
+          : <Button as="input" type="submit" value="Oluştur" variant="success" disabled/>
+        }
       </Modal.Footer>
       </form>
     </Modal>
