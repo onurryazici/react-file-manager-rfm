@@ -32,17 +32,15 @@ function Content() {
                 showHiddenFiles:showHiddenFilesValue
             }})
         .then((response)=>{
-            console.log(response);
             DispatchCaller(dispatch,Actions.SET_LOADING,false);
             DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
         })
         .catch((err)=>{
-            console.log("bir hata oluştu"+err)
+            DispatchCaller(dispatch,Actions.SET_LOADING,false);
+            DispatchCaller(dispatch,Actions.SET_ERROR,true);
         })
         }
-    },
-    [currentLocation]
-    );
+    },[currentLocation]);
 
     if(rfmError){
         return (<div id={styles.contentStage}>
@@ -81,16 +79,16 @@ function Content() {
                             ? 
                                 directoryItems.map((item)=>{
                                     return (<Item 
-                                        key = {item.name}
-                                        name = {item.name}
-                                        type={item.type} 
-                                        owner={item.owner}
-                                        extension={item.extension}
-                                        size={item.size}
-                                        read={item.read}
-                                        write={item.write}
-                                        lastAccessTime={item.lastAccessTime}
-                                        lastModifyTime={item.lastModifyTime}
+                                        key       = {item.name}
+                                        name      = {item.name}
+                                        type      = {item.type} 
+                                        owner     = {item.owner}
+                                        extension = {item.extension}
+                                        size      = {item.size}
+                                        read      = {item.read}
+                                        write     = {item.write}
+                                        lastAccessTime = {item.lastAccessTime}
+                                        lastModifyTime = {item.lastModifyTime}
                                         />)})
                             : ""
                         }
