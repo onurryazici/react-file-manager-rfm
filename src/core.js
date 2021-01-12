@@ -21,6 +21,7 @@ function RFM_Core(props){
             if(response.data.message === Messages.LOGIN_SUCCESSFULL){
                 DispatchCaller(dispatch,Actions.SET_LOADING,false);
                 DispatchCaller(dispatch,Actions.SET_LOCATION,props.location);
+                DispatchCaller(dispatch,Actions.SET_START_LOCATION,props.location);
                 DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
             }
         }).catch((err)=>{

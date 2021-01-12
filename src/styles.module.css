@@ -24,6 +24,7 @@ body{
   position: absolute;
   border: solid thin #dedede;
   font-family: 'Montserrat', sans-serif;
+  overflow-y: hidden;
 }
 
 #actionbarStage{
@@ -127,7 +128,6 @@ body{
   font-size: 16px;
   color: #000;
 }
-
 
 .folderDetails{
   width: 100%;

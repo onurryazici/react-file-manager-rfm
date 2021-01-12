@@ -32,7 +32,7 @@ function ItemDetailModal(props) {
     }
 
     return (
-      <div className={styles.noselect}>
+      <div>
         {
           isContextMenuButton
             ?
@@ -47,7 +47,7 @@ function ItemDetailModal(props) {
         }
         
   
-        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
+        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" className={styles.noselect} centered>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Ayrıntılar

@@ -4,6 +4,9 @@ export function reducer (state,action){
         case Actions.SET_LOCATION:
             state.location = action.payload;
             return {...state}
+        case Actions.SET_START_LOCATION:
+            state.location = action.payload;
+            return {...state}
         case Actions.ADD_DIRECTORY_ITEM:
             return{
                 ...state,

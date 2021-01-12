@@ -1,5 +1,6 @@
 export const initialState = {
     loading:true,         // loading spinner gösterimi için
+    startLocation:"",
     location:"",          // Aktif olarak bulunan konumun adresi
     selectedItems:[],     // Seçilen öğeler
     selectedItemCount:0,  // Seçilen öğe sayısı 
