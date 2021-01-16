@@ -24,6 +24,7 @@ function Item(props){
     var size      = props.size;
     var read      = props.read;
     var write     = props.write;
+    var sharedWith = props.sharedWith;
     var lastAccessTime = props.lastAccessTime;
     var lastModifyTime = props.lastModifyTime;
     var itemObject={
@@ -36,12 +37,15 @@ function Item(props){
       write:write,
       lastAccessTime:lastAccessTime,
       lastModifyTime:lastModifyTime,
+      sharedWith:sharedWith
     }
 
 
     var [itemSelected, setitemSelected] = useState(false);
     var currentLocation   = useSelector(state => state.location);
     var selectedItems     = useSelector(state => state.selectedItems);
+    var selectedItemCount     = useSelector(state => state.selectedItemCount);
+    
     var dispatch          = useDispatch();
 
     useEffect(() => {
@@ -104,29 +108,50 @@ function Item(props){
           </div>
         </ContextMenuTrigger>
         <ContextMenu id={itemName} className={styles.contextMenuStage}>
-        <MenuItem>
-            <ShareItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem>
-            <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
-                <div style={{fontSize:'14px'}}>İndir</div>
-            </Button>
-        </MenuItem>
-        <MenuItem>
-            <CopyItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem>
-            <MoveItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem>
-            <RenameItemModal isContextMenuButton="yes"/>
-        </MenuItem>
-        <MenuItem>
-          <RemoveItemModal isContextMenuButton="yes"/>
-            </MenuItem>
-        <MenuItem>
-            <ItemDetailModal isContextMenuButton="yes"/>
-        </MenuItem>
+          {
+            selectedItemCount > 1 
+            ? "" 
+            :
+            ( 
+              <MenuItem>
+                <ShareItemModal isContextMenuButton="yes"/>
+              </MenuItem>
+            )
+          }
+          <MenuItem>
+              <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
+                  <div style={{fontSize:'14px'}}>İndir</div>
+              </Button>
+          </MenuItem>
+          <MenuItem>
+              <CopyItemModal isContextMenuButton="yes"/>
+          </MenuItem>
+          <MenuItem>
+              <MoveItemModal isContextMenuButton="yes"/>
+          </MenuItem>
+          {
+            selectedItemCount > 1 
+            ? "" 
+            :
+            ( 
+              <MenuItem>
+                <RenameItemModal isContextMenuButton="yes"/>
+              </MenuItem>
+            )
+          }
+          <MenuItem>
+            <RemoveItemModal isContextMenuButton="yes"/>
+          </MenuItem>
+          {
+            selectedItemCount > 1 
+            ? "" 
+            :
+            ( 
+              <MenuItem>
+                <ItemDetailModal isContextMenuButton="yes"/>
+              </MenuItem>
+            )
+          }
       </ContextMenu>
       </div>
     )

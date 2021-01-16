@@ -16,9 +16,9 @@ function RenameItemModal(props) {
   const [isAcceptable, setIsAcceptable] = useState(false);
   const [newItemName, setNewItemName]   = useState('');
   const dispatch                        = useDispatch();
-  const directoryItems = useSelector((state)  => state.directoryItems);
+  const directoryItems  = useSelector((state) => state.directoryItems);
   const currentLocation = useSelector((state) => state.location);
-  const selectedItems = useSelector((state)   => state.selectedItems);
+  const selectedItems   = useSelector((state) => state.selectedItems);
 
   function onKeyPress(event) {
     var value         = event.value

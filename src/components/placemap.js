@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
-import { FaChevronRight } from 'react-icons/fa'
+import { FaChevronRight, FaSort } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import styles from '../styles.module.css'
@@ -21,16 +21,9 @@ function Placemap() {
         }
     }
 
-    var count = splittedPlacemaps.length;
-
     return(
         <div className={styles.placemapArea}>
             {
-                // Key 0 = /
-                // Key 1 = home/
-                // Key 2 = username/
-                // Key 3 = drive/
-                // Parsed : / home / username / drive
                 splittedPlacemaps.map((item, key) => {
                     if(key > startLocation.split('/').length ){
                         if(key===startLocation.split('/').length + 1)
@@ -43,12 +36,6 @@ function Placemap() {
 
                 
             }
-            <div className="mb-2" style={{float:'right'}}>
-            <DropdownButton menuAlign="right" title={"test"} id="dropdown-menu-align-right" variant="light" style={{background:'#fffff'}}>
-                <Dropdown.Item eventKey="1">A-Z Baştan sona</Dropdown.Item>
-                <Dropdown.Item eventKey="2">Z-A Sondan başa</Dropdown.Item>
-            </DropdownButton>    
-            </div>
         </div>
     )    
 }

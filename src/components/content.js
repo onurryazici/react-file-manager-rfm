@@ -87,6 +87,7 @@ function Content() {
                                         size      = {item.size}
                                         read      = {item.read}
                                         write     = {item.write}
+                                        sharedWith     = {item.sharedWith}
                                         lastAccessTime = {item.lastAccessTime}
                                         lastModifyTime = {item.lastModifyTime}
                                         />)})
