@@ -47,13 +47,13 @@ function ItemDetailModal(props) {
         }
         
   
-        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" className={styles.noselect} centered>
+        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" className={styles.noselect} right>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Ayrıntılar
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{padding:'0px'}} >
           <p>
           <Form autoComplete="off">
             <Form.Group controlId="formFolderName">

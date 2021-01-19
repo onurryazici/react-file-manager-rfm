@@ -358,3 +358,36 @@ body{
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+.bordered{
+  border:solid thin #dedede;
+  height: 40px;
+}
+.noRadius{
+  border-radius: 0;
+}
+.shareUserLogo{
+  color:#0066cc;
+  height:60px;
+  width:60px;
+  padding:8px;
+}
+.textCentered{
+  text-align: center;
+  line-height: 50px;
+  font-weight: lighter;
+}
+.shareUICol1{
+  flex-basis: 58%;
+}
+.shareUICol2{
+  flex-basis: 25%;
+}
+.shareUICol3{
+  flex-basis: 17%;
+}
+.flex{
+  display: flex;
+}
+.height40{
+  height:40px;
+}
