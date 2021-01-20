@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import { Button, Dropdown, DropdownButton, Form, FormControl } from 'react-bootstrap';
-import classNames from 'classnames'
 import { FaUserCircle } from 'react-icons/fa';
-import styles from '../styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchCaller } from '../helper/global';
-import axios from 'axios';
 import { Actions } from '../context/actions';
 import { NotificationManager } from 'react-notifications';
-export default function ShareView() {
+import classNames from 'classnames'
+import styles from '../styles.module.css'
+import axios from 'axios';
 
-    const [newUserName, setNewUserName] = useState("");
-    const selectedItems  = useSelector((state) => state.selectedItems);
-    const directoryItems = useSelector((state) => state.directoryItems);
-    const dispatch = useDispatch();
+export default function ShareView() {
+    const selectedItems = useSelector((state) => state.selectedItems);
     const encryptedItem = Buffer.from(selectedItems[0].absolutePath).toString('base64');
-    const [newUserFullAccess , setNewUserFullAccess] = useState(true);
-    const [newUserReadOnly , setNewUserReadOnly]     = useState(false);
+    const [newUserFullAccess, setNewUserFullAccess] = useState(true);
+    const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
+    const [newUserName, setNewUserName] = useState("");
+    const dispatch = useDispatch();
+
     const ShareType={
         FOR_NEW_USER:"FOR_NEW_USER",
         FOR_EXISTING_USER:"FOR_EXISTING_USER"
@@ -35,15 +35,13 @@ export default function ShareView() {
             }
             }).then((response)=>{
                 if(response.data.statu === true){
-                    let read    = true; 
                     let write   = (permission === PermissionType.FULL_ACCESS) ? true : false;
-                    let execute = true;
                     let payload = { 
                         itemName:selectedItems[0].name,
                         username:username,
-                        read:read,
+                        read:true,
                         write:write,
-                        execute:execute
+                        execute:true
                     }
                     if(type === ShareType.FOR_NEW_USER){
                         DispatchCaller(dispatch,Actions.ADD_SHARED_WITH,payload)
@@ -51,9 +49,7 @@ export default function ShareView() {
                     }
                     else{
                         DispatchCaller(dispatch,Actions.UPDATE_SHARED_WITH,payload);
-                        console.log(selectedItems);
                     }
-                        
                 }
                 else
                     NotificationManager.error(response.data.message);
@@ -62,13 +58,12 @@ export default function ShareView() {
             });
     }
 
-
     function ShareWithNewUser(event){
         event.preventDefault();
         var exist = (selectedItems[0].sharedWith.some((item)=>item.username === newUserName) || selectedItems[0].owner === newUserName);
         if(!exist){
             if(newUserName.trim(' ').length > 0) {
-                let newUserPermission = newUserFullAccess ? "rwx" : "r-x";
+                let newUserPermission = newUserFullAccess ? PermissionType.FULL_ACCESS : PermissionType.READ_ONLY;
                 ShareItem(newUserName,newUserPermission,ShareType.FOR_NEW_USER);
             }
         }
@@ -86,7 +81,6 @@ export default function ShareView() {
         }
     }
     function toggleExistUser(eventKey,username){
-        //let permission = (eventKey===PermissionType.FULL_ACCESS) ? "rwx" : "r-x";
         ShareItem(username,eventKey,ShareType.FOR_EXISTING_USER);
     }
 
