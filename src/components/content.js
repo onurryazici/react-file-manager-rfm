@@ -84,9 +84,10 @@ function Content() {
                                         type      = {item.type} 
                                         owner     = {item.owner}
                                         extension = {item.extension}
-                                        size      = {item.size}
-                                        read      = {item.read}
-                                        write     = {item.write}
+                                        absolutePath   = {item.absolutePath}
+                                        size           = {item.size}
+                                        read           = {item.read}
+                                        write          = {item.write}
                                         sharedWith     = {item.sharedWith}
                                         lastAccessTime = {item.lastAccessTime}
                                         lastModifyTime = {item.lastModifyTime}

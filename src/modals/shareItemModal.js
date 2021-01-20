@@ -1,9 +1,10 @@
-import React from 'react'
-import { Button, Dropdown, DropdownButton, Form, FormControl, InputGroup, Modal, Table } from 'react-bootstrap';
+import React, { useState } from 'react'
+import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap';
 import classNames from 'classnames'
 import {  FaGgCircle, FaUserCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
+import ShareView from '../views/shareView';
 
 function ShareItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
@@ -11,13 +12,9 @@ function ShareItemModal(props){
     const selectedItemCount         = useSelector((state) => state.selectedItemCount);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
 
-    function ShareItem(){
-
-    }
-
-    function toggle(eventKey,username){
-      console.log(e);
-    }
+    
+    
+    
     return (
       <div>
         {
@@ -40,50 +37,11 @@ function ShareItemModal(props){
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form autoComplete="off" onSubmit={ShareItem}>
-              <div className={styles.flex}>
-                <FormControl className={classNames(styles.noRadius,styles.bordered,styles.shareUICol1)} placeholder="Yeni kişi" aria-label="Yeni kişi" aria-describedby="basic-addon2" />
-                <DropdownButton className={classNames(styles.noRadius,styles.bordered,styles.shareUICol2)} variant="" title="Tam Erişim" >
-                    <Dropdown.Item eventKey="1" active>Tam Erişim</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">Salt Okunur</Dropdown.Item>
-                </DropdownButton>
-                <Button className={classNames(styles.noRadius,styles.shareUICol3)} variant="outline-primary">Ekle</Button>
-              </div>
-              {
-                  (modalShow && selectedItems !== undefined && selectedItemCount === 1)
-                      ?[
-                          <div className={styles.flex}>
-                            <div className={styles.shareUICol1}>
-                              <FaUserCircle className={styles.shareUserLogo}/>
-                              <span>{selectedItems[0].owner}</span>
-                            </div>
-                            <div className={styles.shareUICol2}>
-                              <h6 className={styles.textCentered}>(Sahibi)</h6>
-                            </div>                   
-                          </div>,
-                          
-                          selectedItems[0].sharedWith.map((userElement,index) => {
-                            let fullAccess = (userElement.read === true && userElement.write === true) ? true : false;
-                            let readOnly   = (userElement.read === true && userElement.write === false) ? true : false;
-                            let selectedTitle = fullAccess ? "Tam Erişim" : "Salt Okunur";
-                            return (
-                              <div className={styles.flex} key={index}>
-                                <div className={styles.shareUICol1}>
-                                  <FaUserCircle className={styles.shareUserLogo}/>
-                                  <span>{userElement.username}</span>
-                                </div>
-                                <DropdownButton className={classNames(styles.noRadius,styles.shareUICol2)} variant="" title={selectedTitle} >
-                                  <Dropdown.Item eventKey="1" active={fullAccess} onSelect={(e)=>toggle(e)}>Tam Erişim</Dropdown.Item>
-                                  <Dropdown.Item eventKey="2" active={readOnly} onSelect={(eventKey)=>toggle(eventKey)}>Salt Okunur</Dropdown.Item>
-                                </DropdownButton>
-                                <Button className={classNames(styles.noRadius,styles.shareUICol3,styles.height40)} variant="outline-danger">Kaldır</Button>
-                              </div>
-                            )
-                          })
-                        ]
-                      : ""
-                    }
-              </Form>
+            {
+              (modalShow && selectedItems !== undefined && selectedItemCount === 1)
+              ? <ShareView/>
+              : ""
+            }
             </Modal.Body>
           </Modal>
       </div>

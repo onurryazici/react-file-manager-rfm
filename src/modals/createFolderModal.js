@@ -66,7 +66,7 @@ function CreateFolderModal(props){
       }  
 
       <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
-      <form autoComplete="off" onSubmit={CreateFolder}>
+      <Form autoComplete="off" onSubmit={CreateFolder}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
             Yeni Klasör
@@ -92,7 +92,7 @@ function CreateFolderModal(props){
           : <Button as="input" type="submit" value="Oluştur" variant="success" disabled/>
         }
       </Modal.Footer>
-      </form>
+      </Form>
     </Modal>
     </div>
   );

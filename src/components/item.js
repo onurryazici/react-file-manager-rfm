@@ -21,6 +21,7 @@ function Item(props){
     var itemType  = props.type;
     var itemOwner = props.owner;
     var extension = props.extension;
+    var absolutePath = props.absolutePath;
     var size      = props.size;
     var read      = props.read;
     var write     = props.write;
@@ -32,6 +33,7 @@ function Item(props){
       type:itemType, 
       owner:itemOwner,
       extension:extension,
+      absolutePath:absolutePath,
       size:size,
       read:read,
       write:write,
