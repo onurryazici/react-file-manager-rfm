@@ -30,7 +30,7 @@ export default function ShareView() {
         axios.get("http://192.168.252.128:3030/api/shareItem",{
             params:{
                 user:username,
-                permissions:PermissionType.FULL_ACCESS ? "rwx" : "r-x",
+                permissions: permission === PermissionType.FULL_ACCESS ? "rwx" : "r-x",
                 item:encryptedItem
             }
             }).then((response)=>{
