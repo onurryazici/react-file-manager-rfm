@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaFolder, FaFolderPlus, FaShare, FaUserCircle } from 'react-icons/fa';
+import { FaFolder, FaUserCircle } from 'react-icons/fa';
 
 import styles from "../styles.module.css"
 function Folder(props){

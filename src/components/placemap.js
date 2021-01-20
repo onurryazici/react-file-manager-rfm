@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
-import { FaChevronRight, FaSort } from 'react-icons/fa'
+import { Button } from 'react-bootstrap'
+import { FaChevronRight } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import styles from '../styles.module.css'

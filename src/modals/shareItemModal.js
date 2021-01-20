@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap';
-import classNames from 'classnames'
-import {  FaGgCircle, FaUserCircle } from 'react-icons/fa';
+import React from 'react'
+import { Button, Modal } from 'react-bootstrap';
+import {  FaGgCircle,  } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 import ShareView from '../views/shareView';
@@ -11,10 +10,6 @@ function ShareItemModal(props){
     const selectedItems             = useSelector((state) => state.selectedItems);
     const selectedItemCount         = useSelector((state) => state.selectedItemCount);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
-
-    
-    
-    
     return (
       <div>
         {

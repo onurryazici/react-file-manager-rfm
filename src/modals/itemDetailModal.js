@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Form, Button, Modal, Row, Col, Container, Table } from 'react-bootstrap';
-import { FaCheckCircle, FaCross, FaInfoCircle, FaTimesCircle } from 'react-icons/fa';
+import { Form, Button, Modal, Table } from 'react-bootstrap';
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 function ItemDetailModal(props) {

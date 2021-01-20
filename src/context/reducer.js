@@ -1,4 +1,3 @@
-import update from 'react-addons-update';
 import { Actions } from './actions';
 export function reducer (state,action){
    switch(action.type){
@@ -81,13 +80,6 @@ export function reducer (state,action){
             const s_index = state.selectedItems[0].sharedWith.findIndex(element=>element.username === action.payload.username);
             const newDirectoryItems = [...state.directoryItems];
             const newSelectedItems  = [...state.selectedItems];
-            
-            const share = {
-                username:action.payload.username,
-                read:action.payload.read,
-                write:action.payload.write,
-                execute:action.payload.execute
-            }
 
             newDirectoryItems[d_index].sharedWith.map((element,i)=>{
                 if(element.username === action.payload.username){
