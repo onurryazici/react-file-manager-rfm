@@ -7,7 +7,7 @@ import ShareItemModal from '../modals/shareItemModal'
 import RemoveItemModal from '../modals/removeItemModal'
 import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
-import CopyItemModal from '../modals/copyItemModal';
+import CopyItemModal from '../modals/createCopyItemModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import ItemDetailModal from '../modals/itemDetailModal';

@@ -87,7 +87,7 @@ function CreateFolderModal(props){
         <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
         
         {
-          DirectoryName!==""
+          DirectoryName!=="" && directoryItems !== undefined
           ? <Button as="input" type="submit" value="Oluştur" variant="success" />
           : <Button as="input" type="submit" value="Oluştur" variant="success" disabled/>
         }

@@ -14,7 +14,7 @@ import ItemDetailModal from '../modals/itemDetailModal';
 import { DispatchCaller } from '../helper/global';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
-import CopyItemModal from '../modals/copyItemModal';
+import CopyItemModal from '../modals/createCopyItemModal';
 
 function Item(props){
     var itemName  = props.name;
