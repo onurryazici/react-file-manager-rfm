@@ -67,8 +67,7 @@ export default function ShareView() {
                 ShareItem(newUserName,newUserPermission,ShareType.FOR_NEW_USER);
             }
         }
-      }
-  
+    }
     function toggleNewUser(eventKey){
         if(eventKey===PermissionType.FULL_ACCESS)
         {
@@ -84,6 +83,26 @@ export default function ShareView() {
         ShareItem(username,eventKey,ShareType.FOR_EXISTING_USER);
     }
 
+    function removeUserPermission(username){
+        axios.get("http://192.168.252.128:3030/api/removePermission",{
+            params:{
+                user:username,
+                item:encryptedItem
+            }
+            }).then((response)=>{
+                if(response.data.statu === true){
+                    let payload={
+                        itemName:selectedItems[0].name,
+                        username:username
+                    }
+                    DispatchCaller(dispatch,Actions.DELETE_SHARED_WITH,payload);
+                }   
+                else
+                    NotificationManager.error(response.data.message);
+                }).catch((err)=>{
+                    NotificationManager.error(err);
+            });
+    }
     return (
         <Form autoComplete="off" onSubmit={ShareWithNewUser}>
             <div className={styles.flex}>
@@ -123,7 +142,9 @@ export default function ShareView() {
                                 <Dropdown.Item eventKey={PermissionType.FULL_ACCESS} active={fullAccess} onSelect={(eventKey)=>toggleExistUser(eventKey,userElement.username)}>Tam Erişim</Dropdown.Item>
                                 <Dropdown.Item eventKey={PermissionType.READ_ONLY} active={readOnly} onSelect={(eventKey)=>toggleExistUser(eventKey,userElement.username)}>Salt Okunur</Dropdown.Item>
                             </DropdownButton>
-                            <Button className={classNames(styles.noRadius,styles.shareUICol3,styles.height40,styles.mt10)} variant="outline-danger">Kaldır</Button>
+                            <Button className={classNames(styles.noRadius,styles.shareUICol3,styles.height40,styles.mt10)} 
+                                variant="outline-danger" onClick={()=>removeUserPermission(userElement.username)}>Kaldır
+                            </Button>
                         </div>
                     )
                 })

@@ -25,7 +25,7 @@ function ShareItemModal(props){
               </Button>
         }
         
-        <Modal show={modalShow} onHide={()=>setModalShow(false) }  aria-labelledby="contained-modal-title-vcenter" centered >
+        <Modal show={modalShow} onHide={()=>setModalShow(false) }  aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
                 Paylaş
