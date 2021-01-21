@@ -6,7 +6,8 @@ import { createStore } from 'redux';
 import { reducer } from './context/reducer';
 import { initialState } from './context/store';
 
-const store = createStore(reducer, initialState)
+const store = createStore(reducer, initialState, 
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 const RFM = (props) =>{
     return(
       <Provider store={store}>
