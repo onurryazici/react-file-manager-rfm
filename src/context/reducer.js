@@ -1,36 +1,43 @@
 import { Actions } from './actions';
 export function reducer (state,action){
    switch(action.type){
-        case Actions.SET_LOCATION:
+        case Actions.SET_LOCATION:{
             state.location = action.payload;
             return {...state}
-        case Actions.SET_START_LOCATION:
+        }
+        case Actions.SET_START_LOCATION:{
             state.location = action.payload;
             return {...state}
-        case Actions.ADD_DIRECTORY_ITEM:
+        }
+        case Actions.ADD_DIRECTORY_ITEM:{
             return{
                 ...state,
                 directoryItems:state.directoryItems.concat(action.payload)
             }
-        case Actions.SET_ERROR:
+        }
+        case Actions.SET_ERROR:{
             state.hasError = action.payload;
             return {...state}
-        case Actions.SET_LOADING:
+        }
+        case Actions.SET_LOADING:{
             state.loading = action.payload;
             return {...state}
-        case Actions.CLEAR_SELECTED_ITEMS:
-            return{
+        }
+        case Actions.CLEAR_SELECTED_ITEMS:{
+            return {
                 ...state,
                 selectedItems:[],
                 selectedItemCount:0
             }
-        case Actions.ADD_SELECTED_ITEM:
+        }
+        case Actions.ADD_SELECTED_ITEM:{
             return {
                 ...state,
-                selectedItems:state.selectedItems.concat(action.payload),
+                selectedItems: state.selectedItems.concat(action.payload),
                 selectedItemCount: state.selectedItemCount + 1
             }
-        case Actions.REMOVE_SELECTED_ITEM:
+        }
+        case Actions.REMOVE_SELECTED_ITEM:{
             return {
                 ...state,
                 selectedItems:[
@@ -39,28 +46,32 @@ export function reducer (state,action){
                 ],
                 selectedItemCount:state.selectedItemCount -  1
             }
-        case Actions.SET_DIRECTORY_ITEMS:
+        }
+        case Actions.SET_DIRECTORY_ITEMS:{
             return {
                 ...state,
                 directoryItems:action.payload
             }
-        case Actions.SET_SHOW_HIDDEN_FILES:
+        }
+        case Actions.SET_SHOW_HIDDEN_FILES:{
             return {
                 ...state,
                 showHiddenFiles:action.payload
             }
-        case Actions.RENAME_ITEM:
+        }
+        case Actions.RENAME_ITEM:{
             return {
                 ...state,
-                directoryItems:state.directoryItems.map((item,i)=> 
+                directoryItems: state.directoryItems.map((item,i)=> 
                     item.name === action.payload.oldName 
-                    ? {...item, name:action.payload.newName} 
-                    : {...item} 
-                    )
+                        ? {...item, name:action.payload.newName} 
+                        : {...item})
             }
-        case Actions.ADD_SHARED_WITH:
+        }
+        case Actions.ADD_SHARED_WITH:{
             const index = state.directoryItems.findIndex(element=>element.name === action.payload.itemName);
-            const newArray = [...state.directoryItems];
+            const newDirectoryItems = [...state.directoryItems];
+            const newSelectedItems  = [...state.selectedItems];
 
             const shareObject = {
                 username:action.payload.username,
@@ -68,16 +79,18 @@ export function reducer (state,action){
                 write:action.payload.write,
                 execute:action.payload.execute
             }
-            newArray[index].sharedWith.push(shareObject)
+
+            newDirectoryItems[index].sharedWith.push(shareObject)
+            newSelectedItems[0].sharedWith.push(shareObject);
             return {
                 ...state,
-                directoryItems:newArray,
-                selectedItems:[state.selectedItems[0],shareObject]
+                directoryItems: newDirectoryItems,
+                selectedItems : newSelectedItems
             }
-        
-        case Actions.UPDATE_SHARED_WITH:
-            const d_index = state.directoryItems.findIndex(element=>element.name === action.payload.itemName);
-            const s_index = state.selectedItems[0].sharedWith.findIndex(element=>element.username === action.payload.username);
+        }
+        case Actions.UPDATE_SHARED_WITH:{
+            const d_index = state.directoryItems.findIndex(element=>element.name === action.payload.itemName); // directoryItems
+            const s_index = state.selectedItems[0].sharedWith.findIndex(element=>element.username === action.payload.username); // selectedItems
             const newDirectoryItems = [...state.directoryItems];
             const newSelectedItems  = [...state.selectedItems];
 
@@ -93,9 +106,23 @@ export function reducer (state,action){
             newSelectedItems[0].sharedWith[s_index].execute = action.payload.execute;
             return {
                 ...state,
-                directoryItems:newDirectoryItems,
-                selectedItems:newSelectedItems
+                directoryItems: newDirectoryItems,
+                selectedItems : newSelectedItems
             }
+        }
+        case Actions.DELETE_SHARED_WITH:{
+            const dir_index = state.directoryItems.findIndex(element=>element.name === action.payload.itemName); // directoryItems
+            const newDirectoryItems = [...state.directoryItems];
+            const newSelectedItems  = [...state.selectedItems];
+            
+            newDirectoryItems[dir_index].sharedWith = newDirectoryItems[dir_index].sharedWith.filter((item)=> item.username !== action.payload.username);
+            newSelectedItems[0].sharedWith          = newSelectedItems[0].sharedWith.filter((item)=>item.username !== action.payload.username);
+            return {
+                ...state,
+                directoryItems: newDirectoryItems,
+                selectedItems: newSelectedItems
+            }
+        }
         default:
             return state
    }
