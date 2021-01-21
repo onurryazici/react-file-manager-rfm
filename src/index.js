@@ -20,4 +20,3 @@ const RFM = (props) =>{
     )
   }
 export default RFM;
-
