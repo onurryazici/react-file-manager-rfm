@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { FaStumbleuponCircle } from 'react-icons/fa';
+import ModalListView from '../components/modalListview';
 import ModalPlacemap from '../components/modalPlacemap';
 import styles from '../styles.module.css'
 
@@ -34,7 +35,7 @@ function CopyItemModal(props){
             modalShow ?
             [
               <ModalPlacemap/>,
-              <ListView/>
+              <ModalListView/>
             ]
             :""
           }

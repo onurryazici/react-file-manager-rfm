@@ -7,7 +7,7 @@ export const initialState = {
     selectedItems:[],     // Seçilen öğeler
     selectedItemCount:0,  // Seçilen öğe sayısı 
     directoryItems:[],    // Aktif olarak bulunan konumdaki öğeler
-    showHiddenFiles:"no", // Gizli dosyaların gösterimi 
+    modalDirectroyItems:[], // Modalda aktif olarak bulunan konumdaki öğeler
     refreshRequest:false,  // Aynı konuma tekrar tıklanırsa  
     hasError:false,
 }

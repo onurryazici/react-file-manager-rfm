@@ -17,20 +17,14 @@ function Content() {
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
     const directoryItems        = useSelector(state => state.directoryItems);
-    const showHiddenFilesValue  = useSelector(state => state.showHiddenFiles);
     const dispatch              = useDispatch();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
-    const username = "main";
 
 
     useEffect(() => {
         if(encryptedLocation !== ""){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{
-            params:{
-                location:encryptedLocation,
-                username:username,
-                showHiddenFiles:showHiddenFilesValue
-            }})
+            params:{location:encryptedLocation}})
         .then((response)=>{
             DispatchCaller(dispatch,Actions.SET_LOADING,false);
             DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);

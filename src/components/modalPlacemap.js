@@ -25,8 +25,8 @@ function ModalPlacemap() {
         <div className={styles.placemapArea}>
             {
                 splittedPlacemaps.map((item, key) => {
-                    if(key >= startLocation.split('/').length -1)
-                        if(key === startLocation.split('/').length -1)
+                    if(key >= startLocation.split('/').length - 1)
+                        if(key === startLocation.split('/').length - 1)
                             return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}> Home</Button></a>
                         else 
                             return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>

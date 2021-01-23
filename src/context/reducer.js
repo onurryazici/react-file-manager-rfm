@@ -4,6 +4,7 @@ export function reducer (state,action){
         case Actions.SET_LOCATION:{
             state.location = action.payload;
             state.modalLocation = action.payload;
+            state.modalLoading = true;
             return {...state}
         }
         case Actions.SET_MODAL_LOCATION:{
@@ -62,10 +63,10 @@ export function reducer (state,action){
                 directoryItems:action.payload
             }
         }
-        case Actions.SET_SHOW_HIDDEN_FILES:{
+        case Actions.SET_MODAL_DIRECTORY_ITEMS:{
             return {
                 ...state,
-                showHiddenFiles:action.payload
+                modalDirectoryItems:action.payload
             }
         }
         case Actions.RENAME_ITEM:{

@@ -87,7 +87,6 @@ function Item(props){
         if(type==="directory"){
           DispatchCaller(dispatch,Actions.SET_LOADING,true);
           var newLocation = currentLocation + "/" + name;
-          console.log(newLocation+ "yy");//////////////////////////////////////// BURADA EKSİK VAR
           DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
           DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
         }
