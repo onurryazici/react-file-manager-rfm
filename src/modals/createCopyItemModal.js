@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import { FaStumbleuponCircle } from 'react-icons/fa';
+import ModalPlacemap from '../components/modalPlacemap';
 import styles from '../styles.module.css'
 
 function CopyItemModal(props){
@@ -29,13 +30,14 @@ function CopyItemModal(props){
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
-          <Form autoComplete="off">
-            <Form.Group controlId="formFolderName">
-              <Form.Control type="text" placeholder="Adsız Klasör"  />
-            </Form.Group>
-          </Form>
-          </p>
+          {
+            modalShow ?
+            [
+              <ModalPlacemap/>,
+              <ListView/>
+            ]
+            :""
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Close</Button>

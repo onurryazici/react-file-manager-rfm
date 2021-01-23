@@ -10,12 +10,12 @@ import styles from '../styles.module.css'
 import axios from 'axios';
 
 export default function ShareView() {
+    const dispatch      = useDispatch();
     const selectedItems = useSelector((state) => state.selectedItems);
     const encryptedItem = Buffer.from(selectedItems[0].absolutePath).toString('base64');
     const [newUserFullAccess, setNewUserFullAccess] = useState(true);
     const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
     const [newUserName, setNewUserName] = useState("");
-    const dispatch = useDispatch();
 
     const ShareType={
         FOR_NEW_USER:"FOR_NEW_USER",
@@ -57,7 +57,6 @@ export default function ShareView() {
                     NotificationManager.error(err);
             });
     }
-
     function ShareWithNewUser(event){
         event.preventDefault();
         var exist = (selectedItems[0].sharedWith.some((item)=>item.username === newUserName) || selectedItems[0].owner === newUserName);
@@ -82,7 +81,6 @@ export default function ShareView() {
     function toggleExistUser(eventKey,username){
         ShareItem(username,eventKey,ShareType.FOR_EXISTING_USER);
     }
-
     function removeUserPermission(username){
         axios.get("http://192.168.252.128:3030/api/removePermission",{
             params:{
@@ -109,13 +107,12 @@ export default function ShareView() {
                 <FormControl className={classNames(styles.noRadius,styles.bordered,styles.shareUICol1)} 
                     placeholder="Yeni kişi"
                     onChange={(e)=>setNewUserName(e.target.value)}/>
-                <DropdownButton className={classNames(styles.noRadius,styles.bordered,styles.shareUICol2)} variant="" 
-                    title={newUserFullAccess ? "Tam Erişim" : "Salt Okunur"}>
+                <DropdownButton className={classNames(styles.noRadius,styles.bordered,styles.shareUICol2)} title={newUserFullAccess ? "Tam Erişim" : "Salt Okunur"} variant="">
                     <Dropdown.Item eventKey={PermissionType.FULL_ACCESS} onSelect={(e)=>toggleNewUser(e)} active={newUserFullAccess}>Tam Erişim </Dropdown.Item>
                     <Dropdown.Item eventKey={PermissionType.READ_ONLY}   onSelect={(e)=>toggleNewUser(e)} active={newUserReadOnly}  >Salt Okunur</Dropdown.Item>
                 </DropdownButton>
                 <Button as="input" type="submit" value="Davet et" variant="primary" className={classNames(styles.noRadius,styles.shareUICol3)}
-                disabled={newUserName.trim('').length < 1}/>
+                    disabled={newUserName.trim('').length < 1}/>
             </div>
             {
                 [<div className={styles.flex}>

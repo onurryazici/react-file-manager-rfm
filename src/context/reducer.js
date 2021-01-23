@@ -3,10 +3,15 @@ export function reducer (state,action){
    switch(action.type){
         case Actions.SET_LOCATION:{
             state.location = action.payload;
+            state.modalLocation = action.payload;
+            return {...state}
+        }
+        case Actions.SET_MODAL_LOCATION:{
+            state.modalLocation = action.payload;
             return {...state}
         }
         case Actions.SET_START_LOCATION:{
-            state.location = action.payload;
+            state.startLocation = action.payload;
             return {...state}
         }
         case Actions.ADD_DIRECTORY_ITEM:{
@@ -21,6 +26,10 @@ export function reducer (state,action){
         }
         case Actions.SET_LOADING:{
             state.loading = action.payload;
+            return {...state}
+        }
+        case Actions.SET_MODAL_LOADING:{
+            state.modalLoading = action.payload;
             return {...state}
         }
         case Actions.CLEAR_SELECTED_ITEMS:{

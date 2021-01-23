@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import styles from '../styles.module.css'
 import { DispatchCaller } from '../helper/global';
-function Placemap() {
+function ModalPlacemap() {
     const dispatch        = useDispatch();
-    var currentLocation   = useSelector(state => state.location) + '';
+    var currentLocation   = useSelector(state => state.modalLocation) + '';
     var startLocation     = useSelector(state => state.startLocation) + '';
     var splittedPlacemaps = currentLocation.split('/');
 
@@ -16,8 +16,8 @@ function Placemap() {
         var newLocation          = reducedLocationArray.join('/');
         var refreshRequest       = (currentLocation === newLocation) ? true : false;
         if(!refreshRequest) {
-            DispatchCaller(dispatch,Actions.SET_LOADING,true);
-            DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
+            DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,true);
+            DispatchCaller(dispatch,Actions.SET_MODAL_LOCATION,newLocation);
         }
     }
 
@@ -30,12 +30,9 @@ function Placemap() {
                             return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}> Home</Button></a>
                         else 
                             return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
-                    
-                   
                 })
-                
             }
         </div>
     )    
 }
-export default Placemap;
+export default ModalPlacemap;
