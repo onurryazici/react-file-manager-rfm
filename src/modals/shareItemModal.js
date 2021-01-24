@@ -11,7 +11,7 @@ function ShareItemModal(props){
     const selectedItemCount         = useSelector((state) => state.selectedItemCount);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
     return (
-      <div>
+      <React.Fragment>
         {
           isContextMenuButton
             ?
@@ -33,13 +33,13 @@ function ShareItemModal(props){
           </Modal.Header>
           <Modal.Body>
             {
-              (modalShow && selectedItems !== undefined && selectedItemCount === 1)
+              (selectedItems !== undefined && selectedItemCount === 1)
               ? <ShareView/>
               : ""
             }
             </Modal.Body>
           </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 export default ShareItemModal;

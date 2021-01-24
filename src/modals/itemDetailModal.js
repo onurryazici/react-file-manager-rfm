@@ -32,7 +32,7 @@ function ItemDetailModal(props) {
     }
 
     return (
-      <div>
+      <React.Fragment>
         {
           isContextMenuButton
             ?
@@ -106,7 +106,7 @@ function ItemDetailModal(props) {
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Kapat</Button>
         </Modal.Footer>
       </Modal>
-      </div>
+      </React.Fragment>
     );
 }
 export default ItemDetailModal;

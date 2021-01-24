@@ -97,13 +97,13 @@ function Item(props){
     return(
       <div>
         <ContextMenuTrigger id={itemName}>
-          <div className={classNames(styles.itemBlock,{[styles.itemBlockActive]:itemSelected===true})} 
+          <div className={classNames(styles.itemBlockGridView,{[styles.itemBlockGridViewActive]:itemSelected===true})} 
               onClick={(event)=>onItemSelected(event,itemName)}
               onContextMenu={(event)=>onItemContextMenu(event,itemName)}
               onDoubleClick={()=>onItemDoubleClick(itemName,itemType)}>
               {(itemType==="file")
-                ? <File fileName={itemName} extension={extension}/>
-                : <Folder folderName={itemName} folderType={itemType}/> 
+                ? <File fileName={itemName} extension={extension} viewMode="grid"/>
+                : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
               }
               <span className={styles.tooltiptext}>{itemName}</span>
           </div>

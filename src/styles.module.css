@@ -166,10 +166,34 @@ body{
   user-select:none;
   -o-user-select:none;
 }
-
-.itemBlock{
+.containerW100PH300{
+  width:100%;
+  height:300px;
   position: relative;
-  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.itemBlockListView{
+  width: 100%;
+  height: 50px;
+  background-color: #ffffff;
+  border: solid thin #dedede;
+  padding:3px;
+  display: flex;
+}
+.itemBlockListView:hover{
+  background: #c1d7ec;
+}
+.itemBlockListViewActive{
+  background: #c6daeb;
+  border: solid thin #0066cc;
+  display: flex;
+  line-height: 45px;
+  padding:3px;
+}
+
+.itemBlockGridView{
+  position: relative;
   width: 140px;
   height: 155px;
   margin-right: 10px;
@@ -180,14 +204,14 @@ body{
   overflow: hidden;
   border: solid thin #dedede;
 }
-.itemBlock:hover{
-  background: #cbdef1;
+.itemBlockGridView:hover{
+  background: #c1d7ec;
 }
-.itemBlockActive{
+.itemBlockGridViewActive{
   background: #c6daeb;
   border: solid thin #0066cc;
 }
-.itemIcon{
+.itemIconGrid{
   width: 95%;
   height: 100%;
   margin-left: auto;
@@ -195,7 +219,16 @@ body{
   text-align: center;
   align-items: center;
 }
-.itemName{
+.itemIconList{
+  width:45px;
+  height:45px;
+  margin-right: 8px;
+}
+.itemNameList{
+  width: 100%;
+  float:left
+}
+.itemNameGrid{
   width: 93%;
   margin-right: 5px;
   text-align: center;
@@ -207,7 +240,8 @@ body{
   -webkit-line-clamp: 1; /* number of lines to show */
   -webkit-box-orient: vertical;
 }
-.itemBlock .tooltiptext {
+
+.itemBlockGridView .tooltiptext {
   visibility: hidden;
   width: auto;
   background-color: black;
@@ -224,7 +258,7 @@ body{
   
 }
 
-.itemBlock:hover .tooltiptext {
+.itemBlockGridView:hover .tooltiptext {
   visibility: visible;
   transition-delay: 1s;
 }

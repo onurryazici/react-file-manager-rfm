@@ -1,26 +1,27 @@
 import React from 'react'
-import { FaFolder, FaUserCircle } from 'react-icons/fa';
+import { FaFolder, FaFolderPlus, FaUserCircle } from 'react-icons/fa';
 
 import styles from "../styles.module.css"
 function Folder(props){
     const folderType = props.folderType; // directory or symbolic
     const folderName = props.folderName;
+    const viewMode   = props.viewMode;
+    const selectedIconClass = viewMode === "grid" ? styles.itemIconGrid : styles.itemIconList;
+    const selectedNameClass = viewMode === "grid" ? styles.itemNameGrid : styles.itemNameList;
     return(
-        <div>
+        <React.Fragment>
             {
                 folderType==="directory"?
-                    <React.Fragment><FaFolder className={styles.itemIcon} style={{color:"#f7b600"}}/> 
-                    <div className={styles.itemName}>{folderName}</div></React.Fragment>
+                    <React.Fragment><FaFolder className={`${selectedIconClass}`} style={{color:"#f7b600"}}/> 
+                    <div className={selectedNameClass}>{folderName}</div></React.Fragment>
                 :
                     <React.Fragment>
-                        <FaFolder className={styles.itemIcon} style={{color:"#f7b600"}}/>
-                        <FaUserCircle className={styles.itemMiniIcon} style={{color:"#0066cc"}}/>
-                        
-                        <div className={styles.itemName}>{folderName}</div>
+                        <FaFolderPlus className={`${selectedIconClass}`} style={{color:"#f7b600"}}/>                        
+                        <div className={`${selectedNameClass}`}>{folderName}</div>
                         
                     </React.Fragment>
             }
-        </div>
+        </React.Fragment>
     )
 }
 

@@ -6,7 +6,7 @@ function MoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     return (
-      <div className={styles.noselect}>
+      <React.Fragment>
         {
             isContextMenuButton 
               ?
@@ -20,7 +20,7 @@ function MoveItemModal(props){
                 </Button>
         }
 
-        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
+        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
               Yeni Klasör
@@ -40,7 +40,7 @@ function MoveItemModal(props){
           <Button onClick={()=>setModalShow(false)} variant="warning">Oluştur</Button>
         </Modal.Footer>
       </Modal>
-      </div>
+      </React.Fragment>
     );
   }
   export default MoveItemModal;

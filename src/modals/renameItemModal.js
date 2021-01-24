@@ -73,7 +73,7 @@ function RenameItemModal(props) {
     }
   }
   return (
-    <div className={styles.noselect}>
+    <React.Fragment>
       {isContextMenuButton ? 
       (
         <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
@@ -90,7 +90,7 @@ function RenameItemModal(props) {
           </Button>
       )}
 
-      <Modal show={modalShow} onHide={() => setModalShow(false)} size='s' aria-labelledby='contained-modal-title-vcenter' centered >
+      <Modal show={modalShow} onHide={() => setModalShow(false)} size='s' aria-labelledby='contained-modal-title-vcenter' centered className={styles.noselect}>
         <Modal.Header closeButton>
           <Modal.Title id='contained-modal-title-vcenter'>
             Yeniden adlandır
@@ -98,23 +98,21 @@ function RenameItemModal(props) {
         </Modal.Header>
         <form autoComplete='off' onSubmit={RenameItem}>
           <Modal.Body>
-            <p>
+            
               <Form.Group role='form' controlId='formFolderName'>
                 <Form.Control type='text' placeholder='Adsız Klasör' name='folderName' onChange={(e) => onKeyPress(e.target)} />
                 <br />
-                {newItemName.length > 0 && !isAcceptable ? (
+                {newItemName.length > 0 && !isAcceptable 
+                ? (
                   <Alert variant='danger'>
                     <p>
                       Şu karakterleri içermemelidir . , / \ : ; ^ &gt; &lt; |
                     </p>
                   </Alert>
-                ) 
-                : 
-                (
-                    ''
-                )}
+                  ) 
+                : ('')
+                }
               </Form.Group>
-            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => setModalShow(false)} variant='outline-dark'>
@@ -134,7 +132,7 @@ function RenameItemModal(props) {
           </Modal.Footer>
         </form>
       </Modal>
-    </div>
+    </React.Fragment>
   )
 }
 export default RenameItemModal

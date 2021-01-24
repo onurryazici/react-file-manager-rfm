@@ -58,7 +58,7 @@ function RemoveItemModal(props){
       }
     }
     return (
-      <div className={styles.noselect}>
+      <React.Fragment>
         {
           isContextMenuButton 
             ?
@@ -71,7 +71,7 @@ function RemoveItemModal(props){
                 <div className={styles.actionbarText}>Sil</div>
               </Button>
         }
-        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
+        <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Uyarı
@@ -92,7 +92,7 @@ function RemoveItemModal(props){
           <Button onClick={()=>RemoveItem()} variant="danger">Sil</Button>
         </Modal.Footer>
       </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 export default RemoveItemModal;

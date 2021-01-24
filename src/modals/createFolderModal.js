@@ -51,7 +51,7 @@ function CreateFolderModal(props){
     }
   }
   return (
-    <div className={styles.noselect}>
+    <React.Fragment>
       {
         isContextMenuButton
           ?
@@ -65,7 +65,7 @@ function CreateFolderModal(props){
             </Button>
       }  
 
-      <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered >
+      <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
       <Form autoComplete="off" onSubmit={CreateFolder}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -94,7 +94,7 @@ function CreateFolderModal(props){
       </Modal.Footer>
       </Form>
     </Modal>
-    </div>
+    </React.Fragment>
   );
 }
 export default CreateFolderModal;
