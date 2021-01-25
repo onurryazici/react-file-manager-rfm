@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap';
-import { FaStumbleuponCircle } from 'react-icons/fa';
+import { FaFolderOpen, FaStumbleuponCircle } from 'react-icons/fa';
 import ModalPlacemap from '../views/modalPlacemap';
 import styles from '../styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { DispatchCaller } from '../helper/global';
 import { Actions } from '../context/actions';
 import Folder from '../components/folder';
+import axios from 'axios';
+import { NotificationManager } from 'react-notifications';
 
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
@@ -17,7 +18,7 @@ function CopyItemModal(props){
     const currentLocation   = useSelector(state => state.modalLocation);
     const directoryItems    = useSelector(state => state.modalDirectoryItems);
     const encryptedLocation = Buffer.from(currentLocation).toString('base64');
-
+    const selectedItems     = useSelector(state => state.selectedItems);
     useEffect(() => {
         if(encryptedLocation !== "" && modalShow){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{params:{location:encryptedLocation}})
@@ -39,8 +40,28 @@ function CopyItemModal(props){
         let newLocation = currentLocation + "/" + nameParam;
         DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,true);
         DispatchCaller(dispatch,Actions.SET_MODAL_LOCATION,newLocation);
-    }
+    } 
+    function CreateCopyItem(){
+      setModalShow(false);
+      
+      axios.get("http://192.168.252.128:3030/api/createCopy",{
+          params:{
+            "items[]":encryptedLocation,
+            target:encryptedLocation
+          }
+        })
+        .then((response)=>{
+          if(response.data.statu){
+              NotificationManager.success("Kopyalama işlemi gerçekleştirlidi");
+          }
+          else
+                NotificationManager.error(response.data.message);
+        }).catch((err)=>{
+        DispatchCaller(dispatch,Actions.SET_ERROR, true);
+        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+        });
 
+    }
     return (
       <React.Fragment>
         {
@@ -85,7 +106,7 @@ function CopyItemModal(props){
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
-          <Button onClick={()=>setModalShow(false)} variant="primary">Kopya Oluştur</Button>
+          <Button onClick={()=>CreateCopyItem()} variant="primary">Kopya Oluştur</Button>
         </Modal.Footer>
       </Modal>
       </React.Fragment>
