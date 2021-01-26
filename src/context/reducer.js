@@ -16,10 +16,11 @@ export function reducer (state,action){
             return {...state}
         }
         case Actions.ADD_DIRECTORY_ITEM:{
-            return{
+            const newDirectoryItems = [...state.directoryItems];
+            newDirectoryItems.push(action.payload);
+            return {
                 ...state,
-                directoryItems:state.directoryItems.concat(action.payload),
-                modalDirectoryItems:state.modalDirectoryItems.concat(action.payload)
+                directoryItems:newDirectoryItems
             }
         }
         case Actions.SET_ERROR:{

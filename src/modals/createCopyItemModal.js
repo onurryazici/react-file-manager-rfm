@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap';
-import { FaFolderOpen, FaStumbleuponCircle } from 'react-icons/fa';
+import { FaStumbleuponCircle } from 'react-icons/fa';
 import ModalPlacemap from '../views/modalPlacemap';
 import styles from '../styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ function CopyItemModal(props){
     const directoryItems    = useSelector(state => state.modalDirectoryItems);
     const encryptedLocation = Buffer.from(currentLocation).toString('base64');
     const selectedItems     = useSelector(state => state.selectedItems);
+
     useEffect(() => {
         if(encryptedLocation !== "" && modalShow){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{params:{location:encryptedLocation}})
@@ -29,10 +30,6 @@ function CopyItemModal(props){
                 DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,false);
                 DispatchCaller(dispatch,Actions.SET_ERROR,true);
             })
-            console.log("running")
-        }
-        else{
-          console.log(encryptedLocation + " ve " + modalShow);
         }
     },[modalShow,currentLocation]);
     
@@ -43,10 +40,13 @@ function CopyItemModal(props){
     } 
     function CreateCopyItem(){
       setModalShow(false);
-      
+      let encryptedItems=[];
+      selectedItems.forEach(element => {
+          encryptedItems.push(Buffer.from(element.absolutePath).toString('base64')); 
+      });
       axios.get("http://192.168.252.128:3030/api/createCopy",{
           params:{
-            "items[]":encryptedLocation,
+            "items[]":encryptedItems,
             target:encryptedLocation
           }
         })

@@ -34,6 +34,7 @@ function CreateFolderModal(props){
         })
         .then((response)=>{
           if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
+            console.log("oluştu");
               DispatchCaller(dispatch,Actions.SET_LOADING,false);
               DispatchCaller(dispatch,Actions.ADD_DIRECTORY_ITEM,response.data.item);
               NotificationManager.success("Dizin oluşturuldu");
@@ -41,6 +42,7 @@ function CreateFolderModal(props){
           else
                 NotificationManager.error(response.data.message);
         }).catch((err)=>{
+          console.log("Hataa "  + err)
         DispatchCaller(dispatch,Actions.SET_ERROR, true);
         DispatchCaller(dispatch,Actions.SET_LOADING, false);
         });

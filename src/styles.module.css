@@ -61,6 +61,9 @@ body{
 
 #contentStage{
   width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x:hidden;
   height: calc(100% - 124px);
   overflow-y:auto;
   display: block;
@@ -69,7 +72,8 @@ body{
 }
 #contents{
   background-color: #ffffff;
-  width:100%;
+  width: 100%;
+  max-width: 100%;
   min-height: 100%;
   position: absolute;
   padding: 15px;
@@ -78,6 +82,7 @@ body{
   flex-wrap: wrap;/**/
   flex-direction: row;/**/
   align-content: flex-start; /*  */
+  overflow-x: hidden;
 }
 .react-context-menu-wrapper {
   width: 100%;
