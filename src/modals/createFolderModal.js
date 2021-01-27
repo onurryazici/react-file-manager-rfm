@@ -9,7 +9,7 @@ import Axios from 'axios';
 import { Messages } from '../helper/message';
 import { Actions } from '../context/actions';
 import { useState } from 'react';
-import { NotificationManager } from 'react-notifications';
+import {  toast } from 'material-react-toastify';
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName] = useState("");
   const [modalShow, setModalShow] = React.useState(false);
@@ -37,19 +37,20 @@ function CreateFolderModal(props){
             console.log("oluştu");
               DispatchCaller(dispatch,Actions.SET_LOADING,false);
               DispatchCaller(dispatch,Actions.ADD_DIRECTORY_ITEM,response.data.item);
-              NotificationManager.success("Dizin oluşturuldu");
+              toast.success("Dizin oluşturuldu")
           }
-          else
-                NotificationManager.error(response.data.message);
+          else{
+            
+              toast.error(response.data.message+"xx");
+          }
         }).catch((err)=>{
-          console.log("Hataa "  + err)
         DispatchCaller(dispatch,Actions.SET_ERROR, true);
         DispatchCaller(dispatch,Actions.SET_LOADING, false);
         });
       }
     }
     else{
-      NotificationManager.warning("Bu dizin zaten mevcut");
+      toast.warning("Bu dizin zaten mevcut");
     }
   }
   return (

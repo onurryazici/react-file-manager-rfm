@@ -4,10 +4,10 @@ import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchCaller } from '../helper/global';
 import { Actions } from '../context/actions';
-import { NotificationManager } from 'react-notifications';
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 import axios from 'axios';
+import { toast } from 'material-react-toastify';
 
 export default function ShareView() {
     const dispatch      = useDispatch();
@@ -45,16 +45,16 @@ export default function ShareView() {
                     }
                     if(type === ShareType.FOR_NEW_USER){
                         DispatchCaller(dispatch,Actions.ADD_SHARED_WITH,payload)
-                        NotificationManager.success("Öğe paylaşıldı");
+                        toast.success("Öğe paylaşıldı");
                     }
                     else{
                         DispatchCaller(dispatch,Actions.UPDATE_SHARED_WITH,payload);
                     }
                 }
                 else
-                    NotificationManager.error(response.data.message);
+                   toast.error(response.data.message);
                 }).catch((err)=>{
-                    NotificationManager.error(err);
+                    toast.error(err);
             });
     }
     function ShareWithNewUser(event){
@@ -96,9 +96,9 @@ export default function ShareView() {
                     DispatchCaller(dispatch,Actions.DELETE_SHARED_WITH,payload);
                 }   
                 else
-                    NotificationManager.error(response.data.message);
+                    toast.error(response.data.message);
                 }).catch((err)=>{
-                    NotificationManager.error(err);
+                    toast.error(err);
             });
     }
     return (

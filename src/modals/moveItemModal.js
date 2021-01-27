@@ -1,8 +1,8 @@
 import axios from 'axios'
+import { toast } from 'material-react-toastify'
 import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
-import { NotificationManager } from 'react-notifications'
 import { useDispatch, useSelector } from 'react-redux'
 import Folder from '../components/folder'
 import { Actions } from '../context/actions'
@@ -61,8 +61,8 @@ function MoveItemModal(props) {
           console.log(reduced);
           DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,reduced);
           DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
-          NotificationManager.success('Taşıma işlemi gerçekleştirlidi')
-        } else NotificationManager.error(response.data.message)
+          toast.success('Taşıma işlemi gerçekleştirlidi')
+        } else toast.error(response.data.message)
       })
       .catch((err) => {
         DispatchCaller(dispatch, Actions.SET_ERROR, true)

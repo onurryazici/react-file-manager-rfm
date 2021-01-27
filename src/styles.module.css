@@ -33,15 +33,18 @@ body{
   border-bottom: solid thin #dededede;
   z-index: 3;
   text-align: left;
-  
+  display: flex;
 }
 
 .actionbarButton
 {
   border:0px;
   background-color: #ffffff;
+  width: auto;
   height: 44px;
   float: left;
+  display: flex;
+  line-height: 35px;
 }
 
 .actionbarButton:hover
@@ -52,6 +55,7 @@ body{
   font-size: 26px;
   float: left;
   line-height: 10px;
+  margin-top:3px;
 }
 .actionbarText{
   float: left;
@@ -452,4 +456,14 @@ body{
 }
 .mt10{
   margin-top: 10px;
+}
+
+.customFilesUpload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.animateLeft{
+  transition: ease-in 2s, ease-out 4s;
 }

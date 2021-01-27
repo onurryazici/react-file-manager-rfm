@@ -8,7 +8,7 @@ import { DispatchCaller } from '../helper/global';
 import { Actions } from '../context/actions';
 import Folder from '../components/folder';
 import axios from 'axios';
-import { NotificationManager } from 'react-notifications';
+import { toast } from 'material-react-toastify';
 
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
@@ -52,10 +52,10 @@ function CopyItemModal(props){
         })
         .then((response)=>{
           if(response.data.statu){
-              NotificationManager.success("Kopyalama işlemi gerçekleştirlidi");
+              toast.success("Kopyalama işlemi gerçekleştirlidi");
           }
           else
-                NotificationManager.error(response.data.message);
+                toast.error(response.data.message);
         }).catch((err)=>{
         DispatchCaller(dispatch,Actions.SET_ERROR, true);
         DispatchCaller(dispatch,Actions.SET_LOADING, false);

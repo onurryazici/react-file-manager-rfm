@@ -8,7 +8,7 @@ import { Messages } from '../helper/message'
 import axios from 'axios'
 import { DispatchCaller } from '../helper/global'
 import { Actions } from '../context/actions'
-import { NotificationManager } from 'react-notifications'
+import { toast } from 'material-react-toastify'
 
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
@@ -57,19 +57,18 @@ function RenameItemModal(props) {
                 }
                 DispatchCaller(dispatch,Actions.RENAME_ITEM,data)
               }
-              NotificationManager.success('Yeniden adlandırıldı');
+              toast.success('Yeniden adlandırıldı');
             } 
             else
-              NotificationManager.error(response.data.message)
+              toast.error(response.data.message)
           })
           .catch((err) => {
-            console.log("xxx " + err);
             DispatchCaller(dispatch, Actions.SET_ERROR, true)
             DispatchCaller(dispatch, Actions.SET_LOADING, false)
           })
       }
     } else {
-      NotificationManager.warning('Bu öğe zaten mevcut')
+      toast.warning('Bu öğe zaten mevcut')
     }
   }
   return (

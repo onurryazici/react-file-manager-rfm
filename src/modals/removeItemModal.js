@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
@@ -6,8 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Actions } from '../context/actions';
 import { DispatchCaller } from '../helper/global';
 import styles from '../styles.module.css'
-import 'react-notifications/lib/notifications.css';
-import { NotificationManager} from 'react-notifications';
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const dispatch          = useDispatch();
@@ -44,17 +43,17 @@ function RemoveItemModal(props){
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
               DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
               DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,reduced);
-              NotificationManager.success('Silme işlemi başarılı');
+              toast.success('Silme işlemi başarılı');
             }
             else
-              NotificationManager.error(response.data.message);
+              toast.error(response.data.message);
         }).catch(()=>{
             DispatchCaller(dispatch,Actions.SET_ERROR, true);
             DispatchCaller(dispatch,Actions.SET_LOADING, false);
         });
       }
       if(cantRemove.length > 0){
-        NotificationManager.error(cantRemove, 'Silmek için yetkiniz yok');
+        toast.error(cantRemove, 'Silmek için yetkiniz yok');
       }
     }
     return (

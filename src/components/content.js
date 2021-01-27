@@ -10,7 +10,9 @@ import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
-import NotificationContainer from 'react-notifications/lib/NotificationContainer';
+import Upload from './upload';
+import { ToastContainer } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 
 function Content() {
     const loading               = useSelector(state => state.loading);
@@ -96,11 +98,19 @@ function Content() {
                             <CreateFolderModal isContextMenuButton="yes"/>
                         </MenuItem>
                         <MenuItem>
-                            <button type="button" className={styles.contextMenuItem}>Dosya yükle</button>
+                            <Upload isContextMenuButton="yes"/>
                         </MenuItem>
                     </div>
                 </ContextMenu>
-                <NotificationContainer></NotificationContainer>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    />
             </div>     
         )
     }
