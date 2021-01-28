@@ -102,15 +102,7 @@ function Content() {
                         </MenuItem>
                     </div>
                 </ContextMenu>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={2000}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    />
+                
             </div>     
         )
     }

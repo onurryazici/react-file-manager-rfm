@@ -203,12 +203,12 @@ body{
 
 .itemBlockGridView{
   position: relative;
-  width: 140px;
+  width: 145px;
   height: 155px;
   margin-right: 10px;
   margin-bottom: 10px;
   text-align: left;
-  padding: 5px;
+  padding: 10px;
   background: #fff;
   overflow: hidden;
   border: solid thin #dedede;
@@ -221,7 +221,7 @@ body{
   border: solid thin #0066cc;
 }
 .itemIconGrid{
-  width: 95%;
+  width: 100%;
   height: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -238,8 +238,8 @@ body{
   float:left
 }
 .itemNameGrid{
-  width: 93%;
-  margin-right: 5px;
+  width: 100%;
+  margin-left: -10px;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -463,7 +463,4 @@ body{
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
-}
-.animateLeft{
-  transition: ease-in 2s, ease-out 4s;
 }

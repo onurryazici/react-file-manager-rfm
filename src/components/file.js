@@ -14,13 +14,13 @@ function File(props){
     {
         switch(extension)
         {
-            case '.txt':
-                return <FaFileAlt className={`${selectedClass}`} color="#1c96a9" style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
-            case 'docx' || '.doc':
+            case 'txt':
+                return <FaFileAlt className={`${selectedClass}`} color="#ca4fa6" style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
+            case 'docx' || 'doc':
                 return <FaFileWord color="#0066cc" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}} />
-            case '.pdf':
+            case 'pdf':
                 return <FaFilePdf color="#d13131" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
-            case 'xlsx':
+            case 'xlsx' || 'xls':
                 return <FaFileExcel color="#1e7e34" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
             default:
                 return <FaFile color="#777777" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>;

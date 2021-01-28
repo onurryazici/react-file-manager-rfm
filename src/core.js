@@ -10,6 +10,7 @@ import { DispatchCaller } from './helper/global'
 import { Messages } from './helper/message'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
+import { ToastContainer } from 'material-react-toastify'
 
 function RFM_Core(props) {
   const dispatch = useDispatch()
@@ -38,6 +39,16 @@ function RFM_Core(props) {
       <Placemap />
       <Content />
       <FolderDetails />
+      <ToastContainer
+                    autoClose={3000}
+                    position="top-right"
+                    newestOnTop={false}
+                    hideProgressBar={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    />
     </div>
   )
 }
