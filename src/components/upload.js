@@ -5,18 +5,23 @@ import styles from '../styles.module.css'
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
 import { useDispatch } from 'react-redux';
-import { DispatchCaller } from '../helper/global';
+import { DispatchCaller, HTTP_REQUEST } from '../helper/global';
 import { Actions } from '../context/actions';
+import {UploadService }from '../services/upload-service';
 
 export default function Upload(props) {
     const inputFileRef = useRef(null);
     const toastId      = useRef(null);
-    const dispatch     = useDispatch();
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
-    function onFileChange(e){
-        let data = new FormData();
-        data.append('file',e.target.files[0]); // BURAYI DEĞİŞTİRMEK GEREKEBİLİR
-        const config  = { 
+
+    function onFileChange(event){
+        const files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            UploadService(files[i])
+        }
+        //data.append('file',e.target.files[0]); // BURAYI DEĞİŞTİRMEK GEREKEBİLİR
+        
+        /*const config  = { 
             headers: {
                 'content-type': 'multipart/form-data'
             },
@@ -35,18 +40,18 @@ export default function Upload(props) {
                     });
                     console.log(percent + "% BBBB");
                 }
-                
             }
         }
-        axios.post('http://192.168.252.128:3030/api/uploadItem', data, config).then(res=>{
+        HTTP_REQUEST.post('/uploadItem',data,config)
+        .then((response)=>{
             setTimeout(() => {
                 toast.done(toastId.current);
                 toastId.current = null;
             }, 1000);
-            toast.success("Yükleme tamamlandı")
+            toast.success("Yükleme tamamlandı")    
         }).catch((err)=>{
             console.log("hata " + err)
-        })
+        });*/
     }
     function handleClick(){
         inputFileRef.current.click();
@@ -56,14 +61,14 @@ export default function Upload(props) {
             {
                 isContextMenuButton ?
                 <div>
-                    <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} />
+                    <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} multiple/>
                     <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
                         <div style={{fontSize:'14px'}}>Yükle</div>
                     </Button>
                 </div>
                 :
                 <div>
-                <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} />
+                <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} multiple/>
                 <Button variant="light" className={styles.actionbarButton} onClick={handleClick}>
                     <div className={styles.actionbarIcon}><FaChevronCircleUp color="#dc3545"/></div>
                     <div className={styles.actionbarText}>Yükle</div>
