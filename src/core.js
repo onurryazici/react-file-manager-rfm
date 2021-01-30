@@ -11,6 +11,7 @@ import { Messages } from './helper/message'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import { ToastContainer } from 'material-react-toastify'
+import UploadDetails from './components/uploadDetails'
 
 function RFM_Core(props) {
   const dispatch = useDispatch()
@@ -39,12 +40,10 @@ function RFM_Core(props) {
       <Placemap />
       <Content />
       <FolderDetails />
+      <UploadDetails/>
       <ToastContainer
-                    autoClose={3000}
                     position="top-right"
                     newestOnTop={false}
-                    hideProgressBar={false}
-                    closeOnClick
                     rtl={false}
                     pauseOnFocusLoss
                     draggable

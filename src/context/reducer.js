@@ -1,4 +1,6 @@
+import { size } from 'lodash';
 import { Actions } from './actions';
+
 export function reducer (state,action){
    switch(action.type){
         case Actions.SET_LOCATION:{
@@ -135,7 +137,82 @@ export function reducer (state,action){
                 selectedItems: newSelectedItems
             }
         }
+
+
+        case Actions.SET_UPLOAD_FILE:{
+            const files = action.payload;
+            let fileToUpload = state.fileProgress;
+
+            for (let i = 0; i < files.length; i++) {
+                
+                const id = size(state.fileProgress) + i +1;
+                fileToUpload = {
+                    ...fileToUpload,
+                    [id]: {
+                        id,
+                        file: files[i],
+                        progress: 0,
+                        completed:false
+                        },
+                }
+            }
+            return {
+                ...state,
+                fileProgress:fileToUpload
+            }
+
+            /*return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    ...modifyFiles(state.fileProgress,action.payload)
+                }
+            }*/
+        }
+
+        case Actions.SET_UPLOAD_PROGRESS:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload.id]:{
+                        ...state.fileProgress[action.payload.id],
+                        progress:action.payload.progress
+                    }
+                }
+            }
+        }
+
+        case Actions.SUCCESS_UPLOAD_FILE:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload]:{
+                        ...state.fileProgress[action.payload],
+                        completed:true,
+                    },
+                },
+            }
+        }
+
+        case Actions.FAILURE_UPLOAD_FILE:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload]:{
+                        ...state.fileProgress[action.payload],
+                        completed:false,
+                        progress:0,
+                    },
+                }
+            }
+        }
+
+
         default:
             return state
    }
 }
+

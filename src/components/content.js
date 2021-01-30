@@ -10,7 +10,7 @@ import CreateFolderModal from '../modals/createFolderModal';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
-import Upload from './upload';
+import Upload from '../views/uploadButton';
 import { ToastContainer } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
 

@@ -10,5 +10,6 @@ export const initialState = {
     directoryItems:[],    // Aktif olarak bulunan konumdaki öğeler
     modalDirectroyItems:[], // Modalda aktif olarak bulunan konumdaki öğeler
     refreshRequest:false,  // Aynı konuma tekrar tıklanırsa  
-    hasError:false,
+    hasError:false,        // Hata denetlemek için (kaldırılabilir)
+    fileProgress:{}        // Upload takibi için
 }

@@ -1,15 +1,12 @@
-import React, { useRef } from 'react'
-import { Button } from 'react-bootstrap';
-import { FaChevronCircleUp } from 'react-icons/fa';
-import Upload from '../components/upload';
+import React from 'react'
 import CreateFolderModal from '../modals/createFolderModal';
-import styles from '../styles.module.css'
+import UploadButton from './uploadButton';
 function OnStartView() {
     
     return (
         <React.Fragment>
             <CreateFolderModal />
-            <Upload/>
+            <UploadButton/>
         </React.Fragment>
     )
 }

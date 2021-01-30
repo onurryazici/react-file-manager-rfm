@@ -50,6 +50,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "fs": "0.0.1-security",
+    "lodash": "^4.17.20",
     "material-react-toastify": "^1.0.1",
     "prop-types": "^15.7.2",
     "react-icons": "^3.11.0",

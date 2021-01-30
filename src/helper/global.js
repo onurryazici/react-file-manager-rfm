@@ -6,8 +6,5 @@ export function DispatchCaller(dispatchObject,typeValue,payloadValue)
     return dispatch({type:typeValue, payload:payloadValue});
 }  
 export const HTTP_REQUEST = axios.create({
-    baseURL:"http://192.168.252.128:3030/api",
-    header: {
-        "content-type": "application/json"
-    }
+    baseURL:"http://192.168.252.128:3030/api"
 })
