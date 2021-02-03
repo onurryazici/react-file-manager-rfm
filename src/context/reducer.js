@@ -1,6 +1,7 @@
 import { size } from 'lodash';
 import { Actions } from './actions';
 
+
 export function reducer (state,action){
    switch(action.type){
         case Actions.SET_LOCATION:{
@@ -149,9 +150,10 @@ export function reducer (state,action){
                 fileToUpload = {
                     ...fileToUpload,
                     [id]: {
-                        id,
+                        id:id,
                         file: files[i],
                         progress: 0,
+                        failure:false,
                         completed:false
                         },
                 }
@@ -160,14 +162,6 @@ export function reducer (state,action){
                 ...state,
                 fileProgress:fileToUpload
             }
-
-            /*return {
-                ...state,
-                fileProgress:{
-                    ...state.fileProgress,
-                    ...modifyFiles(state.fileProgress,action.payload)
-                }
-            }*/
         }
 
         case Actions.SET_UPLOAD_PROGRESS:{
@@ -190,6 +184,7 @@ export function reducer (state,action){
                     ...state.fileProgress,
                     [action.payload]:{
                         ...state.fileProgress[action.payload],
+                        failure:false,
                         completed:true,
                     },
                 },
@@ -203,6 +198,7 @@ export function reducer (state,action){
                     ...state.fileProgress,
                     [action.payload]:{
                         ...state.fileProgress[action.payload],
+                        failure:true,
                         completed:false,
                         progress:0,
                     },

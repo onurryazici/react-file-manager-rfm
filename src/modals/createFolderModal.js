@@ -3,18 +3,17 @@ import {Button, Modal,Form } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 import { FaPlusCircle } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { DispatchCaller } from '../helper/global';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import Axios from 'axios';
 import { Messages } from '../helper/message';
-import { Actions } from '../context/actions';
 import { useState } from 'react';
 import {  toast } from 'material-react-toastify';
+import { ADD_DIRECTORY_ITEM, SET_ERROR, SET_LOADING } from '../context/functions';
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName] = useState("");
   const [modalShow, setModalShow] = React.useState(false);
   const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
-  const dispatch            = useDispatch();
+  const store               = useStore();
   const currentLocation     = useSelector(state => state.location);
   const encryptedLocation   = currentLocation !== undefined && currentLocation !== "" ? Buffer.from(currentLocation).toString('base64') : "";
   const directoryItems      = useSelector(state => state.directoryItems);
@@ -34,9 +33,8 @@ function CreateFolderModal(props){
         })
         .then((response)=>{
           if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
-            console.log("oluştu");
-              DispatchCaller(dispatch,Actions.SET_LOADING,false);
-              DispatchCaller(dispatch,Actions.ADD_DIRECTORY_ITEM,response.data.item);
+              store.dispatch(SET_LOADING(false));
+              store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
               toast.success("Dizin oluşturuldu")
           }
           else{
@@ -44,8 +42,8 @@ function CreateFolderModal(props){
               toast.error(response.data.message+"xx");
           }
         }).catch((err)=>{
-        DispatchCaller(dispatch,Actions.SET_ERROR, true);
-        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+        store.dispatch(SET_ERROR(true));
+        store.dispatch(SET_LOADING(false));
         });
       }
     }

@@ -467,8 +467,41 @@ body{
 
 .uploadDetailStage{
   position: absolute;
-  bottom: 70px;
-  right: 35px;
+  bottom: 60px;
+  right: 30px;
   width: 330px;
   max-width: 330px;
+  z-index: 5;
+}
+.uploadHeader{
+  background:#333333;
+  border:solid thin #dedede;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.uploadHeaderButtons{
+  color: #ffffff;
+  border-radius: 25px;
+  line-height: 0px;
+  float: right; 
+}
+
+.uploadCancelButton{
+  border:0px;
+  background-color: #ffffff;
+  height: 30px;
+}
+.uploadIcons{
+  font-size: 15px;
+  line-height: 15px;
+  text-align: center;
+}
+.uploadLineProgressStyle{
+  height:3px;
+  margin-top: 8px;
+  width: 100%;
+}
+.uploadInnerContainer{
+  max-height: 350px;
+  overflow-y: auto;
 }

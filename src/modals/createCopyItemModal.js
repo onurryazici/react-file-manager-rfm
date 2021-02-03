@@ -3,17 +3,17 @@ import { Button, Modal } from 'react-bootstrap';
 import { FaStumbleuponCircle } from 'react-icons/fa';
 import ModalPlacemap from '../views/modalPlacemap';
 import styles from '../styles.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { DispatchCaller } from '../helper/global';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Actions } from '../context/actions';
 import Folder from '../components/folder';
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
+import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
 
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
-    const dispatch          = useDispatch();
+    const store             = useStore();
     const loading           = useSelector(state => state.modalLoading);
     const currentLocation   = useSelector(state => state.modalLocation);
     const directoryItems    = useSelector(state => state.modalDirectoryItems);
@@ -24,19 +24,19 @@ function CopyItemModal(props){
         if(encryptedLocation !== "" && modalShow){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{params:{location:encryptedLocation}})
               .then((response)=>{
-                DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,false);
-                DispatchCaller(dispatch,Actions.SET_MODAL_DIRECTORY_ITEMS,response.data.items);
+                store.dispatch(SET_MODAL_LOADING(false));
+                store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
             }).catch((err)=>{
-                DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,false);
-                DispatchCaller(dispatch,Actions.SET_ERROR,true);
+                store.dispatch(SET_MODAL_LOADING(false));
+                store.dispatch(SET_ERROR(true));
             })
         }
     },[modalShow,currentLocation]);
     
     function onItemDoubleClick (event,nameParam){
         let newLocation = currentLocation + "/" + nameParam;
-        DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,true);
-        DispatchCaller(dispatch,Actions.SET_MODAL_LOCATION,newLocation);
+        store.dispatch(SET_MODAL_LOADING(true));
+        store.dispatch(SET_MODAL_LOCATION(newLocation));
     } 
     function CreateCopyItem(){
       setModalShow(false);
@@ -57,8 +57,8 @@ function CopyItemModal(props){
           else
                 toast.error(response.data.message);
         }).catch((err)=>{
-        DispatchCaller(dispatch,Actions.SET_ERROR, true);
-        DispatchCaller(dispatch,Actions.SET_LOADING, false);
+          store.dispatch(SET_ERROR(true));
+          store.dispatch(SET_LOADING(false));
         });
 
     }

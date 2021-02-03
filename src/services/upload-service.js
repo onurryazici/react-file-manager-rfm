@@ -1,56 +1,33 @@
 import React from 'react'
-import { toast } from "material-react-toastify";
-import { useRef } from "react";
-import { DispatchCaller, HTTP_REQUEST } from "../helper/global";
-import { useDispatch } from 'react-redux';
-import { Actions } from '../context/actions';
+import { useSelector, useStore } from 'react-redux';
+import { FAILURE_UPLOAD_FILE, SET_UPLOAD_PROGRESS, SUCCESS_UPLOAD_FILE } from '../context/functions';
+import {  HTTP_REQUEST } from "../helper/global";
 
-export function UploadService(files,dispatch){
-    
-    Array.from(files).forEach(async file => {
-        const formPayload = new FormData();
-        formPayload.append('file',file.file);
-        const config  = { 
-            onUploadProgress: (ProgresEvent) => {
-                const {loaded, total} = ProgresEvent;
-                let percentage = Math.floor(loaded / total) * 100;
-                let payload = { id: file.id, progress : percentage };
-                alert("c kısmı");
-                //DispatchCaller(dispatch,Actions.SET_UPLOAD_PROGRESS, payload);
+const fileProgress = useSelector(state => state.fileProgress);
+const store = useStore();
+export function UploadService(files) {
+    Array.from(files).forEach(async (_file,_id) => {
+        try{
+            var formPayload = new FormData();
+            formPayload.append('file', _file.file);   
+            const config  = { 
+                headers:{
+                    'content-type':'multipart/form-data'
+                },
+                onUploadProgress: (ProgresEvent) => {
+                    const {loaded, total} = ProgresEvent;
+                    const percentage = Math.floor((loaded / total) * 100 );
+                    store.dispatch(SET_UPLOAD_PROGRESS(_file.id, percentage));
+                }
             }
-        }
-        try{    
-            /*await HTTP_REQUEST.post('/uploadItem',formPayload,config).then((response)=>{
-                
-            });*/
-            alert("b kısmı");
-
-            DispatchCaller(dispatch,Actions.SUCCESS_UPLOAD_FILE,file.id);
-        }
-        catch(error){
-            DispatchCaller(dispatch,Actions.FAILURE_UPLOAD_FILE,file.id);
-            alert("hata var");
+            await HTTP_REQUEST.post('/uploadItem',formPayload, config);
+            setTimeout(() => {
+                store.dispatch(SUCCESS_UPLOAD_FILE(_file.id));    
+            }, 1000);
+            
+        }catch(error){
+            alert("hata " + error)
+            store.dispatch(FAILURE_UPLOAD_FILE(_file.id))
         }
     });
-
-    
-    
-    /*return HTTP_REQUEST.post('/uploadItem',data,config)
-    .then((response)=>{
-        setTimeout(() => {
-            toast.done(toastId.current);
-            toastId.current = null;
-        }, 1000);
-        toast.update(toastId.current,{
-            render: "✅ \"" + file.name + "\" yüklemesi tamamlandı",
-            progress:0,
-            autoClose:5000,
-            type: toast.TYPE.INFO,
-            className: 'rotateY animated'
-        })
-        const dispatch  = useDispatch();
-       // DispatchCaller(dispatch, Actions.ADD_DIRECTORY_ITEM,response.data.item);
-    }).catch((err)=>{
-        console.log("hata " + err)
-    });*/
 }

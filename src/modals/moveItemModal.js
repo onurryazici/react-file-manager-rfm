@@ -3,42 +3,42 @@ import { toast } from 'material-react-toastify'
 import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
 import { Actions } from '../context/actions'
-import { DispatchCaller } from '../helper/global'
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
 function MoveItemModal(props) {
   const [modalShow, setModalShow] = React.useState(false)
   const isContextMenuButton = props.isContextMenuButton === 'yes' ? true : false
-  const dispatch = useDispatch()
-  const loading = useSelector((state) => state.modalLoading)
-  const currentLocation = useSelector((state) => state.modalLocation)
+  const store              = useStore();
+  const loading            = useSelector((state) => state.modalLoading)
+  const currentLocation    = useSelector((state) => state.modalLocation)
   const mainDirectoryItems = useSelector((state) => state.directoryItems)
-  const directoryItems = useSelector((state) => state.modalDirectoryItems)
-  const encryptedLocation = Buffer.from(currentLocation).toString('base64')
-  const selectedItems = useSelector((state) => state.selectedItems)
+  const directoryItems     = useSelector((state) => state.modalDirectoryItems)
+  const selectedItems      = useSelector((state) => state.selectedItems)
+  const encryptedLocation  = Buffer.from(currentLocation).toString('base64')
 
   useEffect(() => {
     if (encryptedLocation !== '' && modalShow) {
       axios.get('http://192.168.252.128:3030/api/getDirectory', {
           params: { location: encryptedLocation }
         }).then((response) => {
-          DispatchCaller(dispatch, Actions.SET_MODAL_LOADING, false)
-          DispatchCaller(dispatch, Actions.SET_MODAL_DIRECTORY_ITEMS, response.data.items)
+          store.dispatch(SET_MODAL_LOADING(false));
+          store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
         })
         .catch((err) => {
-          DispatchCaller(dispatch, Actions.SET_MODAL_LOADING, false)
-          DispatchCaller(dispatch, Actions.SET_ERROR, true)
+          store.dispatch(SET_MODAL_LOADING(false));
+          store.dispatch(SET_ERROR(true));
         })
     } 
   }, [modalShow, currentLocation])
 
   function onItemDoubleClick(event, nameParam) {
     let newLocation = currentLocation + '/' + nameParam
-    DispatchCaller(dispatch, Actions.SET_MODAL_LOADING, true)
-    DispatchCaller(dispatch, Actions.SET_MODAL_LOCATION, newLocation)
+    store.dispatch(SET_MODAL_LOADING(true));
+    store.dispatch(SET_MODAL_LOCATION(newLocation));
   }
 
   function MoveItems() {
@@ -58,15 +58,14 @@ function MoveItemModal(props) {
       .then((response) => {
         if (response.data.statu) {
           var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
-          console.log(reduced);
-          DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,reduced);
-          DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
+          store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+          store.dispatch(CLEAR_SELECTED_ITEMS());
           toast.success('Taşıma işlemi gerçekleştirlidi')
         } else toast.error(response.data.message)
       })
       .catch((err) => {
-        DispatchCaller(dispatch, Actions.SET_ERROR, true)
-        DispatchCaller(dispatch, Actions.SET_LOADING, false)
+        store.dispatch(SET_ERROR(true));
+        store.dispatch(SET_LOADING(false));
       })
   }
   return (

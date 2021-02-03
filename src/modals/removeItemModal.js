@@ -3,13 +3,12 @@ import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../context/actions';
-import { DispatchCaller } from '../helper/global';
+import { useSelector, useStore } from 'react-redux';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import styles from '../styles.module.css'
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
-    const dispatch          = useDispatch();
+    const store             = useStore();
     const currentLocation   = useSelector(state => state.location);
     const directoryItems    = useSelector(state => state.directoryItems);
     const selectedItemCount = useSelector(state => state.selectedItemCount);
@@ -41,15 +40,15 @@ function RemoveItemModal(props){
         }).then((response)=>{
             if(response.data.statu === true) {
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
-              DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
-              DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,reduced);
+              store.dispatch(CLEAR_SELECTED_ITEMS());
+              store.dispatch(SET_DIRECTORY_ITEMS(reduced));
               toast.success('Silme işlemi başarılı');
             }
             else
               toast.error(response.data.message);
         }).catch(()=>{
-            DispatchCaller(dispatch,Actions.SET_ERROR, true);
-            DispatchCaller(dispatch,Actions.SET_LOADING, false);
+          store.dispatch(SET_ERROR(true));
+          store.dispatch(SET_LOADING(false));
         });
       }
       if(cantRemove.length > 0){

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu';
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../context/actions';
-import { DispatchCaller } from '../helper/global';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import Item from './item'
 import styles from '../styles.module.css'
 import axios from 'axios';
@@ -11,8 +9,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
-import { ToastContainer } from 'material-react-toastify';
-import 'material-react-toastify/dist/ReactToastify.css';
+import { SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 
 function Content() {
     const loading               = useSelector(state => state.loading);
@@ -20,6 +17,7 @@ function Content() {
     const currentLocation       = useSelector(state => state.location);
     const directoryItems        = useSelector(state => state.directoryItems);
     const dispatch              = useDispatch();
+    const store = useStore();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
 
 
@@ -28,12 +26,12 @@ function Content() {
             axios.get("http://192.168.252.128:3030/api/getDirectory",{
             params:{location:encryptedLocation}})
         .then((response)=>{
-            DispatchCaller(dispatch,Actions.SET_LOADING,false);
-            DispatchCaller(dispatch,Actions.SET_DIRECTORY_ITEMS,response.data.items);
+            store.dispatch(SET_LOADING(false));
+            store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
         })
         .catch((err)=>{
-            DispatchCaller(dispatch,Actions.SET_LOADING,false);
-            DispatchCaller(dispatch,Actions.SET_ERROR,true);
+            store.dispatch(SET_LOADING(false));
+            store.dispatch(SET_ERROR(true));
         })
         }
     },[currentLocation]);

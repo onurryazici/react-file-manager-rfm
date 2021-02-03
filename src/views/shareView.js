@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Button, Dropdown, DropdownButton, Form, FormControl } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { DispatchCaller } from '../helper/global';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { Actions } from '../context/actions';
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
+import { ADD_SHARED_WITH, DELETE_SHARED_WITH, UPDATE_SHARED_WITH } from '../context/functions';
 
 export default function ShareView() {
-    const dispatch      = useDispatch();
+    const store      = useStore();
     const selectedItems = useSelector((state) => state.selectedItems);
     const encryptedItem = Buffer.from(selectedItems[0].absolutePath).toString('base64');
     const [newUserFullAccess, setNewUserFullAccess] = useState(true);
@@ -36,19 +36,12 @@ export default function ShareView() {
             }).then((response)=>{
                 if(response.data.statu === true){
                     let write   = (permission === PermissionType.FULL_ACCESS) ? true : false;
-                    let payload = { 
-                        itemName:selectedItems[0].name,
-                        username:username,
-                        read:true,
-                        write:write,
-                        execute:true
-                    }
                     if(type === ShareType.FOR_NEW_USER){
-                        DispatchCaller(dispatch,Actions.ADD_SHARED_WITH,payload)
+                        store.dispatch(ADD_SHARED_WITH(selectedItems[0].name,username,true,write,true))
                         toast.success("Öğe paylaşıldı");
                     }
                     else{
-                        DispatchCaller(dispatch,Actions.UPDATE_SHARED_WITH,payload);
+                        store.dispatch(UPDATE_SHARED_WITH(selectedItems[0].name,username,true,write,true))
                     }
                 }
                 else
@@ -89,11 +82,7 @@ export default function ShareView() {
             }
             }).then((response)=>{
                 if(response.data.statu === true){
-                    let payload={
-                        itemName:selectedItems[0].name,
-                        username:username
-                    }
-                    DispatchCaller(dispatch,Actions.DELETE_SHARED_WITH,payload);
+                    store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name, username))
                 }   
                 else
                     toast.error(response.data.message);

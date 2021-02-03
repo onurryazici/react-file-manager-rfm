@@ -1,23 +1,21 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../context/actions';
+import {  useSelector, useStore } from 'react-redux';
+import { SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
 import styles from '../styles.module.css'
-import { DispatchCaller } from '../helper/global';
 function ModalPlacemap() {
-    const dispatch        = useDispatch();
     var currentLocation   = useSelector(state => state.modalLocation) + '';
     var startLocation     = useSelector(state => state.startLocation) + '';
     var splittedPlacemaps = currentLocation.split('/');
-
+    const store           = useStore();
     function changeCurrentLocation(key) {
         var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
         var newLocation          = reducedLocationArray.join('/');
         var refreshRequest       = (currentLocation === newLocation) ? true : false;
         if(!refreshRequest) {
-            DispatchCaller(dispatch,Actions.SET_MODAL_LOADING,true);
-            DispatchCaller(dispatch,Actions.SET_MODAL_LOCATION,newLocation);
+            store.dispatch(SET_MODAL_LOADING(true));
+            store.dispatch(SET_MODAL_LOCATION(newLocation));
         }
     }
 

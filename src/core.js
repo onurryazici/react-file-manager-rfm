@@ -4,17 +4,16 @@ import Content from './components/content'
 import Placemap from './components/placemap'
 import FolderDetails from './components/folderDetails'
 import Actionbar from './components/actionbar'
-import { useDispatch } from 'react-redux'
-import { Actions } from './context/actions'
-import { DispatchCaller } from './helper/global'
+import { useDispatch, useStore } from 'react-redux'
 import { Messages } from './helper/message'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import { ToastContainer } from 'material-react-toastify'
-import UploadDetails from './components/uploadDetails'
+import Upload from './components/Upload'
+import { SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
 
 function RFM_Core(props) {
-  const dispatch = useDispatch()
+  const store = useStore();
   useEffect(() => {
     Axios.post('http://192.168.252.128:3030/api/userAuthentication', {
       username: props.username,
@@ -22,15 +21,17 @@ function RFM_Core(props) {
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
-          DispatchCaller(dispatch, Actions.SET_LOADING, false)
-          DispatchCaller(dispatch, Actions.SET_LOCATION, props.location)
-          DispatchCaller(dispatch, Actions.SET_START_LOCATION, props.location)
-          DispatchCaller(dispatch, Actions.SET_DIRECTORY_ITEMS, response.data.items)
+          store.dispatch(SET_LOADING(false));
+          store.dispatch(SET_LOCATION(props.location));
+          store.dispatch(SET_START_LOCATION(props.location));
+          store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
         }
       })
       .catch((err) => {
-        DispatchCaller(dispatch, Actions.SET_ERROR, true)
-        DispatchCaller(dispatch, Actions.SET_LOADING, false)
+        store.dispatch(SET_ERROR(true));
+        store.dispatch(SET_LOADING(false));
+        
+        
       })
   }, [])
 
@@ -40,7 +41,7 @@ function RFM_Core(props) {
       <Placemap />
       <Content />
       <FolderDetails />
-      <UploadDetails/>
+      <Upload/>
       <ToastContainer
                     position="top-right"
                     newestOnTop={false}

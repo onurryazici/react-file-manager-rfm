@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Actions } from '../context/actions';
 import Folder from './folder';
@@ -11,10 +11,10 @@ import RemoveItemModal from '../modals/removeItemModal';
 import ShareItemModal from '../modals/shareItemModal';
 import MoveItemModal from '../modals/moveItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
-import { DispatchCaller } from '../helper/global';
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 import CopyItemModal from '../modals/createCopyItemModal';
+import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, SET_LOADING, SET_LOCATION } from '../context/functions';
 
 function Item(props){
     var itemName  = props.name;
@@ -49,7 +49,7 @@ function Item(props){
     var selectedItemCount     = useSelector(state => state.selectedItemCount);
     
     var dispatch          = useDispatch();
-
+    const store = useStore();
     useEffect(() => {
       let exist = selectedItems.some((element)=>{return element.name===itemName});
       if (exist){
@@ -65,30 +65,29 @@ function Item(props){
       if(event.ctrlKey)
       {
         if(!exist){
-          
-          DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
+          store.dispatch(ADD_SELECTED_ITEM(itemObject))
         }
       }
       else 
       {
-        DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS, null);
-        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
+        store.dispatch(CLEAR_SELECTED_ITEMS());
+        store.dispatch(ADD_SELECTED_ITEM(itemObject));
       }
       
     }
     function onItemContextMenu(event, nameParam){
       var exist = selectedItems.some((element)=>{return element.name === nameParam});
       if(!exist){
-        DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
-        DispatchCaller(dispatch,Actions.ADD_SELECTED_ITEM,itemObject);
+        store.dispatch(CLEAR_SELECTED_ITEMS());
+        store.dispatch(ADD_SELECTED_ITEM(itemObject));
       }
     }
     function onItemDoubleClick(name,type){
         if(type==="directory"){
-          DispatchCaller(dispatch,Actions.SET_LOADING,true);
+          store.dispatch(SET_LOADING(true));
           var newLocation = currentLocation + "/" + name;
-          DispatchCaller(dispatch,Actions.SET_LOCATION,newLocation);
-          DispatchCaller(dispatch,Actions.CLEAR_SELECTED_ITEMS,null);
+          store.dispatch(SET_LOCATION(newLocation));
+          store.dispatch(CLEAR_SELECTED_ITEMS());
         }
     }
     function handleClick(e, data) {
