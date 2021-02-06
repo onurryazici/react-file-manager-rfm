@@ -62,7 +62,6 @@ function ItemDetailModal(props) {
                  <thead>
                    <tr>
                      <th colspan="2">{name}</th>
-                     
                    </tr>
                  </thead>
                  <tbody>
@@ -77,7 +76,6 @@ function ItemDetailModal(props) {
                    <tr>
                      <td>Sahibi</td>
                      <td>{owner}</td>
-                     
                    </tr>
                    <tr>
                      <td>En son değiştirilme</td>

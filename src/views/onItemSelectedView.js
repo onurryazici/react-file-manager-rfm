@@ -5,22 +5,18 @@ import RemoveItemModal from '../modals/removeItemModal'
 import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
 import CopyItemModal from '../modals/createCopyItemModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { Actions } from '../context/actions';
 import ItemDetailModal from '../modals/itemDetailModal';
+import { CLEAR_SELECTED_ITEMS } from '../context/functions';
+import { useSelector, useStore } from 'react-redux';
+
 function OnItemSelectedView() {
     const selectedItemCount = useSelector(state => state.selectedItemCount);
-    const dispatch = useDispatch();
-    function dispatchInvoker(typeValue,payloadValue)
-    {
-        return dispatch({type:typeValue, payload:payloadValue});
-    }
+    const store = useStore();
     function clearSelection(){
-        dispatchInvoker(Actions.CLEAR_SELECTED_ITEMS);
+        store.dispatch(CLEAR_SELECTED_ITEMS(null));
     }
     return (
         <div>
-            
             {selectedItemCount === 1 ? <ShareItemModal isContextMenuButton="no"/> : ""}
             <RemoveItemModal isContextMenuButton="no"/>
             <MoveItemModal isContextMenuButton="no"/>

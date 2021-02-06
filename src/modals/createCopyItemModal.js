@@ -90,10 +90,10 @@ function CopyItemModal(props){
                 : <div className={styles.containerW100PH300}>
                   {
                     directoryItems !== undefined && directoryItems.length > 0 
-                      ? directoryItems.map((item)=>{
+                      ? directoryItems.map((item,key)=>{
                           if(item.type==="directory")
                               return (
-                                <div className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}>
+                                <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}>
                                     <Folder viewMode="list" folderName={item.name} folderType={item.type}/>
                                 </div>   
                           )

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles.module.css'
-import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel} from 'react-icons/fa'
+import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage} from 'react-icons/fa'
 function File(props){
     const fileId    = props.fileId;
     const fileName  = props.fileName;
@@ -8,22 +8,30 @@ function File(props){
     
     const viewMode = props.viewMode;
     
-    const selectedClass = viewMode === "grid" ? styles.itemIconGrid : styles.itemIconList;
-    const selectedNameClass = viewMode === "grid" ? styles.itemNameGrid : styles.itemNameList;
+    const selectedClass = viewMode === "grid" ? styles.fileIconGrid : styles.itemIconList; /// burada düzenleme ypmk gerekcek gibi
+    const selectedNameClass = viewMode === "grid" ? styles.itemNameGrid : styles.itemNameList; /// burada düzenleme ypmk gerekcek gibi
     function iconChooser( extension)
     {
         switch(extension)
         {
             case 'txt':
-                return <FaFileAlt className={`${selectedClass}`} color="#ca4fa6" style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
-            case 'docx' || 'doc':
-                return <FaFileWord color="#0066cc" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}} />
+                return <FaFileAlt className={`${selectedClass}`} color="#ca4fa6"/>
+            case 'docx':
+                return <FaFileWord color="#0066cc" className={`${selectedClass}`} />
+            case 'doc':
+                return <FaFileWord color="#0066cc" className={`${selectedClass}`} />
             case 'pdf':
-                return <FaFilePdf color="#d13131" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
-            case 'xlsx' || 'xls':
-                return <FaFileExcel color="#1e7e34" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>
+                return <FaFilePdf color="#d13131" className={`${selectedClass}`}/>
+            case 'xlsx':
+                return <FaFileExcel color="#1e7e34" className={`${selectedClass}`} />
+            case 'xls':
+                return <FaFileExcel color="#1e7e34" className={`${selectedClass}`} />
+            case 'png':
+                return <FaFileImage color="#36bae1" className={`${selectedClass}`} />
+            case 'jpg':
+                return <FaFileImage color="#36bae1" className={`${selectedClass}`} />
             default:
-                return <FaFile color="#777777" className={`${selectedClass}`}  style={{width:'110px', height:"110px",marginLeft:"11px"}}/>;
+                return <FaFile color="#777777" className={`${selectedClass}`} />;
 
         }
     }

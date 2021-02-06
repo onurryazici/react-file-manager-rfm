@@ -108,7 +108,7 @@ function Upload(props) {
                                             </Row>
                                         </React.Fragment>
                                     )
-                               }) 
+                               })
                             }
                         </Card.Body>
                         </Accordion.Collapse>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { connect, useDispatch, useSelector, useStore } from 'react-redux';
 import Item from './item'
 import styles from '../styles.module.css'
 import axios from 'axios';
@@ -10,26 +10,27 @@ import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
 import { SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { size } from 'lodash';
 
-function Content() {
+function Content(props) {
     const loading               = useSelector(state => state.loading);
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
-    const directoryItems        = useSelector(state => state.directoryItems);
-    const dispatch              = useDispatch();
-    const store = useStore();
+    const directoryItems        = props.directoryItems;
+    const store                 = useStore();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
-
 
     useEffect(() => {
         if(encryptedLocation !== ""){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{
             params:{location:encryptedLocation}})
         .then((response)=>{
-            store.dispatch(SET_LOADING(false));
             store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
+            store.dispatch(SET_LOADING(false));
+
         })
         .catch((err)=>{
+            console.log(err)
             store.dispatch(SET_LOADING(false));
             store.dispatch(SET_ERROR(true));
         })
@@ -60,6 +61,13 @@ function Content() {
                 <div id={styles.loadingSpinner}>
                   loading
                 </div>
+            </div>
+        )
+    }
+    else if(size(directoryItems)===0){
+        return (
+            <div className={styles.containerW100H100}>
+                boş
             </div>
         )
     }
@@ -105,5 +113,9 @@ function Content() {
         )
     }
 }
-export default Content;
+
+const mapStateToProps = state => ({
+    directoryItems: state.directoryItems,
+})
+export default connect(mapStateToProps)(Content);
 
