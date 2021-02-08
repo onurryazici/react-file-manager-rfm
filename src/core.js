@@ -21,10 +21,8 @@ function RFM_Core(props) {
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
-          store.dispatch(SET_LOADING(false));
           store.dispatch(SET_LOCATION(props.location));
           store.dispatch(SET_START_LOCATION(props.location));
-          store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
         }
       })
       .catch((err) => {
@@ -33,7 +31,7 @@ function RFM_Core(props) {
         
         
       })
-  }, [])
+  }, []) /// BURASI GERİ AÇILACAK
 
   return (
     <div className={styles.container}>

@@ -1,6 +1,7 @@
 import { size } from 'lodash';
 import { Actions } from './actions';
-
+import styles from '../styles.module.css';
+import { access } from 'fs';
 
 export function reducer (state,action){
    switch(action.type){
@@ -39,6 +40,13 @@ export function reducer (state,action){
             return {...state}
         }
         case Actions.CLEAR_SELECTED_ITEMS:{
+            const selectedItems = [...state.selectedItems];
+            selectedItems.forEach((item)=>{
+                const accessibleId = item.name + "-" + item.type
+                const element = document.getElementById(accessibleId);
+                element.classList.remove(styles.itemBlockGridViewActive); 
+            })
+
             return {
                 ...state,
                 selectedItems:[],
@@ -206,6 +214,12 @@ export function reducer (state,action){
             }
         }
 
+        case Actions.SET_RECYCLE_BIN:{
+            return {
+                ...state,
+                isItRecycleBin:action.payload
+            }
+        }
 
         default:
             return state

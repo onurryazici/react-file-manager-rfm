@@ -47,9 +47,9 @@ export function CLEAR_SELECTED_ITEMS(){
     }
 }
 
-export function ADD_SELECTED_ITEM(item){
+export function ADD_SELECTED_ITEM(_item){
     return dispatch => {
-        dispatch({ type: Actions.ADD_SELECTED_ITEM, payload:item })
+        dispatch({ type: Actions.ADD_SELECTED_ITEM, payload:_item})
     }
 }
 export function REMOVE_SELECTED_ITEM(item){
@@ -116,5 +116,11 @@ export function SUCCESS_UPLOAD_FILE(_id, ){
 export function FAILURE_UPLOAD_FILE(_id, ){
     return dispatch => {
         dispatch({ type: Actions.FAILURE_UPLOAD_FILE, payload: _id })
+    }
+}
+
+export function SET_RECYCLE_BIN(_isItRecycleBin){
+    return dispatch => {
+        dispatch({ type: Actions.SET_RECYCLE_BIN, payload: _isItRecycleBin })
     }
 }

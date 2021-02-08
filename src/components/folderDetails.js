@@ -2,9 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 function FolderDetails(){
-    let selectedItemCount = useSelector(state => state.selectedItemCount);
-    let directoryItems    = useSelector(state => state.directoryItems);
-    let loading           = false;
+    const selectedItemCount = useSelector(state => state.selectedItemCount);
+    const directoryItems    = useSelector(state => state.directoryItems);
+    const loading    = useSelector(state => state.loading);
+    
     let fileCount         = 0;
     let folderCount       = 0;
 
@@ -12,7 +13,7 @@ function FolderDetails(){
     directoryItems !== undefined ? directoryItems.filter(item => (item.type==="directory" || item.type==="symbolic") ? folderCount++ : "") : "";
 
     var message = "";
-
+    
     if(folderCount > 0){
         message = folderCount + " klasör";
         if(fileCount > 0)

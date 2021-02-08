@@ -9,7 +9,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
-import { SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import { size } from 'lodash';
 
 function Content(props) {
@@ -26,7 +26,7 @@ function Content(props) {
             params:{location:encryptedLocation}})
         .then((response)=>{
             store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
-            store.dispatch(SET_LOADING(false));
+            store.dispatch(SET_LOADING(false))
 
         })
         .catch((err)=>{
@@ -36,6 +36,11 @@ function Content(props) {
         })
         }
     },[currentLocation]);
+
+    function clearSelection(event){
+        if(event.target.id === styles.contents)
+            store.dispatch(CLEAR_SELECTED_ITEMS(null));
+    }
 
     if(rfmError){
         return (<div id={styles.contentStage}>
@@ -64,17 +69,12 @@ function Content(props) {
             </div>
         )
     }
-    else if(size(directoryItems)===0){
-        return (
-            <div className={styles.containerW100H100}>
-                boş
-            </div>
-        )
-    }
+  
     else
     {
         return (
-            <div id={styles.contentStage} className={styles.noselect} >
+            <div id={styles.contentStage} className={styles.noselect} 
+                onClick={(event)=>clearSelection(event)}>
                 <ContextMenuTrigger id="mainTrigger">
                     <div id={styles.contents} >
                         { directoryItems !== undefined && directoryItems.length > 0 

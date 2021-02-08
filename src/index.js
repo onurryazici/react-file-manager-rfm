@@ -8,16 +8,21 @@ import { initialState } from './context/store';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { compose } from 'redux';
+import PropTypes from 'prop-types'
+import { SET_RECYCLE_BIN } from './context/functions';
 const allEnhancers = compose( 
   applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 const store = createStore(reducer, initialState, allEnhancers)
 const RFM = (props) =>{
+    const _location = props.location;
+    const _isItRecycleBin = props.isItRecycleBin;
+    store.dispatch(SET_RECYCLE_BIN(_isItRecycleBin))
     return(
       <Provider store={store}>
         <RFM_Core
-          location="/home/main"
+          location={_location}
           username="main"
           password="qweqweasd"
         />
@@ -25,3 +30,8 @@ const RFM = (props) =>{
     )
   }
 export default RFM;
+
+RFM.PropTypes = {
+  location       : PropTypes.string,
+  isItRecycleBin : PropTypes.bool
+}

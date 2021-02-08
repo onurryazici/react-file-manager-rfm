@@ -9,7 +9,8 @@ export const initialState = {
     selectedItemCount:0,  // Seçilen öğe sayısı 
     directoryItems:[],    // Aktif olarak bulunan konumdaki öğeler
     modalDirectroyItems:[], // Modalda aktif olarak bulunan konumdaki öğeler
-    refreshRequest:false,  // Aynı konuma tekrar tıklanırsa  
-    hasError:false,        // Hata denetlemek için (kaldırılabilir)
-    fileProgress:{}        // Upload takibi için
+    refreshRequest:false,   // Aynı konuma tekrar tıklanırsa  
+    hasError:false,         // Hata denetlemek için (kaldırılabilir)
+    fileProgress:{},        // Upload takibi için
+    isItRecycleBin:false    // Çöp kutusu için
 }
