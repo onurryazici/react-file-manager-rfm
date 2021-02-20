@@ -25,6 +25,7 @@ body{
   border: solid thin #dedede;
   font-family: 'Montserrat', sans-serif;
   overflow-y: hidden;
+  border: solid thin #0066cc;
 }
 
 #actionbarStage{

@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap'
 import { FaChevronRight, FaHistory, FaTrash } from 'react-icons/fa'
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { SET_LOADING, SET_LOCATION } from '../context/functions';
+import EmptyTrashModal from '../modals/emptyTrashModal';
 import styles from '../styles.module.css'
 function Placemap() {
     const store           = useStore();
@@ -21,7 +22,6 @@ function Placemap() {
             store.dispatch(SET_LOCATION(newLocation));
         }
     }
-
     return(
         <div className={styles.placemapArea}>
             {
@@ -36,7 +36,7 @@ function Placemap() {
                 :(
                     <div>
                         <a><Button variant="link" style={{color:'#000'}}> Çöp Kutusu</Button></a>
-                        <a><Button variant="danger" style={{float:'right'}}> Çöp Kutusunu Boşalt</Button></a>
+                        <a><EmptyTrashModal/></a>
                         {
                             selectedItemCount > 0 
                             ?([

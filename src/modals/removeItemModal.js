@@ -32,7 +32,7 @@ function RemoveItemModal(props){
       
       if(encryptedItems.length > 0)
       {
-        axios.get("http://192.168.252.128:3030/api/removeItem",{
+        axios.get("http://192.168.252.128:3030/api/moveToTrash",{
           params:{
             "items":encryptedItems,
             location:Buffer.from(currentLocation).toString('base64')

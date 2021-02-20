@@ -6,7 +6,7 @@ const App = () =>{
     return(
         <RFM 
           location="/home/main"
-          isItRecycleBin={true}
+          isItRecycleBin={false}
         />
     )
   }

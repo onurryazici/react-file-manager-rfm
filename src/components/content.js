@@ -19,11 +19,15 @@ function Content(props) {
     const directoryItems        = props.directoryItems;
     const store                 = useStore();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
-
+    const isItRecycleBin        = useSelector(state => state.isItRecycleBin);
     useEffect(() => {
         if(encryptedLocation !== ""){
             axios.get("http://192.168.252.128:3030/api/getDirectory",{
-            params:{location:encryptedLocation}})
+            params:{
+                location:encryptedLocation,
+                isItRecycleBin:isItRecycleBin
+            },
+        })
         .then((response)=>{
             store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
             store.dispatch(SET_LOADING(false))
@@ -69,14 +73,14 @@ function Content(props) {
             </div>
         )
     }
-  
+    
     else
     {
         return (
-            <div id={styles.contentStage} className={styles.noselect} 
-                onClick={(event)=>clearSelection(event)}>
+            <div id={styles.contentStage} className={styles.noselect}>
                 <ContextMenuTrigger id="mainTrigger">
-                    <div id={styles.contents} >
+                    <div id={styles.contents} onClick={(event)=>clearSelection(event)}
+                onContextMenu={(event)=>clearSelection(event)} >
                         { directoryItems !== undefined && directoryItems.length > 0 
                             ? 
                                 directoryItems.map((item)=>{
@@ -93,21 +97,27 @@ function Content(props) {
                                         sharedWith     = {item.sharedWith}
                                         lastAccessTime = {item.lastAccessTime}
                                         lastModifyTime = {item.lastModifyTime}
+                                        restorePath    = {item.restorePath} // if needed
                                         />)})
                             : ""
                         }
                     </div>
                 </ContextMenuTrigger>
-                <ContextMenu id="mainTrigger">
-                    <div className={styles.contextMenuStage}>
-                        <MenuItem>
-                            <CreateFolderModal isContextMenuButton="yes"/>
-                        </MenuItem>
-                        <MenuItem>
-                            <Upload isContextMenuButton="yes"/>
-                        </MenuItem>
-                    </div>
-                </ContextMenu>
+                {
+                    !isItRecycleBin?
+                    <ContextMenu id="mainTrigger">
+                        <div className={styles.contextMenuStage}>
+                            <MenuItem>
+                                <CreateFolderModal isContextMenuButton="yes"/>
+                            </MenuItem>
+                            <MenuItem>
+                                <Upload isContextMenuButton="yes"/>
+                            </MenuItem>
+                        </div>
+                    </ContextMenu>
+                    :""
+                }
+                
                 
             </div>     
         )

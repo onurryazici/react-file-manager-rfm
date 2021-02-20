@@ -4,16 +4,17 @@ import Content from './components/content'
 import Placemap from './components/placemap'
 import FolderDetails from './components/folderDetails'
 import Actionbar from './components/actionbar'
-import { useDispatch, useStore } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { Messages } from './helper/message'
 import Axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import { ToastContainer } from 'material-react-toastify'
 import Upload from './components/Upload'
-import { SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
+import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
 
 function RFM_Core(props) {
   const store = useStore();
+  const isItRecycleBin = useSelector(state=>state.isItRecycleBin);
   useEffect(() => {
     Axios.post('http://192.168.252.128:3030/api/userAuthentication', {
       username: props.username,
@@ -21,15 +22,20 @@ function RFM_Core(props) {
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
-          store.dispatch(SET_LOCATION(props.location));
-          store.dispatch(SET_START_LOCATION(props.location));
+          if(isItRecycleBin){
+            store.dispatch(SET_LOCATION("Trash"));
+            store.dispatch(SET_START_LOCATION("Trash"));
+          }
+          else{
+            store.dispatch(SET_LOCATION(props.location));
+            store.dispatch(SET_START_LOCATION(props.location));
+          }
+          
         }
       })
       .catch((err) => {
         store.dispatch(SET_ERROR(true));
         store.dispatch(SET_LOADING(false));
-        
-        
       })
   }, []) /// BURASI GERİ AÇILACAK
 
