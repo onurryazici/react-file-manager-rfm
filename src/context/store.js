@@ -12,5 +12,7 @@ export const initialState = {
     refreshRequest:false,   // Aynı konuma tekrar tıklanırsa  
     hasError:false,         // Hata denetlemek için (kaldırılabilir)
     fileProgress:{},        // Upload takibi için
-    isItRecycleBin:false    // Çöp kutusu için
+    isItRecycleBin:false,   // Çöp kutusu için
+    isPreviewActive:false,  // Resim görüntülemek için
+    previewData:[],         // Resim base64 verisi için
 }

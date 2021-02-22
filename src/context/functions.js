@@ -68,8 +68,8 @@ export function SET_MODAL_DIRECTORY_ITEMS(items){
     }
 }
 
-export function RENAME_ITEM(_oldName, _newName){
-    let payload = {oldName: _oldName, newName: _newName}
+export function RENAME_ITEM(_oldName, _itemType, _newName){
+    let payload = {oldName: _oldName, itemType:_itemType, newName: _newName}
     return dispatch => {
         dispatch({ type: Actions.RENAME_ITEM, payload: payload })
     }
@@ -122,5 +122,17 @@ export function FAILURE_UPLOAD_FILE(_id, ){
 export function SET_RECYCLE_BIN(_isItRecycleBin){
     return dispatch => {
         dispatch({ type: Actions.SET_RECYCLE_BIN, payload: _isItRecycleBin })
+    }
+}
+
+export function SET_PREVIEW_ACTIVE(_isActive){
+    return dispatch => {
+        dispatch({ type: Actions.SET_PREVIEW_ACTIVE, payload: _isActive })
+    }
+}
+
+export function SET_PREVIEW_DATA(_previewData){
+    return dispatch => {
+        dispatch({ type: Actions.SET_PREVIEW_DATA, payload: _previewData })
     }
 }

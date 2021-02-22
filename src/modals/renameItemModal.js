@@ -7,7 +7,7 @@ import { useSelector, useStore } from 'react-redux'
 import { Messages } from '../helper/message'
 import axios from 'axios'
 import { toast } from 'material-react-toastify'
-import { RENAME_ITEM, SET_ERROR, SET_LOADING } from '../context/functions'
+import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../context/functions'
 
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
@@ -50,7 +50,8 @@ function RenameItemModal(props) {
             if (response.data.message === Messages.ITEM_RENAME_SUCCESS) {
               var item = directoryItems.find((element) => element.name === selectedItems[0].name)
               if (item) {
-                store.dispatch(RENAME_ITEM(item.name, newItemName));
+                store.dispatch(RENAME_ITEM(item.name, item.type,newItemName));
+               // store.dispatch(CLEAR_SELECTED_ITEMS(null));
               }
               toast.success('Yeniden adlandırıldı');
             } 

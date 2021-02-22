@@ -2,6 +2,7 @@ import { size } from 'lodash';
 import { Actions } from './actions';
 import styles from '../styles.module.css';
 import { access } from 'fs';
+import { SET_PREVIEW_ACTIVE } from './functions';
 
 export function reducer (state,action){
    switch(action.type){
@@ -83,12 +84,17 @@ export function reducer (state,action){
             }
         }
         case Actions.RENAME_ITEM:{
+            const newSelectedItems = [...state.selectedItems];
+            newSelectedItems[0].name = action.payload.newName;
+            const element = document.getElementById(action.payload.oldName+"-"+action.payload.itemType);
+            element.id = action.payload.newName + "-" + action.payload.itemType;
             return {
                 ...state,
                 directoryItems: state.directoryItems.map((item,i)=> 
                     item.name === action.payload.oldName 
                         ? {...item, name:action.payload.newName} 
-                        : {...item})
+                        : {...item}),
+                selectedItems:newSelectedItems
             }
         }
         case Actions.ADD_SHARED_WITH:{
@@ -221,6 +227,19 @@ export function reducer (state,action){
             }
         }
 
+        case Actions.SET_PREVIEW_ACTIVE:{
+            return {
+                ...state,
+                isPreviewActive:action.payload
+            }
+        }
+
+        case Actions.SET_PREVIEW_DATA:{
+            return {
+                ...state,
+                previewData:action.payload
+            }
+        }
         default:
             return state
    }

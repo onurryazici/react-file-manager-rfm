@@ -1,15 +1,16 @@
 import React from 'react'
 import styles from '../styles.module.css'
-import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage} from 'react-icons/fa'
+import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage} from 'react-icons/fa';
 function File(props){
     const fileId    = props.fileId;
     const fileName  = props.fileName;
+    const absolutePath = props.absolutePath;
     const extension = props.extension;
-    
     const viewMode = props.viewMode;
     
     const selectedClass = viewMode === "grid" ? styles.fileIconGrid : styles.itemIconList; /// burada düzenleme ypmk gerekcek gibi
     const selectedNameClass = viewMode === "grid" ? styles.itemNameGrid : styles.itemNameList; /// burada düzenleme ypmk gerekcek gibi
+
     function iconChooser( extension)
     {
         switch(extension)

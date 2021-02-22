@@ -533,3 +533,18 @@ body{
 .trashButtons{
   line-height: 23px;
 }
+
+.previewContainer{
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  height: 520px;
+  line-height: 500px;
+  text-align: center;
+  background: black;
+}
+.previewFitCenter{
+  max-width:100%;
+    max-height:100%;
+    vertical-align: middle;
+}

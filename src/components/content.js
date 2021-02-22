@@ -11,6 +11,7 @@ import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import { size } from 'lodash';
+import ItemPreviewModal from '../modals/itemPreviewModal';
 
 function Content(props) {
     const loading               = useSelector(state => state.loading);
@@ -117,8 +118,7 @@ function Content(props) {
                     </ContextMenu>
                     :""
                 }
-                
-                
+                <ItemPreviewModal/>
             </div>     
         )
     }
