@@ -5,7 +5,7 @@ import 'react-file-manager-rfm/dist/index.css';
 const App = () =>{
     return(
         <RFM 
-          location="/home/main"
+          location="/home/main/Desktop/react-file-manager-rfm-api/node_modules"
           isItRecycleBin={false}
         />
     )

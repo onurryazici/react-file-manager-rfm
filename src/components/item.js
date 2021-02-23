@@ -55,12 +55,13 @@ function Item(props){
     const store             = useStore();
     const selectedItemCount = useSelector(state=>state.selectedItemCount);
     const isItRecycleBin    = useSelector(state => state.isItRecycleBin);
-
+    const [itemSelected, setItemSelected] = useState(false);
     const [ref, inView] = useInView({
-      threshold: 0,
+      threshold: 0.2,
     })
 
     function onItemSelected (event){
+      console.log("tıklandı")
       var exist = selectedItems.some((element)=>{return element.name === itemName});
       const element = document.getElementById(accessibleId);
       if(event.ctrlKey)
@@ -74,7 +75,10 @@ function Item(props){
         store.dispatch(CLEAR_SELECTED_ITEMS());
         store.dispatch(ADD_SELECTED_ITEM(itemObject));
       }
-      element.classList.add(styles.itemBlockGridViewActive);
+      setItemSelected(true);
+     // element.classList.add(styles.itemBlockGridViewActive);
+      
+      
     }
     function onItemContextMenu(event){
       var exist = selectedItems.some((element)=>{return element.name === itemName});
@@ -179,8 +183,8 @@ function Item(props){
     
  
     return(
-      <div ref={ref}>
-          <div id={accessibleId} className={classNames(styles.itemBlockGridView)}>
+      <React.Fragment>
+          <div ref={ref} id={accessibleId} className={classNames(styles.itemBlockGridView,itemSelected ? styles.itemBlockGridViewActive : "")}>
               <ContextMenuTrigger id={itemName} >
                 <div onContextMenu={(event)=>onItemContextMenu(event)} 
                      onClick={(event)=>onItemSelected(event)} 
@@ -259,7 +263,7 @@ function Item(props){
               </ContextMenu>
             )
           }
-      </div>
+      </React.Fragment>
     )
   }
   
