@@ -1,8 +1,6 @@
 import { size } from 'lodash';
 import { Actions } from './actions';
 import styles from '../styles.module.css';
-import { access } from 'fs';
-import { SET_PREVIEW_ACTIVE } from './functions';
 
 export function reducer (state,action){
    switch(action.type){

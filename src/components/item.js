@@ -18,6 +18,7 @@ import CopyItemModal from '../modals/createCopyItemModal';
 import 'bootstrap/dist/css/bootstrap.css';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { useInView } from 'react-intersection-observer';
+import {  onItemContextMenu,onItemSelected } from '../helper/test';
 
 function Item(props){
     var itemName  = props.name;
@@ -57,10 +58,10 @@ function Item(props){
     const isItRecycleBin    = useSelector(state => state.isItRecycleBin);
     const [itemSelected, setItemSelected] = useState(false);
     const [ref, inView] = useInView({
-      threshold: 0.2,
+      threshold: 0.3,
     })
 
-    function onItemSelected (event){
+    /*function onItemSelected (event){
       console.log("tıklandı")
       var exist = selectedItems.some((element)=>{return element.name === itemName});
       const element = document.getElementById(accessibleId);
@@ -76,9 +77,7 @@ function Item(props){
         store.dispatch(ADD_SELECTED_ITEM(itemObject));
       }
       setItemSelected(true);
-     // element.classList.add(styles.itemBlockGridViewActive);
-      
-      
+     // element.classList.add(styles.itemBlockGridViewActive); 
     }
     function onItemContextMenu(event){
       var exist = selectedItems.some((element)=>{return element.name === itemName});
@@ -175,20 +174,22 @@ function Item(props){
           store.dispatch(SET_LOADING(false)); 
         });
       }
-    }
+    }*/
 
-    function handleClick(){
+   /* function handleClick(){
       alert("oko")
     }
     
- 
+    console.log("work")*/
     return(
       <React.Fragment>
           <div ref={ref} id={accessibleId} className={classNames(styles.itemBlockGridView,itemSelected ? styles.itemBlockGridViewActive : "")}>
+            {
+              inView?
               <ContextMenuTrigger id={itemName} >
-                <div onContextMenu={(event)=>onItemContextMenu(event)} 
-                     onClick={(event)=>onItemSelected(event)} 
-                     onDoubleClick={()=>onItemDoubleClick()}>
+                <div onContextMenu={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
+                     onClick={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
+                     onDoubleClick={()=>onItemSelected(event,accessibleId,itemName,itemObject)}>
                   {(itemType==="file")
                     ? <File fileName={itemName} extension={extension} viewMode="grid" image={_image}/>
                     : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
@@ -196,8 +197,13 @@ function Item(props){
                   <span className={styles.tooltiptext}>{itemName}</span>
                   </div>
               </ContextMenuTrigger>
+              :""
+            }
+              
           </div>
+          
           {
+            inView?
             isItRecycleBin 
             ?(
               <ContextMenu id={itemName} className={styles.contextMenuStage}>
@@ -227,7 +233,7 @@ function Item(props){
                     )
                 }
                 <MenuItem>
-                    <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
+                    <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
                         <div style={{fontSize:'14px'}}>İndir</div>
                     </Button>
                 </MenuItem>
@@ -262,6 +268,7 @@ function Item(props){
                 }
               </ContextMenu>
             )
+            :""
           }
       </React.Fragment>
     )
