@@ -5,8 +5,24 @@ import 'react-file-manager-rfm/dist/index.css';
 const App = () =>{
     return(
         <RFM 
-          location="/home/main/Desktop/react-file-manager-rfm-api/node_modules"
-          isItRecycleBin={false}
+          location                      = "/home/main/Desktop"
+          isItRecycleBin                = {false}
+          API_URL                       = "http://192.168.252.128:3030"
+          API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
+          API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"
+          API_URL_CreateCopy            = "/api/secured/createCopy"
+          API_URL_CreateDirectory       = "/api/secured/createDirectory"
+          API_URL_EmptyTrash            = "/api/secured/emptyTrash"
+          API_URL_GetDirectory          = "/api/secured/getDirectory"
+          API_URL_GetImage              = "/api/secured/getImage"
+          API_URL_MoveItems             = "/api/secured/moveItems"
+          API_URL_MoveToTrash           = "/api/secured/moveToTrash"
+          API_URL_RemovePermission      = "/api/secured/removePermission"
+          API_URL_RenameItem            = "/api/secured/renameItem"
+          API_URL_RestoreItem           = "/api/secured/restoreItem"
+          API_URL_ShareItem             = "/api/secured/shareItem"
+          API_URL_UploadItem            = "/api/secured/uploadItem"
+          token                         = ""
         />
     )
   }

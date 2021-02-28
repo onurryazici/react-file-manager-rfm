@@ -19,6 +19,9 @@ function RenameItemModal(props) {
   const currentLocation = useSelector((state) => state.location);
   const selectedItems   = useSelector((state) => state.selectedItems);
 
+  const API_URL = store.getState().config.API_URL;
+  const API_URL_RenameItem = store.getState().config.API_URL_RenameItem;
+
   function onKeyPress(event) {
     var value         = event.value
     var pattern       = ['.', '/', '\\', ':', ';', '^', '>', '<', '|']
@@ -39,8 +42,7 @@ function RenameItemModal(props) {
 
     if (!exist) {
       if (newItemName.trim(' ').length > 0) {
-        axios
-          .get('http://192.168.252.128:3030/api/renameItem', {
+        axios.get(API_URL + API_URL_RenameItem, {
             params: {
               itemPath: Buffer.from(currentLocation + '/' + selectedItems[0].name).toString('base64'),
               newName : Buffer.from(newItemName).toString('base64')

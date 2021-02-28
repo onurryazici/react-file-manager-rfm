@@ -10,9 +10,13 @@ function EmptyTrashModal(){
     const store             = useStore();
     const directoryItems    = useSelector(state => state.directoryItems);
     const modalDisabled     = size(directoryItems) > 0 ? false : true;
+
+    const API_URL            = store.getState().config.API_URL;
+    const API_URL_EmptyTrash = store.getState().config.API_URL_EmptyTrash;
+
     function EmptyTrash() {
       setModalShow(false);
-      axios.get("http://192.168.252.128:3030/api/emptyTrash").then((response)=>{
+      axios.get(API_URL + API_URL_EmptyTrash).then((response)=>{
             if(response.data.statu === true) {
               const cleared = [];
               store.dispatch(CLEAR_SELECTED_ITEMS());

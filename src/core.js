@@ -15,8 +15,11 @@ import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './cont
 function RFM_Core(props) {
   const store = useStore();
   const isItRecycleBin = useSelector(state=>state.isItRecycleBin);
+
+  const API_URL                     = useSelector(state => state.config.API_URL);
+  const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
   useEffect(() => {
-    Axios.post('http://192.168.252.128:3030/api/userAuthentication', {
+    Axios.post(API_URL + API_URL_UserAuthentication , {
       username: props.username,
       password: props.password
     })
@@ -30,6 +33,7 @@ function RFM_Core(props) {
             store.dispatch(SET_LOCATION(props.location));
             store.dispatch(SET_START_LOCATION(props.location));
           }
+          
           
         }
       })

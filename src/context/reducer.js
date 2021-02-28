@@ -238,6 +238,13 @@ export function reducer (state,action){
                 previewData:action.payload
             }
         }
+
+        case Actions.SET_RFM_CONFIG:{
+            return {
+                ...state,
+                config:action.payload
+            }
+        }
         default:
             return state
    }

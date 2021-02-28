@@ -73,7 +73,7 @@ export function removePermanently(){
     }
     if(encryptedItems.length > 0)
     {
-      axios.get("http://192.168.252.128:3030/api/removeItemPermanently",{
+      HTTP_REQUEST.get("/removeItemPermanently",{
         params:{
           "items":encryptedItems,
         }

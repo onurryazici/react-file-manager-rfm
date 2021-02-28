@@ -10,20 +10,25 @@ import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
-import { size } from 'lodash';
 import ItemPreviewModal from '../modals/itemPreviewModal';
+import { HTTP_REQUEST } from '../helper/global';
 
 function Content(props) {
+    const directoryItems        = props.directoryItems;
+
     const loading               = useSelector(state => state.loading);
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
-    const directoryItems        = props.directoryItems;
     const store                 = useStore();
     const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
     const isItRecycleBin        = useSelector(state => state.isItRecycleBin);
+    
+    const API_URL               = useSelector(state => state.config.API_URL);
+    const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
+
     useEffect(() => {
         if(encryptedLocation !== ""){
-            axios.get("http://192.168.252.128:3030/api/getDirectory",{
+            axios.get(API_URL + API_URL_GetDirectory,{
             params:{
                 location:encryptedLocation,
                 isItRecycleBin:isItRecycleBin
@@ -35,7 +40,6 @@ function Content(props) {
 
         })
         .catch((err)=>{
-            console.log(err)
             store.dispatch(SET_LOADING(false));
             store.dispatch(SET_ERROR(true));
         })

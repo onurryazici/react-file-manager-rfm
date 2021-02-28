@@ -14,7 +14,7 @@ import styles from '../styles.module.css'
 import CopyItemModal from '../modals/createCopyItemModal';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useInView } from 'react-intersection-observer';
-import {  onItemContextMenu,onItemSelected, restoreItems, onItemDoubleClick } from '../helper/events';
+import {  onItemContextMenu,onItemSelected, restoreItems, onItemDoubleClick, removePermanently } from '../helper/events';
 
 function Item(props){
     var itemName  = props.name;
@@ -49,7 +49,7 @@ function Item(props){
     const selectedItemCount = useSelector(state=>state.selectedItemCount);
     const isItRecycleBin    = useSelector(state => state.isItRecycleBin);
     const [ref, inView] = useInView({
-      threshold: 0.3,
+      threshold: 0,
     })
 
 
@@ -57,7 +57,6 @@ function Item(props){
       <React.Fragment>
           <div ref={ref} id={accessibleId} className={classNames(styles.itemBlockGridView)}>
             {
-              inView?
               <ContextMenuTrigger id={itemName} >
                 <div onContextMenu={()=>onItemContextMenu(accessibleId,itemName,itemObject)} 
                      onClick={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
@@ -69,13 +68,12 @@ function Item(props){
                   <span className={styles.tooltiptext}>{itemName}</span>
                   </div>
               </ContextMenuTrigger>
-              :""
             }
               
           </div>
           
           {
-            inView?
+            inView ?
             isItRecycleBin 
             ?(
               <ContextMenu id={itemName} className={styles.contextMenuStage}>

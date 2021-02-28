@@ -20,6 +20,7 @@ export const initialState = {
     isItRecycleBin:false,   // Çöp kutusu için
     isPreviewActive:false,  // Resim görüntülemek için
     previewData:[],         // Resim base64 verisi için
+    config:[],              // RFM Api konfigurasyonu için
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),

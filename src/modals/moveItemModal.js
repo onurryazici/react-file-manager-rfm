@@ -20,9 +20,12 @@ function MoveItemModal(props) {
   const selectedItems      = useSelector((state) => state.selectedItems)
   const encryptedLocation  = Buffer.from(currentLocation).toString('base64')
 
+  const API_URL            = store.getState().config.API_URL;
+  const API_URL_GetDirectory = store.getState().config.API_URL_EmptyTrash;
+  const API_URL_MoveItems = store.getState().config.API_URL_MoveItems;
   useEffect(() => {
     if (encryptedLocation !== '' && modalShow) {
-      axios.get('http://192.168.252.128:3030/api/getDirectory', {
+      axios.get(API_URL + API_URL_GetDirectory, {
           params: { location: encryptedLocation }
         }).then((response) => {
           store.dispatch(SET_MODAL_LOADING(false));
@@ -49,7 +52,7 @@ function MoveItemModal(props) {
       encryptedItems.push(Buffer.from(element.absolutePath).toString('base64'))
       movedItems.push(element.name)
     })
-    axios.get('http://192.168.252.128:3030/api/moveItems', {
+    axios.get(API_URL + API_URL_MoveItems, {
         params: {
           'items[]': encryptedItems,
           target: encryptedLocation

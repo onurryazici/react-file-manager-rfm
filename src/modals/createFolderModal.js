@@ -18,6 +18,8 @@ function CreateFolderModal(props){
   const encryptedLocation   = currentLocation !== undefined && currentLocation !== "" ? Buffer.from(currentLocation).toString('base64') : "";
   const directoryItems      = useSelector(state => state.directoryItems);
 
+  const API_URL                   = store.getState().config.API_URL;
+  const API_URL_CreateDirectory   = store.getState().config.API_URL_CreateDirectory;
 
   function CreateFolder(event) {
     event.preventDefault();
@@ -25,7 +27,7 @@ function CreateFolderModal(props){
 
     if(!exist){
       if(DirectoryName.trim(' ').length > 0){
-        Axios.get("http://192.168.252.128:3030/api/createDirectory",{
+        Axios.get(API_URL + API_URL_CreateDirectory ,{
           params:{
             location:encryptedLocation,
             dirname:Buffer.from(DirectoryName).toString('base64')

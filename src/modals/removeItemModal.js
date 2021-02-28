@@ -15,6 +15,9 @@ function RemoveItemModal(props){
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
 
+    const API_URL = store.getState().config.API_URL;
+    const API_URL_MoveToTrash = store.getState().config.API_URL_MoveToTrash;
+    
     function RemoveItem() {
       setModalShow(false);
       let encryptedItems=[];
@@ -32,7 +35,7 @@ function RemoveItemModal(props){
       
       if(encryptedItems.length > 0)
       {
-        axios.get("http://192.168.252.128:3030/api/moveToTrash",{
+        axios.get(API_URL + API_URL_MoveToTrash,{
           params:{
             "items":encryptedItems,
             location:Buffer.from(currentLocation).toString('base64')

@@ -19,10 +19,12 @@ function CopyItemModal(props){
     const directoryItems    = useSelector(state => state.modalDirectoryItems);
     const encryptedLocation = Buffer.from(currentLocation).toString('base64');
     const selectedItems     = useSelector(state => state.selectedItems);
-
+    const API_URL           = store.getState().config.API_URL;
+    const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
+    const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
     useEffect(() => {
         if(encryptedLocation !== "" && modalShow){
-            axios.get("http://192.168.252.128:3030/api/getDirectory",{params:{location:encryptedLocation}})
+            axios.get(API_URL + API_URL_GetDirectory,{params:{location:encryptedLocation}})
               .then((response)=>{
                 store.dispatch(SET_MODAL_LOADING(false));
                 store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
@@ -44,7 +46,7 @@ function CopyItemModal(props){
       selectedItems.forEach(element => {
           encryptedItems.push(Buffer.from(element.absolutePath).toString('base64')); 
       });
-      axios.get("http://192.168.252.128:3030/api/createCopy",{
+      axios.get(API_URL + API_URL_CreateCopy,{
           params:{
             "items[]":encryptedItems,
             target:encryptedLocation

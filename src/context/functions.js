@@ -136,3 +136,9 @@ export function SET_PREVIEW_DATA(_previewData){
         dispatch({ type: Actions.SET_PREVIEW_DATA, payload: _previewData })
     }
 }
+
+export function SET_RFM_CONFIG(_configPayload){
+    return dispatch => {
+        dispatch({ type: Actions.SET_RFM_CONFIG, payload: _configPayload })
+    }
+}

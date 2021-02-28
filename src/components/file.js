@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles.module.css'
-import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage} from 'react-icons/fa';
+import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage, FaJava} from 'react-icons/fa';
 function File(props){
     const fileId    = props.fileId;
     const fileName  = props.fileName;
@@ -31,6 +31,8 @@ function File(props){
                 return <FaFileImage color="#36bae1" className={`${selectedClass}`} />
             case 'jpg':
                 return <FaFileImage color="#36bae1" className={`${selectedClass}`} />
+            case 'js':
+                return <FaJava color="#36bae1" className={`${selectedClass}`}/>
             default:
                 return <FaFile color="#777777" className={`${selectedClass}`} />;
 

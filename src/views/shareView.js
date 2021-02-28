@@ -17,6 +17,9 @@ export default function ShareView() {
     const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
     const [newUserName, setNewUserName] = useState("");
 
+    const API_URL = store.getState().config.API_URL;
+    const API_URL_ShareItem = store.getState().config.API_URL_ShareItem;
+    const API_URL_RemovePermission = store.getState().config.API_URL_RemovePermission;
     const ShareType={
         FOR_NEW_USER:"FOR_NEW_USER",
         FOR_EXISTING_USER:"FOR_EXISTING_USER"
@@ -27,7 +30,7 @@ export default function ShareView() {
     }
 
     function ShareItem(username,permission,type){
-        axios.get("http://192.168.252.128:3030/api/shareItem",{
+        axios.get(API_URL + API_URL_ShareItem,{
             params:{
                 user:username,
                 permissions: permission === PermissionType.FULL_ACCESS ? "rwx" : "r-x",
@@ -75,7 +78,7 @@ export default function ShareView() {
         ShareItem(username,eventKey,ShareType.FOR_EXISTING_USER);
     }
     function removeUserPermission(username){
-        axios.get("http://192.168.252.128:3030/api/removePermission",{
+        axios.get(API_URL + API_URL_RemovePermission,{
             params:{
                 user:username,
                 item:encryptedItem
