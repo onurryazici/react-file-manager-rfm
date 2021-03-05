@@ -45,7 +45,6 @@ export function reducer (state,action){
                 const element = document.getElementById(accessibleId);
                 element.classList.remove(styles.itemBlockGridViewActive); 
             })
-
             return {
                 ...state,
                 selectedItems:[],
@@ -82,37 +81,40 @@ export function reducer (state,action){
             }
         }
         case Actions.RENAME_ITEM:{
-            const newSelectedItems = [...state.selectedItems];
-            newSelectedItems[0].name = action.payload.newName;
-            const element = document.getElementById(action.payload.oldName+"-"+action.payload.itemType);
-            element.id = action.payload.newName + "-" + action.payload.itemType;
+            const newSelectedItems           = [...state.selectedItems];
+            newSelectedItems[0].name         = action.payload.newName;
+
+
+            const temp                       = newSelectedItems[0].absolutePath;
+            newSelectedItems[0].absolutePath = temp.substring(0,temp.lastIndexOf('/')) + '/' + action.payload.newName;
+
+            const element = document.getElementById(action.payload.oldName + "-" + action.payload.itemType);
+            element.id    = action.payload.newName + "-" + action.payload.itemType;
             return {
                 ...state,
                 directoryItems: state.directoryItems.map((item,i)=> 
                     item.name === action.payload.oldName 
-                        ? {...item, name:action.payload.newName} 
+                        ? {...item, name:action.payload.newName, absolutePath:temp.substring(0,temp.lastIndexOf('/')) + '/' + action.payload.newName} 
                         : {...item}),
                 selectedItems:newSelectedItems
             }
         }
         case Actions.ADD_SHARED_WITH:{
-            const index = state.directoryItems.findIndex(element=>element.name === action.payload.itemName);
-            const newDirectoryItems = [...state.directoryItems];
-            const newSelectedItems  = [...state.selectedItems];
+            const index = state.directoryItems.findIndex(element => element.name === action.payload.itemName);
+            var newDirectoryItems = [...state.directoryItems];
+            var newSelectedItems  = [...state.selectedItems];
 
             const shareObject = {
                 username:action.payload.username,
                 read:action.payload.read,
                 write:action.payload.write,
-                execute:action.payload.execute
             }
-
-            newDirectoryItems[index].sharedWith.push(shareObject)
-            newSelectedItems[0].sharedWith.push(shareObject);
+            newDirectoryItems[index].sharedWith.push(shareObject);
+            newSelectedItems[0] = newDirectoryItems[index];
             return {
                 ...state,
-                directoryItems: newDirectoryItems,
-                selectedItems : newSelectedItems
+                directoryItems:newDirectoryItems,
+                selectedItems: newSelectedItems
             }
         }
         case Actions.UPDATE_SHARED_WITH:{
@@ -150,8 +152,6 @@ export function reducer (state,action){
                 selectedItems: newSelectedItems
             }
         }
-
-
         case Actions.SET_UPLOAD_FILE:{
             const files = action.payload;
             let fileToUpload = state.fileProgress;
@@ -175,7 +175,6 @@ export function reducer (state,action){
                 fileProgress:fileToUpload
             }
         }
-
         case Actions.SET_UPLOAD_PROGRESS:{
             return {
                 ...state,
@@ -188,7 +187,6 @@ export function reducer (state,action){
                 }
             }
         }
-
         case Actions.SUCCESS_UPLOAD_FILE:{
             return {
                 ...state,
@@ -202,7 +200,6 @@ export function reducer (state,action){
                 },
             }
         }
-
         case Actions.FAILURE_UPLOAD_FILE:{
             return {
                 ...state,
@@ -217,28 +214,24 @@ export function reducer (state,action){
                 }
             }
         }
-
         case Actions.SET_RECYCLE_BIN:{
             return {
                 ...state,
                 isItRecycleBin:action.payload
             }
         }
-
         case Actions.SET_PREVIEW_ACTIVE:{
             return {
                 ...state,
                 isPreviewActive:action.payload
             }
         }
-
         case Actions.SET_PREVIEW_DATA:{
             return {
                 ...state,
                 previewData:action.payload
             }
         }
-
         case Actions.SET_RFM_CONFIG:{
             return {
                 ...state,

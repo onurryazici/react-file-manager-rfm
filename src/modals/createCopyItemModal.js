@@ -88,7 +88,11 @@ function CopyItemModal(props){
             [
                 <ModalPlacemap/>,
                 loading 
-                ? <div id={styles.loadingSpinner}>loading</div>
+                ? <div className={styles.containerW100PH300}>
+                    <div id={styles.detailLoadingSpinner} style={{fontSize:'8px',marginLeft:'auto',marginRight:'auto',marginTop:'120px'}}>
+                      Loading...
+                    </div>
+                  </div>
                 : <div className={styles.containerW100PH300}>
                   {
                     directoryItems !== undefined && directoryItems.length > 0 

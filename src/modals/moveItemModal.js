@@ -3,9 +3,8 @@ import { toast } from 'material-react-toastify'
 import React, { useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
-import { Actions } from '../context/actions'
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
@@ -20,18 +19,25 @@ function MoveItemModal(props) {
   const selectedItems      = useSelector((state) => state.selectedItems)
   const encryptedLocation  = Buffer.from(currentLocation).toString('base64')
 
-  const API_URL            = store.getState().config.API_URL;
-  const API_URL_GetDirectory = store.getState().config.API_URL_EmptyTrash;
-  const API_URL_MoveItems = store.getState().config.API_URL_MoveItems;
+  const API_URL              = store.getState().config.API_URL;
+  const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
+  const API_URL_MoveItems    = store.getState().config.API_URL_MoveItems;
+
   useEffect(() => {
     if (encryptedLocation !== '' && modalShow) {
       axios.get(API_URL + API_URL_GetDirectory, {
           params: { location: encryptedLocation }
         }).then((response) => {
           store.dispatch(SET_MODAL_LOADING(false));
-          store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
+          var reduced = response.data.items.filter((element)=> {
+              return !selectedItems.some((selectedElement)=>{
+                return selectedElement.absolutePath === element.absolutePath
+            })
+          });
+          store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
         })
         .catch((err) => {
+          alert(err)
           store.dispatch(SET_MODAL_LOADING(false));
           store.dispatch(SET_ERROR(true));
         })
@@ -61,12 +67,13 @@ function MoveItemModal(props) {
       .then((response) => {
         if (response.data.statu) {
           var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
-          store.dispatch(SET_DIRECTORY_ITEMS(reduced));
           store.dispatch(CLEAR_SELECTED_ITEMS());
+          store.dispatch(SET_DIRECTORY_ITEMS(reduced));
           toast.success('Taşıma işlemi gerçekleştirlidi')
         } else toast.error(response.data.message)
       })
       .catch((err) => {
+        alert(err)
         store.dispatch(SET_ERROR(true));
         store.dispatch(SET_LOADING(false));
       })
@@ -106,7 +113,11 @@ function MoveItemModal(props) {
             [
                 <ModalPlacemap/>,
                 loading 
-                ? <div id={styles.loadingSpinner}>loading</div>
+                ? <div className={styles.containerW100PH300}>
+                    <div id={styles.detailLoadingSpinner} style={{fontSize:'8px',marginLeft:'auto',marginRight:'auto',marginTop:'120px'}}>
+                      Loading...
+                    </div>
+                  </div>
                 : <div className={styles.containerW100PH300}>
                   {
                     directoryItems !== undefined && directoryItems.length > 0 

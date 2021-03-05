@@ -53,7 +53,7 @@ function RenameItemModal(props) {
               var item = directoryItems.find((element) => element.name === selectedItems[0].name)
               if (item) {
                 store.dispatch(RENAME_ITEM(item.name, item.type,newItemName));
-               // store.dispatch(CLEAR_SELECTED_ITEMS(null));
+                store.dispatch(CLEAR_SELECTED_ITEMS(null));
               }
               toast.success('Yeniden adlandırıldı');
             } 
@@ -61,6 +61,7 @@ function RenameItemModal(props) {
               toast.error(response.data.message)
           })
           .catch((err) => {
+            alert(err)
             store.dispatch(SET_ERROR(true));
           store.dispatch(SET_LOADING(false));
           })
