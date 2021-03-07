@@ -12,7 +12,6 @@ import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { HTTP_REQUEST } from '../helper/global';
-
 function Content(props) {
     const directoryItems        = props.directoryItems;
 
@@ -20,19 +19,18 @@ function Content(props) {
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
     const store                 = useStore();
-    const encryptedLocation     = Buffer.from(currentLocation).toString('base64');
     const isItRecycleBin        = useSelector(state => state.isItRecycleBin);
     
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
 
     useEffect(() => {
-        if(encryptedLocation !== ""){
-            axios.get(API_URL + API_URL_GetDirectory,{
-            params:{
-                location:encryptedLocation,
+        if(currentLocation !== ""){
+            axios.post(API_URL + API_URL_GetDirectory,{
+            
+                location:currentLocation,
                 isItRecycleBin:isItRecycleBin
-            },
+            
         })
         .then((response)=>{
             store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));

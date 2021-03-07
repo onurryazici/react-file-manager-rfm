@@ -19,7 +19,7 @@ const App = () =>{
           API_URL_MoveToTrash           = "/api/secured/moveToTrash"
           API_URL_RemovePermission      = "/api/secured/removePermission"
           API_URL_RenameItem            = "/api/secured/renameItem"
-          API_URL_RestoreItem           = "/api/secured/restoreItem"
+          API_URL_RestoreItems          = "/api/secured/restoreItems"
           API_URL_ShareItem             = "/api/secured/shareItem"
           API_URL_UploadItem            = "/api/secured/uploadItem"
           token                         = ""

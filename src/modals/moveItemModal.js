@@ -17,16 +17,15 @@ function MoveItemModal(props) {
   const mainDirectoryItems = useSelector((state) => state.directoryItems)
   const directoryItems     = useSelector((state) => state.modalDirectoryItems)
   const selectedItems      = useSelector((state) => state.selectedItems)
-  const encryptedLocation  = Buffer.from(currentLocation).toString('base64')
 
   const API_URL              = store.getState().config.API_URL;
   const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
   const API_URL_MoveItems    = store.getState().config.API_URL_MoveItems;
 
   useEffect(() => {
-    if (encryptedLocation !== '' && modalShow) {
-      axios.get(API_URL + API_URL_GetDirectory, {
-          params: { location: encryptedLocation }
+    if (currentLocation !== '' && modalShow) {
+      axios.post(API_URL + API_URL_GetDirectory, {
+         location: currentLocation 
         }).then((response) => {
           store.dispatch(SET_MODAL_LOADING(false));
           var reduced = response.data.items.filter((element)=> {
@@ -52,17 +51,15 @@ function MoveItemModal(props) {
 
   function MoveItems() {
     setModalShow(false)
-    let encryptedItems = []
+    let items      = []
     let movedItems = []
     selectedItems.forEach((element) => {
-      encryptedItems.push(Buffer.from(element.absolutePath).toString('base64'))
+      items.push(element.absolutePath)
       movedItems.push(element.name)
     })
-    axios.get(API_URL + API_URL_MoveItems, {
-        params: {
-          'items[]': encryptedItems,
-          target: encryptedLocation
-        }
+    axios.post(API_URL + API_URL_MoveItems, {
+          "items": items,
+          target: currentLocation
       })
       .then((response) => {
         if (response.data.statu) {

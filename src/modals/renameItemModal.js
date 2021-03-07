@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form, Alert } from 'react-bootstrap'
+import { Button, Modal, Form, Alert, InputGroup, FormControl } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import styles from '../styles.module.css'
 import { FaPenSquare } from 'react-icons/fa'
@@ -18,15 +18,16 @@ function RenameItemModal(props) {
   const directoryItems  = useSelector((state) => state.directoryItems);
   const currentLocation = useSelector((state) => state.location);
   const selectedItems   = useSelector((state) => state.selectedItems);
-
-  const API_URL = store.getState().config.API_URL;
+  const name      = selectedItems.length > 0 && selectedItems[0].name;
+  const type      = selectedItems.length > 0 && selectedItems[0].type;
+  const extension = selectedItems.length > 0 && selectedItems[0].extension;
+  const API_URL            = store.getState().config.API_URL;
   const API_URL_RenameItem = store.getState().config.API_URL_RenameItem;
 
   function onKeyPress(event) {
     var value         = event.value
-    var pattern       = ['.', '/', '\\', ':', ';', '^', '>', '<', '|']
+    var pattern       = ['/', '\\' ]
     var wrongPattern  = pattern.some((element) => value.includes(element))
-
     if (wrongPattern) setIsAcceptable(false)
     else {
       setNewItemName(value)
@@ -42,17 +43,17 @@ function RenameItemModal(props) {
 
     if (!exist) {
       if (newItemName.trim(' ').length > 0) {
-        axios.get(API_URL + API_URL_RenameItem, {
-            params: {
-              itemPath: Buffer.from(currentLocation + '/' + selectedItems[0].name).toString('base64'),
-              newName : Buffer.from(newItemName).toString('base64')
-            }
+        axios.post(API_URL + API_URL_RenameItem, {
+              itemPath  : (currentLocation + '/' + selectedItems[0].name),
+              newName   : newItemName,
+              type      : selectedItems[0].type,
+              extension : selectedItems[0].extension,
           })
           .then((response) => {
             if (response.data.message === Messages.ITEM_RENAME_SUCCESS) {
               var item = directoryItems.find((element) => element.name === selectedItems[0].name)
               if (item) {
-                store.dispatch(RENAME_ITEM(item.name, item.type,newItemName));
+                store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
                 store.dispatch(CLEAR_SELECTED_ITEMS(null));
               }
               toast.success('Yeniden adlandırıldı');
@@ -97,16 +98,34 @@ function RenameItemModal(props) {
         <form autoComplete='off' onSubmit={RenameItem}>
           <Modal.Body>
             
-              <Form.Group role='form' controlId='formFolderName'>
-                <Form.Control type='text' placeholder='Adsız Klasör' name='folderName' onChange={(e) => onKeyPress(e.target)} />
-                <br />
+              <Form.Group role='form' controlId='formItemName'>
+                <InputGroup>
+                  <FormControl
+                    type="text"
+                    name='itemName' 
+                    onChange={(e) => onKeyPress(e.target)} 
+                    defaultValue={ ( type !== "directory") ? (name+"").substring(0,(name+"").lastIndexOf('.')) : name}
+                    aria-label="itemName"
+                    aria-describedby="basic-addon2"
+                    onFocus={(e)=>e.target.select()}
+                  />
+                  {
+                    extension !== "" 
+                    ? <InputGroup.Append>
+                        <InputGroup.Text id="basic-addon2">{"." + extension}</InputGroup.Text>
+                      </InputGroup.Append>
+                    : "" 
+                  }
+                </InputGroup>
                 {newItemName.length > 0 && !isAcceptable 
                 ? (
+                  [<br />,
                   <Alert variant='danger'>
                     <p>
-                      Şu karakterleri içermemelidir . , / \ : ; ^ &gt; &lt; |
+                      Şu karakterleri içermemelidir / \ 
                     </p>
                   </Alert>
+                  ]
                   ) 
                 : ('')
                 }

@@ -20,26 +20,24 @@ function RemoveItemModal(props){
     
     function RemoveItem() {
       setModalShow(false);
-      let encryptedItems=[];
-      let removedItems=[];
-      let cantRemove=[];
+      let items        = [];
+      let removedItems = [];
+      let cantRemove   = [] ;
       
       for(let i=0; i<selectedItems.length;i++){
         if(selectedItems[i].write===false)
           cantRemove.push(selectedItems[i].name);
         else{
-          encryptedItems.push(Buffer.from(selectedItems[i].name).toString('base64'));
+          items.push(selectedItems[i].name);
           removedItems.push(selectedItems[i].name);
         }
       }
       
-      if(encryptedItems.length > 0)
+      if(items.length > 0)
       {
-        axios.get(API_URL + API_URL_MoveToTrash,{
-          params:{
-            "items":encryptedItems,
-            location:Buffer.from(currentLocation).toString('base64')
-          }
+        axios.post(API_URL + API_URL_MoveToTrash,{
+            "items":items,
+            location:currentLocation
         }).then((response)=>{
             if(response.data.statu === true) {
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));

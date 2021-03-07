@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
@@ -20,11 +21,12 @@ export function onItemSelected(event,accessibleId,itemName,itemObject){
       }
     element.classList.add(styles.itemBlockGridViewActive);
 } 
+export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,extension){
+    const isItRecycleBin   = store.getState().isItRecycleBin;
+    const currentLocation  = store.getState().location;
+    const API_URL          = store.getState().config.API_URL;
+    const API_URL_GetImage = store.getState().config.API_URL_GetImage;
 
-
-export function onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension){
-    const isItRecycleBin = store.getState().isItRecycleBin;
-    const currentLocation = store.getState().location;
     if(!isItRecycleBin)
     {
       if(itemType==="directory"){
@@ -37,19 +39,16 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,ex
       }
       else if (extension==="png" || extension === "jpg" || extension === "jpeg")
       {
-         HTTP_REQUEST.get('/getImage',{
-           params:{
-             absolutePath:Buffer.from(absolutePath).toString('base64')
-           }
+        store.dispatch(SET_PREVIEW_ACTIVE(true))
+         axios.post(API_URL + API_URL_GetImage,{
+             absolutePath:_absolutePath
          }).then((response)=>{
-           console.log(response.data)
            store.dispatch(SET_PREVIEW_DATA(response.data))
-           store.dispatch(SET_PREVIEW_ACTIVE(true))
          })
       }
     }
       
-  }
+}
 export function onItemContextMenu(accessibleId,itemName,itemObject){
     const selectedItems = store.getState().selectedItems;
     var exist = selectedItems.some((element)=>{return element.name === itemName});
@@ -59,24 +58,23 @@ export function onItemContextMenu(accessibleId,itemName,itemObject){
       store.dispatch(ADD_SELECTED_ITEM(itemObject));
       element.classList.add(styles.itemBlockGridViewActive);
     }
-
 }
 export function removePermanently(){
     const selectedItems = store.getState().selectedItems;
     const directoryItems = store.getState().directoryItems;
-    let encryptedItems=[];
+    const API_URL                       = store.getState().config.API_URL;
+    const API_URL_RemoveItemPermanently = store.getState().config.API_URL_RemoveItemPermanently;
+    let items=[];
     let removedItems=[];
     
     for(let i=0; i<selectedItems.length;i++){
-        encryptedItems.push(Buffer.from(selectedItems[i].name).toString('base64'));
+        items.push(selectedItems[i].name);
         removedItems.push(selectedItems[i].name);
     }
-    if(encryptedItems.length > 0)
+    if(items.length > 0)
     {
-      HTTP_REQUEST.get("/removeItemPermanently",{
-        params:{
-          "items":encryptedItems,
-        }
+      axios.post(API_URL + API_URL_RemoveItemPermanently,{
+          "items":items,
       }).then((response)=>{
           if(response.data.statu === true) {
             var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
@@ -91,24 +89,28 @@ export function removePermanently(){
         store.dispatch(SET_LOADING(false)); 
       });
     }
-  }
+}
 export function restoreItems(){
-    let encryptedItems=[];
-    let restoredItems=[];
-    const selectedItems = store.getState().selectedItems;
+    let items          = [];
+    let restoredItems  = [];
+    
+    const API_URL              = store.getState().config.API_URL;
+    const API_URL_RestoreItems = store.getState().config.API_URL_RestoreItems;
+    const selectedItems  = store.getState().selectedItems;
     const directoryItems = store.getState().directoryItems;
+
     for(let i=0; i<selectedItems.length;i++){
-        encryptedItems.push({
-          absolutePath:Buffer.from(selectedItems[i].absolutePath).toString('base64'),
-          restorePath:Buffer.from(selectedItems[i].restorePath).toString('base64')
+        items.push({
+          absolutePath:selectedItems[i].absolutePath,
+          restorePath:selectedItems[i].restorePath
         });
         restoredItems.push(selectedItems[i].name)
     }
-    if(encryptedItems.length > 0)
+
+    if(items.length > 0)
     {
-      
-      HTTP_REQUEST.post("/restoreItems",{
-          encryptedItems
+      axios.post(API_URL + API_URL_RestoreItems,{
+          items
       }).then((response)=>{
           if(response.data.statu === true) {
             var reduced = directoryItems.filter((element)=> !restoredItems.includes(element.name));
@@ -118,9 +120,8 @@ export function restoreItems(){
           else
             toast.error(response.data.message);
       }).catch((err)=>{
-        alert(err)
         store.dispatch(SET_ERROR(true));
         store.dispatch(SET_LOADING(false)); 
       });
     }
-  } 
+} 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Modal,Form } from 'react-bootstrap'
+import {Button, Modal,Form, InputGroup } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css';
 import styles from '../styles.module.css'
 import { FaPlusCircle } from 'react-icons/fa';
@@ -11,33 +11,51 @@ import {  toast } from 'material-react-toastify';
 import { ADD_DIRECTORY_ITEM, SET_ERROR, SET_LOADING } from '../context/functions';
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName] = useState("");
-  const [modalShow, setModalShow] = React.useState(false);
-  const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
+  const [modalShow, setModalShow]         = useState(false);
+  const [isAcceptable, setIsAcceptable]   = useState(false);
+  const [isAlreadyExist, setisAlreadyExist] = useState(false);
+  const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
   const store               = useStore();
   const currentLocation     = useSelector(state => state.location);
-  const encryptedLocation   = currentLocation !== undefined && currentLocation !== "" ? Buffer.from(currentLocation).toString('base64') : "";
   const directoryItems      = useSelector(state => state.directoryItems);
 
   const API_URL                   = store.getState().config.API_URL;
   const API_URL_CreateDirectory   = store.getState().config.API_URL_CreateDirectory;
 
+  function onKeyPress(event) {
+    var value         = event.target.value
+    var pattern       = ['/', '\\' ]
+    var wrongPattern  = pattern.some((element) => value.includes(element))
+    var exist         = directoryItems.some((item) => item.name === value && item.type==="directory")
+
+    if (wrongPattern) 
+      setIsAcceptable(false)
+    else if(exist)
+      setisAlreadyExist(true);
+    else {
+      setDirectoryName(value);
+      setIsAcceptable(true);
+      setisAlreadyExist(false);
+    }
+  }
+
+
   function CreateFolder(event) {
     event.preventDefault();
-    var exist = directoryItems.filter((element) => element.name===DirectoryName).length > 0 ? true : false;
+    var exist = directoryItems.filter((element) => element.name === DirectoryName).length > 0 ? true : false;
 
     if(!exist){
       if(DirectoryName.trim(' ').length > 0){
-        Axios.get(API_URL + API_URL_CreateDirectory ,{
-          params:{
-            location:encryptedLocation,
-            dirname:Buffer.from(DirectoryName).toString('base64')
-          }
+        Axios.post(API_URL + API_URL_CreateDirectory ,{
+            location:currentLocation,
+            dirname:DirectoryName
         })
         .then((response)=>{
           if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
               store.dispatch(SET_LOADING(false));
               store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
               toast.success("Dizin oluşturuldu")
+              setModalShow(false);
           }
           else{
             
@@ -68,29 +86,51 @@ function CreateFolderModal(props){
             </Button>
       }  
 
-      <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
-      <Form autoComplete="off" onSubmit={CreateFolder}>
+      <Modal show={modalShow} onHide={()=> { setModalShow(false); setDirectoryName("");} } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
+      <Form noValidate validated={isAcceptable} autoComplete="off" onSubmit={CreateFolder}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
             Yeni Klasör
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        
-          <Form.Group role="form" controlId="formFolderName">
+        <InputGroup hasValidation>
             <Form.Control type="text" 
                 placeholder="Adsız Klasör" 
                 name="folderName" 
-                onChange={(e)=>setDirectoryName(e.target.value)}
+                onChange={(event)=>onKeyPress(event)}
+                required
+                isInvalid = {!isAcceptable || isAlreadyExist}
+                isValid = {isAcceptable && !isAlreadyExist}
                 />
-          </Form.Group>
-       
+              {
+                !isAcceptable && DirectoryName.length > 0
+                ?
+                <Form.Control.Feedback type="invalid" >
+                Şu karakterleri içermemelidir / \
+                </Form.Control.Feedback>
+                : ""
+              }
+              {
+                isAlreadyExist && DirectoryName.length > 0 
+                ?
+                <Form.Control.Feedback type="invalid" >
+                  Bu klasör zaten mevcut 
+                </Form.Control.Feedback>
+                :""
+                
+              }
+              
+
+              
+            
+        </InputGroup>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
         
         {
-          DirectoryName!=="" && directoryItems !== undefined
+          isAcceptable && !isAlreadyExist
           ? <Button as="input" type="submit" value="Oluştur" variant="success" />
           : <Button as="input" type="submit" value="Oluştur" variant="success" disabled/>
         }

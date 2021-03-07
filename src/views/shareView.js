@@ -12,7 +12,6 @@ import { ADD_SHARED_WITH, DELETE_SHARED_WITH, UPDATE_SHARED_WITH } from '../cont
 export default function ShareView() {
     const store      = useStore();
     const selectedItems = useSelector((state) => state.selectedItems);
-    const encryptedItem = Buffer.from(selectedItems[0].absolutePath).toString('base64');
     const [newUserFullAccess, setNewUserFullAccess] = useState(true);
     const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
     const [newUserName, setNewUserName] = useState("");
@@ -34,7 +33,7 @@ export default function ShareView() {
             params:{
                 user:username,
                 permissions: permission === PermissionType.FULL_ACCESS ? "rwx" : "r-x",
-                item:encryptedItem
+                item:selectedItems[0].absolutePath
             }
             }).then((response)=>{
                 if(response.data.statu === true){
@@ -78,11 +77,9 @@ export default function ShareView() {
         ShareItem(username,eventKey,ShareType.FOR_EXISTING_USER);
     }
     function removeUserPermission(username){
-        axios.get(API_URL + API_URL_RemovePermission,{
-            params:{
+        axios.post(API_URL + API_URL_RemovePermission,{ 
                 user:username,
-                item:encryptedItem
-            }
+                item:selectedItems[0].absolutePath
             }).then((response)=>{
                 if(response.data.statu === true){
                     store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name, username))

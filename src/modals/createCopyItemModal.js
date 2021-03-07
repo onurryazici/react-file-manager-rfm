@@ -17,14 +17,13 @@ function CopyItemModal(props){
     const loading           = useSelector(state => state.modalLoading);
     const currentLocation   = useSelector(state => state.modalLocation);
     const directoryItems    = useSelector(state => state.modalDirectoryItems);
-    const encryptedLocation = Buffer.from(currentLocation).toString('base64');
     const selectedItems     = useSelector(state => state.selectedItems);
     const API_URL           = store.getState().config.API_URL;
     const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
     const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
     useEffect(() => {
-        if(encryptedLocation !== "" && modalShow){
-            axios.get(API_URL + API_URL_GetDirectory,{params:{location:encryptedLocation}})
+        if(currentLocation !== "" && modalShow){
+            axios.post(API_URL + API_URL_GetDirectory,{location:currentLocation})
               .then((response)=>{
                 store.dispatch(SET_MODAL_LOADING(false));
                 store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
@@ -42,15 +41,13 @@ function CopyItemModal(props){
     } 
     function CreateCopyItem(){
       setModalShow(false);
-      let encryptedItems=[];
+      let items=[];
       selectedItems.forEach(element => {
-          encryptedItems.push(Buffer.from(element.absolutePath).toString('base64')); 
+        items.push(element.absolutePath);
       });
-      axios.get(API_URL + API_URL_CreateCopy,{
-          params:{
-            "items[]":encryptedItems,
-            target:encryptedLocation
-          }
+      axios.post(API_URL + API_URL_CreateCopy,{
+            "items":items,
+            target:currentLocation
         })
         .then((response)=>{
           if(response.data.statu){
