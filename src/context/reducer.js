@@ -43,7 +43,8 @@ export function reducer (state,action){
             selectedItems.forEach((item)=>{
                 const accessibleId = item.name + "-" + item.type
                 const element = document.getElementById(accessibleId);
-                element.classList.remove(styles.itemBlockGridViewActive); 
+                if(typeof(element) != 'undefined' && element != null)
+                    element.classList.remove(styles.itemBlockGridViewActive); 
             })
             return {
                 ...state,

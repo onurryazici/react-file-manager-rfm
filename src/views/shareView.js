@@ -19,6 +19,7 @@ export default function ShareView() {
     const API_URL = store.getState().config.API_URL;
     const API_URL_ShareItem = store.getState().config.API_URL_ShareItem;
     const API_URL_RemovePermission = store.getState().config.API_URL_RemovePermission;
+    
     const ShareType={
         FOR_NEW_USER:"FOR_NEW_USER",
         FOR_EXISTING_USER:"FOR_EXISTING_USER"
@@ -29,12 +30,10 @@ export default function ShareView() {
     }
 
     function ShareItem(username,permission,type){
-        axios.get(API_URL + API_URL_ShareItem,{
-            params:{
+        axios.post(API_URL + API_URL_ShareItem,{
                 user:username,
                 permissions: permission === PermissionType.FULL_ACCESS ? "rwx" : "r-x",
                 item:selectedItems[0].absolutePath
-            }
             }).then((response)=>{
                 if(response.data.statu === true){
                     let write   = (permission === PermissionType.FULL_ACCESS) ? true : false;

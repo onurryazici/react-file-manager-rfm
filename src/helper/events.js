@@ -40,11 +40,11 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
       else if (extension==="png" || extension === "jpg" || extension === "jpeg")
       {
         store.dispatch(SET_PREVIEW_ACTIVE(true))
-         axios.post(API_URL + API_URL_GetImage,{
+         /*axios.post(API_URL + API_URL_GetImage,{
              absolutePath:_absolutePath
          }).then((response)=>{
            store.dispatch(SET_PREVIEW_DATA(response.data))
-         })
+         })*/
       }
     }
       
