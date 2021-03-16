@@ -62,7 +62,7 @@ function Item(props){
                      onClick={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
                      onDoubleClick={()=>onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension)}>
                   {(itemType==="file")
-                    ? <File fileName={itemName} extension={extension} viewMode="grid" image={_image}/>
+                    ? <File fileName={itemName} extension={extension} viewMode="grid" image={_image} absolutePath={absolutePath}/>
                     : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
                   }
                   <span className={styles.tooltiptext}>{itemName}</span>

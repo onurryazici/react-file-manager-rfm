@@ -40,6 +40,7 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
       else if (extension==="png" || extension === "jpg" || extension === "jpeg")
       {
         store.dispatch(SET_PREVIEW_ACTIVE(true))
+        store.dispatch(SET_PREVIEW_DATA(`${API_URL + API_URL_GetImage}?absolutePath=${_absolutePath}`));
          /*axios.post(API_URL + API_URL_GetImage,{
              absolutePath:_absolutePath
          }).then((response)=>{

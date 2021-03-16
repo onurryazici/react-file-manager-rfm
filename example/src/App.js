@@ -5,7 +5,7 @@ import 'react-file-manager-rfm/dist/index.css';
 const App = () =>{
     return(
         <RFM 
-          location                      = "/home/main/Desktop"
+          location                      = "/home/main/drive"
           isItRecycleBin                = {false}
           API_URL                       = "http://192.168.252.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"

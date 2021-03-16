@@ -24,7 +24,7 @@ function ItemPreviewModal(props) {
         <Modal.Body style={{padding:'0px'}} >
          
             <div className={styles.previewContainer}>
-              <img className={styles.previewFitCenter} src={"http://192.168.252.128:3030/api/secured/getImage?absolutePath=L2hvbWUvbWFpbi9EZXNrdG9wL0lNR18yMDIwMDExNV8wMDE0NTIucG5n"} style={{maxWidth:'100%'}}/>
+              <img className={styles.previewFitCenter} src={previewData} style={{maxWidth:'100%'}}/>
             </div>
          
         </Modal.Body>
