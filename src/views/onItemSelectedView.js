@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import ShareItemModal from '../modals/shareItemModal'
+import NewShareItemModal from '../modals/newShareItemModal'
 import RemoveItemModal from '../modals/removeItemModal'
 import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
@@ -17,7 +17,7 @@ function OnItemSelectedView() {
     }
     return (
         <div>
-            {selectedItemCount === 1 ? <ShareItemModal isContextMenuButton="no"/> : ""}
+            {selectedItemCount === 1 ? <NewShareItemModal isContextMenuButton="no"/> : ""}
             <RemoveItemModal isContextMenuButton="no"/>
             <MoveItemModal isContextMenuButton="no"/>
             <CopyItemModal isContextMenuButton="no"/>

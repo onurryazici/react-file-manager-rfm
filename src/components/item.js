@@ -7,7 +7,7 @@ import File from './file';
 import classNames from 'classnames'
 import RenameItemModal from '../modals/renameItemModal';
 import RemoveItemModal from '../modals/removeItemModal';
-import ShareItemModal from '../modals/shareItemModal';
+import NewShareItemModal from '../modals/newShareItemModal';
 import MoveItemModal from '../modals/moveItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
 import styles from '../styles.module.css'
@@ -98,7 +98,7 @@ function Item(props){
                     :
                     ( 
                     <MenuItem>
-                        <ShareItemModal isContextMenuButton="yes"/>
+                        <NewShareItemModal isContextMenuButton="yes"/>
                     </MenuItem>
                     )
                 }

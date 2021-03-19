@@ -25,6 +25,7 @@ const RFM = (props) =>{
       API_URL_RestoreItems          : props.API_URL_RestoreItems,
       API_URL_ShareItem             : props.API_URL_ShareItem,
       API_URL_UploadItem            : props.API_URL_UploadItem,
+      API_URL_IsUserExist           : props.API_URL_IsUserExist,
       token                         : props.token,
     }
 
@@ -60,5 +61,6 @@ RFM.PropTypes = {
   API_URL_RestoreItems          : PropTypes.string,
   API_URL_ShareItem             : PropTypes.string,
   API_URL_UploadItem            : PropTypes.string,
+  API_URL_IsUserExist           : PropTypes.string,
   token                         : PropTypes.string,
 }

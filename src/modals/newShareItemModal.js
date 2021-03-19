@@ -3,9 +3,9 @@ import { Button, Modal } from 'react-bootstrap';
 import {  FaGgCircle,  } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
-import ShareView from '../views/shareView';
+import NewShareView from '../views/newShareView';
 
-function ShareItemModal(props){
+function NewShareItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const selectedItems             = useSelector((state) => state.selectedItems);
     const selectedItemCount         = useSelector((state) => state.selectedItemCount);
@@ -25,7 +25,7 @@ function ShareItemModal(props){
               </Button>
         }
         
-        <Modal show={modalShow} onHide={()=>setModalShow(false) }  aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
+        <Modal show={modalShow} onHide={()=>setModalShow(false) } aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect} backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
                 Paylaş
@@ -34,7 +34,7 @@ function ShareItemModal(props){
           <Modal.Body>
             {
               (selectedItems !== undefined && selectedItemCount === 1)
-              ? <ShareView/>
+              ? <NewShareView/>
               : ""
             }
             </Modal.Body>
@@ -42,4 +42,4 @@ function ShareItemModal(props){
       </React.Fragment>
     );
   }
-export default ShareItemModal;
+export default NewShareItemModal;
