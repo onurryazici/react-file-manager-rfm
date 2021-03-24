@@ -3,6 +3,9 @@ import  RFM  from 'react-file-manager-rfm';
 import 'react-file-manager-rfm/dist/index.css';
 
 const App = () =>{
+  const testerr=(name)=>{
+    alert("ok " + name);
+  }
     return(
         <RFM 
           location                      = "/home/main/drive/tester"
@@ -20,10 +23,11 @@ const App = () =>{
           API_URL_RemovePermission      = "/api/secured/removePermission"
           API_URL_RenameItem            = "/api/secured/renameItem"
           API_URL_RestoreItems          = "/api/secured/restoreItems"
-          API_URL_ShareItem             = "/api/secured/shareItem"
+          API_URL_NewShareItem          = "/api/secured/newShareItem"
           API_URL_UploadItem            = "/api/secured/uploadItem"
           API_URL_IsUserExist           = "/api/secured/isUserExist"
           token                         = ""
+          seri= {testerr}
         />
     )
   }

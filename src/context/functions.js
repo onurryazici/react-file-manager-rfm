@@ -88,7 +88,11 @@ export function UPDATE_SHARED_WITH(_itemName, _username, _read, _write, _execute
         dispatch({ type: Actions.UPDATE_SHARED_WITH, payload: payload })
     }
 }
-
+export function CLEAR_SELECTED_SHARED_WITH(){
+    return dispatch => {
+        dispatch({ type: Actions.CLEAR_SELECTED_SHARED_WITH, payload: null })
+    }
+}
 export function DELETE_SHARED_WITH(_itemName, _username){
     let payload = {itemName:_itemName, username:_username}
     return dispatch => {

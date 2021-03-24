@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
-import { HTTP_REQUEST } from './global';
 
 export function onItemSelected(event,accessibleId,itemName,itemObject){
     const selectedItems = store.getState().selectedItems;

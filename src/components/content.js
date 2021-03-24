@@ -11,7 +11,6 @@ import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
-import { HTTP_REQUEST } from '../helper/global';
 function Content(props) {
     const directoryItems        = props.directoryItems;
 

@@ -50,13 +50,12 @@ function RenameItemModal(props) {
               extension : selectedItems[0].extension,
           })
           .then((response) => {
-            if (response.data.message === Messages.ITEM_RENAME_SUCCESS) {
+            if (response.data.statu === true) {
               var item = directoryItems.find((element) => element.name === selectedItems[0].name)
               if (item) {
                 store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
                 store.dispatch(CLEAR_SELECTED_ITEMS(null));
               }
-              toast.success('Yeniden adlandırıldı');
             } 
             else
               toast.error(response.data.message)

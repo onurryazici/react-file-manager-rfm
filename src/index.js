@@ -23,10 +23,11 @@ const RFM = (props) =>{
       API_URL_RemovePermission      : props.API_URL_RemovePermission,
       API_URL_RenameItem            : props.API_URL_RenameItem,
       API_URL_RestoreItems          : props.API_URL_RestoreItems,
-      API_URL_ShareItem             : props.API_URL_ShareItem,
+      API_URL_NewShareItem          : props.API_URL_NewShareItem,
       API_URL_UploadItem            : props.API_URL_UploadItem,
       API_URL_IsUserExist           : props.API_URL_IsUserExist,
       token                         : props.token,
+      seri:props.seri
     }
 
     store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
@@ -59,8 +60,9 @@ RFM.PropTypes = {
   API_URL_RemovePermission      : PropTypes.string,
   API_URL_RenameItem            : PropTypes.string,
   API_URL_RestoreItems          : PropTypes.string,
-  API_URL_ShareItem             : PropTypes.string,
+  API_URL_NewShareItem          : PropTypes.string,
   API_URL_UploadItem            : PropTypes.string,
   API_URL_IsUserExist           : PropTypes.string,
   token                         : PropTypes.string,
+  seri : PropTypes.func
 }

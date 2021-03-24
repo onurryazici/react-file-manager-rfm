@@ -11,13 +11,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { ToastContainer } from 'material-react-toastify'
 import Upload from './components/Upload'
 import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
-
+import 'material-react-toastify/dist/ReactToastify.css';
 function RFM_Core(props) {
   const store = useStore();
   const isItRecycleBin = useSelector(state=>state.isItRecycleBin);
 
   const API_URL                     = useSelector(state => state.config.API_URL);
   const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
+ /* var fun = store.getState().config.seri("awda");
+  fun;*///##########################3
   useEffect(() => {
     Axios.post(API_URL + API_URL_UserAuthentication , {
       username: props.username,
@@ -45,18 +47,23 @@ function RFM_Core(props) {
 
   return (
     <div className={styles.container}>
+      <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
       <Actionbar />
       <Placemap />
       <Content />
       <FolderDetails />
       <Upload/>
-      <ToastContainer
-                    position="top-right"
-                    newestOnTop={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    />
+      
     </div>
   )
 }

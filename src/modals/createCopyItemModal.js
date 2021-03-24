@@ -13,12 +13,13 @@ import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, S
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
-    const store             = useStore();
-    const loading           = useSelector(state => state.modalLoading);
-    const currentLocation   = useSelector(state => state.modalLocation);
-    const directoryItems    = useSelector(state => state.modalDirectoryItems);
-    const selectedItems     = useSelector(state => state.selectedItems);
-    const API_URL           = store.getState().config.API_URL;
+    const store              = useStore();
+    const loading            = useSelector(state => state.modalLoading);
+    const currentLocation    = useSelector(state => state.modalLocation);
+    const rfmCurrentLocation = useSelector(state => state.location);
+    const directoryItems     = useSelector(state => state.modalDirectoryItems);
+    const selectedItems      = useSelector(state => state.selectedItems);
+    const API_URL            = store.getState().config.API_URL;
     const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
     const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
     useEffect(() => {
@@ -41,6 +42,7 @@ function CopyItemModal(props){
     } 
     function CreateCopyItem(){
       setModalShow(false);
+      toast.dark("Kopyalama başlatılıyor...")
       let items=[];
       selectedItems.forEach(element => {
         items.push(element.absolutePath);
@@ -109,7 +111,7 @@ function CopyItemModal(props){
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={()=>setModalShow(false)} variant="outline-dark">Vazgeç</Button>
-          <Button onClick={()=>CreateCopyItem()} variant="primary">Kopya Oluştur</Button>
+          <Button onClick={()=>CreateCopyItem()} variant="primary" disabled={currentLocation === rfmCurrentLocation}>Kopya Oluştur</Button>
         </Modal.Footer>
       </Modal>
       </React.Fragment>

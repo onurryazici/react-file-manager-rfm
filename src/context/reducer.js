@@ -69,6 +69,14 @@ export function reducer (state,action){
                 selectedItemCount:state.selectedItemCount -  1
             }
         }
+        case Actions.CLEAR_SELECTED_SHARED_WITH:{
+            const newSelectedItems = [...state.selectedItems];
+            newSelectedItems[0].sharedWith=[];
+            return {
+                ...state,
+                selectedItems:newSelectedItems,
+            }
+        }
         case Actions.SET_DIRECTORY_ITEMS:{
             return {
                 ...state,

@@ -51,7 +51,7 @@ function CreateFolderModal(props){
             dirname:DirectoryName
         })
         .then((response)=>{
-          if(response.data.message === Messages.DIRECTORY_CREATE_SUCCESS){
+          if(response.data.statu === true){
               store.dispatch(SET_LOADING(false));
               store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
               toast.success("Dizin oluşturuldu")
@@ -59,7 +59,7 @@ function CreateFolderModal(props){
           }
           else{
             
-              toast.error(response.data.message+"xx");
+              toast.error(response.data.message);
           }
         }).catch((err)=>{
         store.dispatch(SET_ERROR(true));
