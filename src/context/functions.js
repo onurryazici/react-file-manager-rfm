@@ -146,3 +146,9 @@ export function SET_RFM_CONFIG(_configPayload){
         dispatch({ type: Actions.SET_RFM_CONFIG, payload: _configPayload })
     }
 }
+
+export function INCREASE_DEPTH(){
+    return dispatch => {
+        dispatch({ type: Actions.INCREASE_DEPTH, payload: null })
+    }
+}

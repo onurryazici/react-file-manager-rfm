@@ -23,17 +23,32 @@ function Placemap() {
             store.dispatch(SET_LOCATION(newLocation));
         }
     }
+
+    const ParentWindowName = () =>{
+        switch (rfmWindow) {
+            case RFM_WindowType.DRIVE:
+                return "Drive";
+            case RFM_WindowType.MY_SHARED:
+                return "Paylaştıklarım";
+            case RFM_WindowType.SHARED_WITH_ME:
+                return "Benimle Paylaşılanlar";
+            case RFM_WindowType.RECYCLE_BIN:
+                return "Çöp Kutusu";
+
+        }
+    }
     return(
         <div className={styles.placemapArea}>
             {
                 ! (rfmWindow === RFM_WindowType.RECYCLE_BIN) ?
-                splittedPlacemaps.map((item, key) => {
-                    if(key >= startLocation.split('/').length -1)
-                        if(key === startLocation.split('/').length -1)
-                            return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}> Home</Button></a>
-                        else 
-                            return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
-                })
+                    splittedPlacemaps.map((item, key) => {
+                        if(key >= startLocation.split('/').length -1)
+                            if(key === startLocation.split('/').length -1)
+                                return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{ParentWindowName()}</Button></a>
+                            else 
+                                return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                    })
+                 
                 :(
                     <div>
                         <a><Button variant="link" style={{color:'#000'}}> Çöp Kutusu</Button></a>
