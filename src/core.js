@@ -12,9 +12,10 @@ import { ToastContainer } from 'material-react-toastify'
 import Upload from './components/Upload'
 import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
 import 'material-react-toastify/dist/ReactToastify.css';
+import { RFM_WindowType } from './helper/global'
 function RFM_Core(props) {
   const store = useStore();
-  const isItRecycleBin = useSelector(state=>state.isItRecycleBin);
+  const rfmWindow = useSelector(state=>state.rfmWindow);
 
   const API_URL                     = useSelector(state => state.config.API_URL);
   const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
@@ -27,7 +28,7 @@ function RFM_Core(props) {
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
-          if(isItRecycleBin){
+          if(rfmWindow === RFM_WindowType.RECYCLE_BIN){
             store.dispatch(SET_LOCATION("Trash"));
             store.dispatch(SET_START_LOCATION("Trash"));
           }

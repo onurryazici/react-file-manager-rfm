@@ -223,10 +223,10 @@ export function reducer (state,action){
                 }
             }
         }
-        case Actions.SET_RECYCLE_BIN:{
+        case Actions.SET_RFM_WINDOW:{
             return {
                 ...state,
-                isItRecycleBin:action.payload
+                rfmWindow:action.payload
             }
         }
         case Actions.SET_PREVIEW_ACTIVE:{

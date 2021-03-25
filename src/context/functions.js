@@ -123,9 +123,9 @@ export function FAILURE_UPLOAD_FILE(_id, ){
     }
 }
 
-export function SET_RECYCLE_BIN(_isItRecycleBin){
+export function SET_RFM_WINDOW(_window){
     return dispatch => {
-        dispatch({ type: Actions.SET_RECYCLE_BIN, payload: _isItRecycleBin })
+        dispatch({ type: Actions.SET_RFM_WINDOW, payload: _window })
     }
 }
 

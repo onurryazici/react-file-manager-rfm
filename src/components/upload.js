@@ -5,10 +5,12 @@ import classNames from 'classnames'
 import styles from '../styles.module.css'
 import { connect,  useStore } from 'react-redux'
 import { size, toArray } from 'lodash'
-import { HTTP_REQUEST } from '../helper/global';
 import { SET_UPLOAD_PROGRESS, SUCCESS_UPLOAD_FILE, FAILURE_UPLOAD_FILE } from '../context/functions'
+import axios from 'axios'
 function Upload(props) {
     const store = useStore();
+    const API_URL             = store.getState().config.API_URL;
+    const API_URL_UploadItem  = store.getState().config.API_URL_UploadItem;
     const [isOpen, setIsOpen] = useState(true);
     useEffect(() => {
         if(size(props.fileProgress) > 0) {
@@ -29,7 +31,7 @@ function Upload(props) {
                     store.dispatch(SET_UPLOAD_PROGRESS(_file.id, percentage));
                 }
             }
-            await HTTP_REQUEST.post('/uploadItem',formPayload, config)
+            await axios.post(API_URL+API_URL_UploadItem,formPayload, config)
                 .then(()=>{
                     store.dispatch(SUCCESS_UPLOAD_FILE(_file.id));    
                 }).catch((error)=>{

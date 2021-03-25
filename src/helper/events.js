@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
+import { RFM_WindowType } from './global';
 
 export function onItemSelected(event,accessibleId,itemName,itemObject){
     const selectedItems = store.getState().selectedItems;
@@ -21,12 +22,12 @@ export function onItemSelected(event,accessibleId,itemName,itemObject){
     element.classList.add(styles.itemBlockGridViewActive);
 } 
 export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,extension){
-    const isItRecycleBin   = store.getState().isItRecycleBin;
+    const rfmWindow        = store.getState().rfmWindow;
     const currentLocation  = store.getState().location;
     const API_URL          = store.getState().config.API_URL;
     const API_URL_GetImage = store.getState().config.API_URL_GetImage;
 
-    if(!isItRecycleBin)
+    if(!(rfmWindow===RFM_WindowType.RECYCLE_BIN))
     {
       if(itemType==="directory"){
         store.dispatch(SET_LOADING(true));

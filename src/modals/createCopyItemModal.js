@@ -22,9 +22,10 @@ function CopyItemModal(props){
     const API_URL            = store.getState().config.API_URL;
     const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
     const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
+    const rfmWindow = useSelector(state => state.rfmWindow)
     useEffect(() => {
         if(currentLocation !== "" && modalShow){
-            axios.post(API_URL + API_URL_GetDirectory,{location:currentLocation})
+            axios.post(API_URL + API_URL_GetDirectory,{location:currentLocation,rfmWindow:rfmWindow})
               .then((response)=>{
                 store.dispatch(SET_MODAL_LOADING(false));
                 store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));

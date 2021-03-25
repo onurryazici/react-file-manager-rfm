@@ -17,12 +17,11 @@ export const initialState = {
     refreshRequest:false,   // Aynı konuma tekrar tıklanırsa  
     hasError:false,         // Hata denetlemek için (kaldırılabilir)
     fileProgress:{},        // Upload takibi için
-    isItRecycleBin:false,   // Çöp kutusu için
     isPreviewActive:false,  // Resim görüntülemek için
     previewData:[],         // Resim base64 verisi için
     config:[],              // RFM Api konfigurasyonu için
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
-    window:""               // RFM pencere değişimi için
+    rfmWindow:""               // RFM pencere değişimi için
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),

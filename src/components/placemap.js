@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap'
 import { FaChevronRight, FaHistory, FaTrash } from 'react-icons/fa'
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { SET_LOADING, SET_LOCATION } from '../context/functions';
+import { RFM_WindowType } from '../helper/global';
 import EmptyTrashModal from '../modals/emptyTrashModal';
 import styles from '../styles.module.css'
 function Placemap() {
@@ -10,7 +11,7 @@ function Placemap() {
     var currentLocation   = useSelector(state => state.location) + '';
     var startLocation     = useSelector(state => state.startLocation) + '';
     const selectedItemCount = useSelector(state => state.selectedItemCount);
-    const isItRecycleBin    = useSelector(state=>state.isItRecycleBin);
+    const rfmWindow       = useSelector(state=>state.rfmWindow);
     var splittedPlacemaps = currentLocation.split('/');
     
     function changeCurrentLocation(key) {
@@ -25,7 +26,7 @@ function Placemap() {
     return(
         <div className={styles.placemapArea}>
             {
-                ! isItRecycleBin ?
+                ! (rfmWindow === RFM_WindowType.RECYCLE_BIN) ?
                 splittedPlacemaps.map((item, key) => {
                     if(key >= startLocation.split('/').length -1)
                         if(key === startLocation.split('/').length -1)

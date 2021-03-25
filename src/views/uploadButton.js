@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaChevronCircleUp } from 'react-icons/fa';
 import styles from '../styles.module.css'
 import { useSelector, useStore } from 'react-redux';
-import { HTTP_REQUEST } from '../helper/global';
 import { size, toArray } from 'lodash';
 import {  SET_UPLOAD_FILE } from '../context/functions';
 export default function UploadButton(props) {

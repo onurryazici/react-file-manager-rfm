@@ -11,6 +11,7 @@ import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
+import { RFM_WindowType } from '../helper/global';
 function Content(props) {
     const directoryItems        = props.directoryItems;
 
@@ -18,7 +19,7 @@ function Content(props) {
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
     const store                 = useStore();
-    const isItRecycleBin        = useSelector(state => state.isItRecycleBin);
+    const rfmWindow             = useSelector(state => state.rfmWindow);
     
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
@@ -26,9 +27,8 @@ function Content(props) {
     useEffect(() => {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
-            
                 location:currentLocation,
-                isItRecycleBin:isItRecycleBin
+                rfmWindow: rfmWindow
             
         })
         .then((response)=>{
@@ -106,7 +106,7 @@ function Content(props) {
                     </div>
                 </ContextMenuTrigger>
                 {
-                    !isItRecycleBin?
+                    !rfmWindow === RFM_WindowType.RECYCLE_BIN?
                     <ContextMenu id="mainTrigger">
                         <div className={styles.contextMenuStage}>
                             <MenuItem>

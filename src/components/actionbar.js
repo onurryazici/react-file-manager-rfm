@@ -4,11 +4,12 @@ import OnStartView from '../views/onStartView';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
+import { RFM_WindowType } from '../helper/global';
 const Actionbar = () => {
     const selectedItemCount = useSelector(state => state.selectedItemCount);
-    const isRfmRecycleBin = useSelector(state=> state.isItRecycleBin);
+    const rfmWindow = useSelector(state=> state.rfmWindow);
     return (
-        !isRfmRecycleBin ?
+        !(rfmWindow === RFM_WindowType.RECYCLE_BIN) ?
         <div id={styles.actionbarStage}>   
         {
             

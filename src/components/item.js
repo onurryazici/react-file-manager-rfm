@@ -15,6 +15,7 @@ import CopyItemModal from '../modals/createCopyItemModal';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useInView } from 'react-intersection-observer';
 import {  onItemContextMenu,onItemSelected, restoreItems, onItemDoubleClick, removePermanently } from '../helper/events';
+import { RFM_WindowType } from '../helper/global';
 
 function Item(props){
     var itemName  = props.name;
@@ -47,7 +48,7 @@ function Item(props){
     const [_image, set_image] = useState("")
 
     const selectedItemCount = useSelector(state=>state.selectedItemCount);
-    const isItRecycleBin    = useSelector(state => state.isItRecycleBin);
+    const rfmWindow         = useSelector(state => state.rfmWindow);
     const [ref, inView] = useInView({
       threshold: 0,
     })
@@ -74,7 +75,7 @@ function Item(props){
           
           {
             inView ?
-            isItRecycleBin 
+            rfmWindow === RFM_WindowType.RECYCLE_BIN 
             ?(
               <ContextMenu id={itemName} className={styles.contextMenuStage}>
                 {[

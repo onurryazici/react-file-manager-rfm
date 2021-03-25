@@ -9,7 +9,7 @@ const App = () =>{
     return(
         <RFM 
           location                      = "/home/main/drive/tester"
-          isItRecycleBin                = {false}
+          rfmWindow                     = "MY_SHARED"
           API_URL                       = "http://192.168.91.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
           API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"

@@ -3,12 +3,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import RFM_Core from './core';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types'
-import { SET_RECYCLE_BIN, SET_RFM_CONFIG } from './context/functions';
+import { SET_RFM_WINDOW, SET_RFM_CONFIG } from './context/functions';
 import { store } from './context/store';
 
 const RFM = (props) =>{
     const _location        = props.location;
-    const _isItRecycleBin  = props.isItRecycleBin;
+    const _rfmWindow       = props.rfmWindow;
     const rfmConfigPayload = {
       API_URL                       : props.API_URL,
       API_URL_UserAuthentication    : props.API_URL_UserAuthentication,
@@ -31,7 +31,7 @@ const RFM = (props) =>{
     }
 
     store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
-    store.dispatch(SET_RECYCLE_BIN(_isItRecycleBin));
+    store.dispatch(SET_RFM_WINDOW(_rfmWindow));
     return(
       <Provider store={store}>
         <RFM_Core
@@ -44,9 +44,10 @@ const RFM = (props) =>{
   }
 export default RFM;
 
+
 RFM.PropTypes = {
   location                      : PropTypes.string,
-  isItRecycleBin                : PropTypes.bool,
+  rfmWindow                     : PropTypes.string,
   API_URL                       : PropTypes.string,
   API_URL_UserAuthtentication   : PropTypes.string,
   API_URL_RemoveItemPermanently : PropTypes.string,
