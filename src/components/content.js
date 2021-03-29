@@ -27,7 +27,8 @@ function Content(props) {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
                 location:currentLocation,
-                rfmWindow: rfmWindow
+                rfmWindow: rfmWindow,
+                token:localStorage.getItem("user-token")
             }).then((response)=>{
                 store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
                 store.dispatch(SET_LOADING(false))
@@ -57,8 +58,12 @@ function Content(props) {
     else if(loading)
         return (
             <div id={styles.contentStage}>
-                <div id={styles.loadingSpinner}>
-                  loading
+                <div id={styles.loadingContainer}>
+                    <div className={styles.loading__}>
+                        <div class={styles.loading__letter}>.</div>
+                        <div class={styles.loading__letter}>.</div>
+                        <div class={styles.loading__letter}>.</div>
+                    </div>
                 </div>
             </div>
         )

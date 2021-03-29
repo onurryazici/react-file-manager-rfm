@@ -6,10 +6,18 @@ const App = () =>{
   const testerr=(name)=>{
     alert("ok " + name);
   }
+  const testStyle = {
+    width: 'calc(100% - 245px)',
+    height: 'calc(100% - 60px)',
+    position: 'absolute',
+    right: '0px',
+    top:'60px',
+  }
     return(
+      <div>
         <RFM 
-          location                      = "/home/main/.drive-shared"
-          rfmWindow                     = "MY_SHARED"
+          location                      = "/home/main/drive"
+          rfmWindow                     = "DRIVE"
           API_URL                       = "http://192.168.91.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
           API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"
@@ -29,6 +37,7 @@ const App = () =>{
           token                         = ""
           seri= {testerr}
         />
+        </div>
     )
   }
 export default App;

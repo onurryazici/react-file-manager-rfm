@@ -44,14 +44,14 @@ function Placemap() {
                     splittedPlacemaps.map((item, key) => {
                         if(key >= startLocation.split('/').length -1)
                             if(key === startLocation.split('/').length -1)
-                                return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{ParentWindowName()}</Button></a>
+                                return <a key={key}><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}>{ParentWindowName()}</Button></a>
                             else 
-                                return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                                return <a key={key}><FaChevronRight/><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
                     })
                  
                 :(
                     <div>
-                        <a><Button variant="link" style={{color:'#000'}}> Çöp Kutusu</Button></a>
+                        <a><Button variant="link" className={styles.placemapButtons}> Çöp Kutusu</Button></a>
                         <a><EmptyTrashModal/></a>
                         {
                             selectedItemCount > 0 
