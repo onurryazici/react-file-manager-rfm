@@ -27,8 +27,7 @@ function Content(props) {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
                 location:currentLocation,
-                rfmWindow: rfmWindow,
-                token:localStorage.getItem("user-token")
+                rfmWindow: rfmWindow
             }).then((response)=>{
                 store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
                 store.dispatch(SET_LOADING(false))

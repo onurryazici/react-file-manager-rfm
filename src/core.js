@@ -28,7 +28,6 @@ function RFM_Core(props) {
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
-            localStorage.setItem("user-token",response.data.token);
             store.dispatch(SET_LOCATION(props.location));
             store.dispatch(SET_START_LOCATION(props.location));
         }
