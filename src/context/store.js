@@ -21,7 +21,8 @@ export const initialState = {
     previewData:[],         // Resim base64 verisi için
     config:[],              // RFM Api konfigurasyonu için
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
-    rfmWindow:""               // RFM pencere değişimi için
+    rfmWindow:"",           // RFM pencere değişimi için
+    tokenName:""            // RFM üzerinde token kullanabilmek için
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),

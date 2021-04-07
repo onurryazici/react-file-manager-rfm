@@ -13,10 +13,11 @@ function EmptyTrashModal(){
 
     const API_URL            = store.getState().config.API_URL;
     const API_URL_EmptyTrash = store.getState().config.API_URL_EmptyTrash;
+    const rfmTokenName       = store.getState().config.tokenName;
 
     function EmptyTrash() {
       setModalShow(false);
-      axios.get(API_URL + API_URL_EmptyTrash).then((response)=>{
+      axios.get(API_URL + API_URL_EmptyTrash,{params:{token:localStorage.getItem(rfmTokenName)}}).then((response)=>{
             if(response.data.statu === true) {
               const cleared = [];
               store.dispatch(CLEAR_SELECTED_ITEMS());

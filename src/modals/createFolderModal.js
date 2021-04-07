@@ -21,7 +21,7 @@ function CreateFolderModal(props){
 
   const API_URL                   = store.getState().config.API_URL;
   const API_URL_CreateDirectory   = store.getState().config.API_URL_CreateDirectory;
-
+  const rfmTokenName              = store.getState().config.tokenName;
   function onKeyPress(event) {
     var value         = event.target.value
     var pattern       = ['/', '\\' ]
@@ -48,7 +48,8 @@ function CreateFolderModal(props){
       if(DirectoryName.trim(' ').length > 0){
         Axios.post(API_URL + API_URL_CreateDirectory ,{
             location:currentLocation,
-            dirname:DirectoryName
+            dirname:DirectoryName,
+            token:localStorage.getItem(rfmTokenName)
         })
         .then((response)=>{
           if(response.data.statu === true){

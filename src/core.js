@@ -19,17 +19,22 @@ function RFM_Core(props) {
 
   const API_URL                     = useSelector(state => state.config.API_URL);
   const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
+  const rfmTokenName                = store.getState().config.tokenName;
  /* var fun = store.getState().config.seri("awda");
   fun;*///##########################3
   useEffect(() => {
     Axios.post(API_URL + API_URL_UserAuthentication , {
-      username: props.username,
-      password: props.password
+      username: "main",
+      password: "qweqweasd"
     })
       .then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
+            localStorage.setItem(rfmTokenName, response.data.token);
             store.dispatch(SET_LOCATION(props.location));
             store.dispatch(SET_START_LOCATION(props.location));
+        }
+        else{
+          console.log(JSON.stringify(response.data))
         }
       })
       .catch((err) => {

@@ -25,7 +25,7 @@ const App = () =>{
           API_URL_CreateDirectory       = "/api/secured/createDirectory"
           API_URL_EmptyTrash            = "/api/secured/emptyTrash"
           API_URL_GetDirectory          = "/api/secured/getDirectory"
-          API_URL_GetImage              = "/api/secured/getImage"
+          API_URL_GetImage              = "/api/getImage"
           API_URL_MoveItems             = "/api/secured/moveItems"
           API_URL_MoveToTrash           = "/api/secured/moveToTrash"
           API_URL_RemovePermission      = "/api/secured/removePermission"
@@ -34,7 +34,7 @@ const App = () =>{
           API_URL_NewShareItem          = "/api/secured/newShareItem"
           API_URL_UploadItem            = "/api/secured/uploadItem"
           API_URL_IsUserExist           = "/api/secured/isUserExist"
-          token                         = ""
+          tokenName                     = "user-token"
           seri= {testerr}
         />
         </div>

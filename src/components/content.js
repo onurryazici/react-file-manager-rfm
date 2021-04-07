@@ -22,12 +22,13 @@ function Content(props) {
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
     const store                 = useStore();
-
+    const rfmTokenName          = store.getState().config.tokenName;
     useEffect(() => {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
                 location:currentLocation,
-                rfmWindow: rfmWindow
+                rfmWindow: rfmWindow,
+                token:localStorage.getItem(rfmTokenName)
             }).then((response)=>{
                 store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
                 store.dispatch(SET_LOADING(false))

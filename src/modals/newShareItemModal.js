@@ -23,7 +23,7 @@ function NewShareItemModal(props){
     const API_URL               = store.getState().config.API_URL;
     const API_URL_NewShareItem  = store.getState().config.API_URL_NewShareItem;
     const API_URL_IsUserExist   = store.getState().config.API_URL_IsUserExist;
-
+    const rfmTokenName          = store.getState().config.tokenName;
   const PermissionType={
       FULL_ACCESS:"rwx",
       READ_ONLY:"r-x"
@@ -31,7 +31,8 @@ function NewShareItemModal(props){
   function NewShareItem(){
       axios.post(API_URL + API_URL_NewShareItem,{
               userData:usersToAdd,
-              itemPath:selectedItems[0].absolutePath
+              itemPath:selectedItems[0].absolutePath,
+              token:localStorage.getItem(rfmTokenName)
           }).then((response)=>{
               if(response.data.statu === true){
                 var reduced = directoryItems.filter((element) => element.name !== selectedItems[0].name);
@@ -50,7 +51,7 @@ function NewShareItemModal(props){
   function AddUserToList(event){
       event.preventDefault();
       var exist = (selectedItems[0].sharedWith.some((item)=>item.username === newUserName) || selectedItems[0].owner === newUserName);
-      axios.post(API_URL + API_URL_IsUserExist,{ user:newUserName,})
+      axios.post(API_URL + API_URL_IsUserExist,{ user:newUserName, token:localStorage.getItem(rfmTokenName)})
           .then((response)=>{
               if(response.data.statu === true && !exist && newUserName.trim(' ').length > 0 ){
                   let newUserPermission = newUserFullAccess ? PermissionType.FULL_ACCESS : PermissionType.READ_ONLY;

@@ -21,11 +21,12 @@ function MoveItemModal(props) {
   const API_URL              = store.getState().config.API_URL;
   const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
   const API_URL_MoveItems    = store.getState().config.API_URL_MoveItems;
-
+  const rfmTokenName         = store.getState().config.tokenName;
   useEffect(() => {
     if (currentLocation !== '' && modalShow) {
       axios.post(API_URL + API_URL_GetDirectory, {
-         location: currentLocation 
+         location: currentLocation,
+         token:localStorage.getItem(rfmTokenName)
         }).then((response) => {
           store.dispatch(SET_MODAL_LOADING(false));
           var reduced = response.data.items.filter((element)=> {
@@ -59,7 +60,8 @@ function MoveItemModal(props) {
     })
     axios.post(API_URL + API_URL_MoveItems, {
           "items": items,
-          target: currentLocation
+          target: currentLocation,
+          token:localStorage.getItem(rfmTokenName)
       })
       .then((response) => {
         if (response.data.statu) {

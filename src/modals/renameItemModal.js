@@ -23,6 +23,7 @@ function RenameItemModal(props) {
   const extension = selectedItems.length > 0 && selectedItems[0].extension;
   const API_URL            = store.getState().config.API_URL;
   const API_URL_RenameItem = store.getState().config.API_URL_RenameItem;
+  const rfmTokenName       = store.getState().config.tokenName;
 
   function onKeyPress(event) {
     var value         = event.value
@@ -48,6 +49,7 @@ function RenameItemModal(props) {
               newName   : newItemName,
               type      : selectedItems[0].type,
               extension : selectedItems[0].extension,
+              token     : localStorage.getItem(rfmTokenName)
           })
           .then((response) => {
             if (response.data.statu === true) {

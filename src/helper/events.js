@@ -66,6 +66,7 @@ export function removePermanently(){
     const directoryItems = store.getState().directoryItems;
     const API_URL                       = store.getState().config.API_URL;
     const API_URL_RemoveItemPermanently = store.getState().config.API_URL_RemoveItemPermanently;
+    const rfmTokenName                  = store.getState().config.tokenName;
     let items=[];
     let removedItems=[];
     
@@ -77,6 +78,7 @@ export function removePermanently(){
     {
       axios.post(API_URL + API_URL_RemoveItemPermanently,{
           "items":items,
+          token:localStorage.getItem(rfmTokenName)
       }).then((response)=>{
           if(response.data.statu === true) {
             var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
@@ -100,7 +102,8 @@ export function restoreItems(){
     const API_URL_RestoreItems = store.getState().config.API_URL_RestoreItems;
     const selectedItems  = store.getState().selectedItems;
     const directoryItems = store.getState().directoryItems;
-
+    const rfmTokenName                  = store.getState().config.tokenName;
+    
     for(let i=0; i<selectedItems.length;i++){
         items.push({
           absolutePath:selectedItems[i].absolutePath,
@@ -112,7 +115,8 @@ export function restoreItems(){
     if(items.length > 0)
     {
       axios.post(API_URL + API_URL_RestoreItems,{
-          items
+          items,
+          token:localStorage.getItem(rfmTokenName)
       }).then((response)=>{
           if(response.data.statu === true) {
             var reduced = directoryItems.filter((element)=> !restoredItems.includes(element.name));

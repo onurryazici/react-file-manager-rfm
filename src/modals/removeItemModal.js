@@ -17,7 +17,8 @@ function RemoveItemModal(props){
 
     const API_URL = store.getState().config.API_URL;
     const API_URL_MoveToTrash = store.getState().config.API_URL_MoveToTrash;
-    
+    const rfmTokenName        = store.getState().config.tokenName;
+
     function RemoveItem() {
       setModalShow(false);
       let items        = [];
@@ -37,7 +38,8 @@ function RemoveItemModal(props){
       {
         axios.post(API_URL + API_URL_MoveToTrash,{
             "items":items,
-            location:currentLocation
+            location:currentLocation,
+            token:localStorage.getItem(rfmTokenName)
         }).then((response)=>{
             if(response.data.statu === true) {
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));

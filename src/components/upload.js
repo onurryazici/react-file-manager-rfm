@@ -12,6 +12,7 @@ function Upload(props) {
     const API_URL             = store.getState().config.API_URL;
     const API_URL_UploadItem  = store.getState().config.API_URL_UploadItem;
     const [isOpen, setIsOpen] = useState(true);
+    const rfmTokenName        = store.getState().config.tokenName;
     useEffect(() => {
         if(size(props.fileProgress) > 0) {
             const fileToUpload = toArray(props.fileProgress).filter(file => file.progress===0 && !file.completed);
@@ -29,7 +30,8 @@ function Upload(props) {
                     const {loaded, total} = ProgresEvent;
                     const percentage = Math.floor((loaded / total) * 100 );
                     store.dispatch(SET_UPLOAD_PROGRESS(_file.id, percentage));
-                }
+                },
+                token:localStorage.getItem(rfmTokenName)
             }
             await axios.post(API_URL+API_URL_UploadItem,formPayload, config)
                 .then(()=>{
