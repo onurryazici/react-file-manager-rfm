@@ -12,6 +12,7 @@ import Upload from '../views/uploadButton';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { RFM_WindowType } from '../helper/global';
+import classNames from 'classnames';
 function Content(props) {
     const directoryItems        = props.directoryItems;
     const loading               = useSelector(state => state.loading);
@@ -59,7 +60,7 @@ function Content(props) {
         return (
             <div id={styles.contentStage}>
                 <div id={styles.loadingContainer}>
-                    <div className={styles.loading__}>
+                    <div className={classNames(styles.loading__,styles.noselect)}>
                         <div class={styles.loading__letter}>.</div>
                         <div class={styles.loading__letter}>.</div>
                         <div class={styles.loading__letter}>.</div>

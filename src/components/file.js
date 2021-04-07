@@ -24,7 +24,8 @@ function File(props){
         right:0,
         top:0,
         bottom:0,
-        margin:"auto"
+        margin:"auto",
+        background:"#dedede"
     }
     const fileStyles={
         width: 'auto',
@@ -52,11 +53,11 @@ function File(props){
             case 'xls':
                 return <FaFileExcel color="#1e7e34" className={`${selectedClass}`} style={fileStyles} />
             case 'png':
-                return <img loading="lazy" src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
+                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
             case 'jpg':
-                return <img loading="lazy"src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
+                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
             case 'jpeg':
-                 return <img loading="lazy" src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
+                 return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}`} style={imageStyles} className={`${selectedClass}`} />
             case 'js':
                 return <FaJava color="#36bae1" className={`${selectedClass}`} style={fileStyles}/>
             default:
