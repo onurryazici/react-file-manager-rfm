@@ -31,4 +31,5 @@ export const Actions = {
     SET_RFM_WINDOW:"SET_RFM_WINDOW",
 
     INCREASE_DEPTH:"INCREASE_DEPTH",
+    SET_DEPTH:"SET_DEPTH",
 }

@@ -254,6 +254,13 @@ export function reducer (state,action){
                 depth:state.depth+1
             }
         }
+
+        case Actions.SET_DEPTH:{
+            return {
+                ...state,
+                depth:action.payload
+            }
+        }
         default:
             return state
    }

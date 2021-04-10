@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight, FaHistory, FaTrash } from 'react-icons/fa'
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { SET_LOADING, SET_LOCATION } from '../context/functions';
+import { SET_DEPTH, SET_LOADING, SET_LOCATION } from '../context/functions';
 import { RFM_WindowType } from '../helper/global';
 import EmptyTrashModal from '../modals/emptyTrashModal';
 import styles from '../styles.module.css'
@@ -18,10 +18,15 @@ function Placemap() {
         var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
         var newLocation          = reducedLocationArray.join('/');
         var refreshRequest       = (currentLocation === newLocation) ? true : false;
+
+        var startIndex           = startLocation.split('/').length -1;
+        var currentIndex         = startIndex - key;
         if(!refreshRequest) {
             store.dispatch(SET_LOADING(true));
             store.dispatch(SET_LOCATION(newLocation));
+            store.dispatch(SET_DEPTH(currentIndex));
         }
+
     }
 
     const ParentWindowName = () =>{
@@ -42,11 +47,12 @@ function Placemap() {
             {
                 ! (rfmWindow === RFM_WindowType.RECYCLE_BIN) ?
                     splittedPlacemaps.map((item, key) => {
-                        if(key >= startLocation.split('/').length -1)
+                        if(key >= startLocation.split('/').length -1){
                             if(key === startLocation.split('/').length -1)
                                 return <a key={key}><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}>{ParentWindowName()}</Button></a>
                             else 
                                 return <a key={key}><FaChevronRight/><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                        }
                     })
                  
                 :(

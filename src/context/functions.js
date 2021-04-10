@@ -152,3 +152,8 @@ export function INCREASE_DEPTH(){
         dispatch({ type: Actions.INCREASE_DEPTH, payload: null })
     }
 }
+export function SET_DEPTH(_depth){
+    return dispatch => {
+        dispatch({ type: Actions.SET_DEPTH, payload: _depth })
+    }
+}

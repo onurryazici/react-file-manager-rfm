@@ -16,6 +16,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { useInView } from 'react-intersection-observer';
 import {  onItemContextMenu,onItemSelected, restoreItems, onItemDoubleClick, removePermanently } from '../helper/events';
 import { RFM_WindowType } from '../helper/global';
+import ExistShareItemModal from '../modals/existShareItemModal';
+import RecycleBinContextMenu from '../views/contextMenu_RECYCLE_BIN';
+import DriveContextMenu from '../views/contextMenu_DRIVE';
+import SharedWithMeContextMenu from '../views/contextMenu_SHARED_WITH_ME';
 
 function Item(props){
     var itemName  = props.name;
@@ -76,69 +80,16 @@ function Item(props){
           {
             inView ?
             rfmWindow === RFM_WindowType.RECYCLE_BIN 
-            ?(
-              <ContextMenu id={itemName} className={styles.contextMenuStage}>
-                {[
-                    <MenuItem>
-                        <Button variant="light" className={styles.contextMenuItem} onClick={() => removePermanently()}>
-                            <div style={{fontSize:'14px'}}>Tamamen Sil</div>
-                        </Button>
-                    </MenuItem>,
-                    <MenuItem>
-                        <Button variant="light" className={styles.contextMenuItem} onClick={() => restoreItems()}>
-                            <div style={{fontSize:'14px'}}>Geri Yükle</div>
-                        </Button>
-                    </MenuItem>
-                ]}
-                </ContextMenu>
-            ) : (
-              <ContextMenu id={itemName} className={styles.contextMenuStage}>
-                {
-                    selectedItemCount > 1 
-                    ? "" 
-                    :
-                    ( 
-                    <MenuItem>
-                        <NewShareItemModal isContextMenuButton="yes"/>
-                    </MenuItem>
-                    )
-                }
-                <MenuItem>
-                    <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
-                        <div style={{fontSize:'14px'}}>İndir</div>
-                    </Button>
-                </MenuItem>
-                <MenuItem>
-                    <CopyItemModal isContextMenuButton="yes"/>
-                </MenuItem>
-                <MenuItem>
-                    <MoveItemModal isContextMenuButton="yes"/>
-                </MenuItem>
-                {
-                    selectedItemCount > 1 
-                    ? "" 
-                    :
-                    ( 
-                    <MenuItem>
-                        <RenameItemModal isContextMenuButton="yes"/>
-                    </MenuItem>
-                    )
-                }
-                <MenuItem>
-                    <RemoveItemModal isContextMenuButton="yes"/>
-                </MenuItem>
-                {
-                    selectedItemCount > 1 
-                    ? "" 
-                    :
-                    ( 
-                    <MenuItem>
-                        <ItemDetailModal isContextMenuButton="yes"/>
-                    </MenuItem>
-                    )
-                }
-              </ContextMenu>
-            )
+            ? (<RecycleBinContextMenu itemName={itemName}/>)
+            : 
+            
+            rfmWindow === RFM_WindowType.DRIVE 
+            ? (<DriveContextMenu itemName={itemName}/>)
+            : 
+
+            (rfmWindow === RFM_WindowType.MY_SHARED || rfmWindow === RFM_WindowType.SHARED_WITH_ME)
+            ? (<SharedWithMeContextMenu itemName={itemName}/>)
+            :""
             :""
           }
       </React.Fragment>
