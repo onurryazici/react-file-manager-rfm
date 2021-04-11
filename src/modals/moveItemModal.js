@@ -11,6 +11,7 @@ import ModalPlacemap from '../views/modalPlacemap'
 function MoveItemModal(props) {
   const [modalShow, setModalShow] = React.useState(false)
   const isContextMenuButton = props.isContextMenuButton === 'yes' ? true : false
+  const active              = props.active;
   const store              = useStore();
   const loading            = useSelector((state) => state.modalLoading)
   const currentLocation    = useSelector((state) => state.modalLocation)
@@ -81,12 +82,12 @@ function MoveItemModal(props) {
     <React.Fragment>
       {isContextMenuButton 
       ? (
-        <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+        <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)} disabled={!active}>
           <div style={{ fontSize: '14px' }}>Taşı</div>
         </Button>
       ) : 
       (
-        <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+        <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
           <div className={styles.actionbarIcon}>
             <FaChevronCircleRight color='#4abc96' />
           </div>

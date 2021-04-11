@@ -261,6 +261,12 @@ export function reducer (state,action){
                 depth:action.payload
             }
         }
+        case Actions.SET_CURRENT_DIR_CAN_WRITE:{
+            return {
+                ...state,
+                currentDirCanWrite:action.payload
+            }
+        }
         default:
             return state
    }

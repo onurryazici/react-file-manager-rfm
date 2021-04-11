@@ -22,8 +22,10 @@ function Content(props) {
     const depth                 = useSelector(state => state.depth)
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
+    const currentDirCanWrite    = useSelector(state => state.currentDirCanWrite)
     const store                 = useStore();
     const rfmTokenName          = store.getState().config.tokenName;
+
     useEffect(() => {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
@@ -101,12 +103,24 @@ function Content(props) {
                         ((rfmWindow === RFM_WindowType.MY_SHARED) && depth > 0) ?
                         <ContextMenu id="mainTrigger">
                             <div className={styles.contextMenuStage}>
-                                <MenuItem>
-                                    <CreateFolderModal isContextMenuButton="yes"/>
-                                </MenuItem>
-                                <MenuItem>
-                                    <Upload isContextMenuButton="yes"/>
-                                </MenuItem>
+                                {
+                                    (currentDirCanWrite)
+                                    ?
+                                    [<MenuItem>
+                                        <CreateFolderModal isContextMenuButton="yes" active={true} />
+                                    </MenuItem>,
+                                    <MenuItem>
+                                        <Upload isContextMenuButton="yes" active={true}/>
+                                    </MenuItem>]
+                                    :
+                                    [<MenuItem>
+                                    <CreateFolderModal isContextMenuButton="yes" active={false}/>
+                                    </MenuItem>,
+                                    <MenuItem>
+                                        <Upload isContextMenuButton="yes" active={false}/>
+                                    </MenuItem>]
+                                }
+                                
                             </div>
                         </ContextMenu>
                         :""

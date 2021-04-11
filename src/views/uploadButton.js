@@ -9,9 +9,10 @@ export default function UploadButton(props) {
     const inputFileRef = useRef(null);
     const toastId      = useRef(null);
     const fileProgress = useSelector(state => state.fileProgress);
+    const currentDirCanWrite = useSelector(state => state.currentDirCanWrite)
+    const active       = props.active;
     const store = useStore();
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
-    
     function onFileChange(event){
         const files = event.target.files;
         store.dispatch(SET_UPLOAD_FILE(files));
@@ -22,17 +23,17 @@ export default function UploadButton(props) {
     return (
         <div>
             {
-                isContextMenuButton ?
+                (isContextMenuButton)?
                 <div>
                     <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} multiple/>
-                    <Button variant="light" className={styles.contextMenuItem} onClick={handleClick}>
+                    <Button variant="light" className={styles.contextMenuItem} onClick={handleClick} disabled={!active}>
                         <div style={{fontSize:'14px'}}>Yükle</div>
                     </Button>
                 </div>
                 :
                 <div>
                 <input ref={inputFileRef} style={{display:'none'}} type={"file"} onChange={onFileChange} multiple/>
-                <Button variant="light" className={styles.actionbarButton} onClick={handleClick}>
+                <Button variant="light" className={styles.actionbarButton} onClick={handleClick} disabled={!active}>
                     <div className={styles.actionbarIcon}><FaChevronCircleUp color="#dc3545"/></div>
                     <div className={styles.actionbarText}>Yükle</div>
                 </Button>

@@ -14,7 +14,7 @@ function RemoveItemModal(props){
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
-
+    const active              = props.active;
     const API_URL = store.getState().config.API_URL;
     const API_URL_MoveToTrash = store.getState().config.API_URL_MoveToTrash;
     const rfmTokenName        = store.getState().config.tokenName;
@@ -63,11 +63,11 @@ function RemoveItemModal(props){
         {
           isContextMenuButton 
             ?
-              <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+              <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)} disabled={!active}>
                 <div style={{fontSize:'14px'}}>Sil</div>
               </Button>
             :
-              <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+              <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaTimesCircle color="#e04f5f"/></div>
                 <div className={styles.actionbarText}>Sil</div>
               </Button>

@@ -15,6 +15,7 @@ function CreateFolderModal(props){
   const [isAcceptable, setIsAcceptable]   = useState(false);
   const [isAlreadyExist, setisAlreadyExist] = useState(false);
   const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
+  const active              = props.active;
   const store               = useStore();
   const currentLocation     = useSelector(state => state.location);
   const directoryItems      = useSelector(state => state.directoryItems);
@@ -77,11 +78,11 @@ function CreateFolderModal(props){
       {
         isContextMenuButton
           ?
-            <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+            <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)} disabled={!active}>
                   <div style={{fontSize:'14px'}}>Yeni klasör</div>
             </Button>
           :
-            <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+            <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaPlusCircle color="#28a745"/></div>
                 <div className={styles.actionbarText}>Yeni klasör</div>
             </Button>

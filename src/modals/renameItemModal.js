@@ -12,6 +12,7 @@ import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../co
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
   const isContextMenuButton             = props.isContextMenuButton === 'yes' ? true : false;
+  const active                          = props.active;
   const store                           = useStore();
   const [isAcceptable, setIsAcceptable] = useState(false);
   const [newItemName, setNewItemName]   = useState('');
@@ -76,13 +77,13 @@ function RenameItemModal(props) {
     <React.Fragment>
       {isContextMenuButton ? 
       (
-        <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+        <Button variant='light' className={styles.contextMenuItem} onClick={() => setModalShow(true)} disabled={!active}>
           <div style={{ fontSize: '14px' }}>Yeniden adlandır</div>
         </Button>
       )
       :
       (
-          <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+          <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
             <div className={styles.actionbarIcon}>
               <FaPenSquare color='#28a745' />
             </div>

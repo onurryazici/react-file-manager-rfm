@@ -13,6 +13,7 @@ import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, S
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
+    const active                    = props.active;
     const store              = useStore();
     const loading            = useSelector(state => state.modalLoading);
     const currentLocation    = useSelector(state => state.modalLocation);
@@ -70,10 +71,10 @@ function CopyItemModal(props){
       <React.Fragment>
         {
           (isContextMenuButton)
-            ? <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)}>
+            ? <Button variant="light" className={styles.contextMenuItem} onClick={() => setModalShow(true)} disabled={!active}>
                   <div style={{fontSize:'14px'}}>Kopya oluştur</div>
               </Button>
-            : <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
+            : <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaStumbleuponCircle color="#ab91ea"/></div>
                 <div className={styles.actionbarText}>Kopya oluştur</div>
             </Button>
@@ -102,7 +103,7 @@ function CopyItemModal(props){
                           if(item.type==="directory")
                               return (
                                 <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}>
-                                    <Folder viewMode="list" folderName={item.name} folderType={item.type}/>
+                                    <Folder viewMode="list" folderName={item.name} folderType={item.type} canWrite={item.write}/>
                                 </div>   
                           )
                         })

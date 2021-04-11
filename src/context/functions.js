@@ -157,3 +157,8 @@ export function SET_DEPTH(_depth){
         dispatch({ type: Actions.SET_DEPTH, payload: _depth })
     }
 }
+export function SET_CURRENT_DIR_CAN_WRITE(_permission){
+    return dispatch => {
+        dispatch({ type: Actions.SET_CURRENT_DIR_CAN_WRITE, payload: _permission })
+    }
+}

@@ -65,7 +65,7 @@ function Item(props){
               <ContextMenuTrigger id={itemName} >
                 <div onContextMenu={()=>onItemContextMenu(accessibleId,itemName,itemObject)} 
                      onClick={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
-                     onDoubleClick={()=>onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension)}>
+                     onDoubleClick={()=>onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension,write)}>
                   {(itemType==="file")
                     ? <File fileName={itemName} extension={extension} viewMode="grid" image={_image} absolutePath={absolutePath}/>
                     : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
