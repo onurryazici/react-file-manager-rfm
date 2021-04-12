@@ -23,7 +23,7 @@ export const initialState = {
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
     rfmWindow:"",           // RFM pencere değişimi için
     tokenName:"",           // RFM üzerinde token kullanabilmek için
-    currentDirCanWrite:false// Aktif konumun yazma izni
+    currentDirCanWrite:true // Aktif konumun yazma izni
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),

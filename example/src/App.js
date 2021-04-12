@@ -16,11 +16,12 @@ const App = () =>{
     return(
       <div>
         <RFM 
-          location                      = "/home/main/.sharedWithMe"
-          rfmWindow                     = "SHARED_WITH_ME"
+          location                      = "/home/main/drive/tester"
+          rfmWindow                     = "DRIVE"
           API_URL                       = "http://192.168.91.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
           API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"
+          API_URL_RemoveSharedItem      = "/api/secured/removeSharedItem"
           API_URL_CreateCopy            = "/api/secured/createCopy"
           API_URL_CreateDirectory       = "/api/secured/createDirectory"
           API_URL_EmptyTrash            = "/api/secured/emptyTrash"

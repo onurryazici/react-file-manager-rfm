@@ -20,6 +20,7 @@ import ExistShareItemModal from '../modals/existShareItemModal';
 import RecycleBinContextMenu from '../views/contextMenu_RECYCLE_BIN';
 import DriveContextMenu from '../views/contextMenu_DRIVE';
 import SharedWithMeContextMenu from '../views/contextMenu_SHARED_WITH_ME';
+import MySharedContextMenu from '../views/contextMenu_MY_SHARED';
 
 function Item(props){
     var itemName  = props.name;
@@ -87,8 +88,12 @@ function Item(props){
             ? (<DriveContextMenu itemName={itemName}/>)
             : 
 
-            (rfmWindow === RFM_WindowType.MY_SHARED || rfmWindow === RFM_WindowType.SHARED_WITH_ME)
+            (rfmWindow === RFM_WindowType.SHARED_WITH_ME)
             ? (<SharedWithMeContextMenu itemName={itemName}/>)
+            :
+
+            (rfmWindow === RFM_WindowType.MY_SHARED)
+            ? (<MySharedContextMenu itemName={itemName}/>)
             :""
             :""
           }

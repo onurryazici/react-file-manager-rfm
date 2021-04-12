@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react'
 import { FaFolder, FaFolderPlus, FaUserCircle } from 'react-icons/fa';
 
@@ -15,11 +14,11 @@ function Folder(props){
         <React.Fragment>
             {
                 folderType==="directory"?
-                    <React.Fragment><FaFolder className={classNames(selectedIconClass,disableStyle)} style={{color:"#f7b600"}}/> 
+                    <React.Fragment><FaFolder className={selectedIconClass} style={{color:"#f7b600"}}/> 
                     <div className={selectedNameClass}>{folderName}</div></React.Fragment>
                 :
                     <React.Fragment>
-                        <FaFolderPlus className={classNames(selectedIconClass,disableStyle)} style={{color:"#f7b600"}}/>                        
+                        <FaFolderPlus className={selectedIconClass} style={{color:"#f7b600"}}/>                        
                         <div className={`${selectedNameClass}`}>{folderName}</div>
                         
                     </React.Fragment>

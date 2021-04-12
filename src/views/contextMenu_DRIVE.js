@@ -31,20 +31,20 @@ function DriveContextMenu(props) {
                 </Button>
             </MenuItem>
             <MenuItem>
-                <CopyItemModal isContextMenuButton="yes"/>
+                <CopyItemModal isContextMenuButton="yes" active={true}/>
             </MenuItem>
             <MenuItem>
-                <MoveItemModal isContextMenuButton="yes"/>
+                <MoveItemModal isContextMenuButton="yes" active={true}/>
             </MenuItem>
             {
                 selectedItemCount === 1 ?
                 <MenuItem>
-                    <RenameItemModal isContextMenuButton="yes"/>
+                    <RenameItemModal isContextMenuButton="yes" active={true}/>
                 </MenuItem>
                 : ""
             }
             <MenuItem>
-                <RemoveItemModal isContextMenuButton="yes"/>
+                <RemoveItemModal isContextMenuButton="yes" active={true}/>
             </MenuItem>
             {
                 selectedItemCount === 1 ?

@@ -24,7 +24,12 @@ function CopyItemModal(props){
     const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
     const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
     const rfmTokenName         = store.getState().config.tokenName;
-    const rfmWindow = useSelector(state => state.rfmWindow)
+    const rfmWindow            = useSelector(state => state.rfmWindow);
+
+    const disabledStyle={
+      pointerEvents:'none',
+      opacity:'0.4'
+    }
     useEffect(() => {
         if(currentLocation !== "" && modalShow){
             axios.post(API_URL + API_URL_GetDirectory,{location:currentLocation,rfmWindow:rfmWindow,token:localStorage.getItem(rfmTokenName)})
@@ -102,7 +107,8 @@ function CopyItemModal(props){
                       ? directoryItems.map((item,key)=>{
                           if(item.type==="directory")
                               return (
-                                <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}>
+                                <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}
+                                  style={(item.write===false) ? disabledStyle : null}>
                                     <Folder viewMode="list" folderName={item.name} folderType={item.type} canWrite={item.write}/>
                                 </div>   
                           )

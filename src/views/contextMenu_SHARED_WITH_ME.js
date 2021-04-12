@@ -20,24 +20,15 @@ function SharedWithMeContextMenu(props) {
     const canWrite        = selectedItems[0] !== undefined ? selectedItems[0].write : false;
     return(
         <ContextMenu id={itemName} className={styles.contextMenuStage}>
-            {/*
-                (selectedItemCount === 1 && depth === 0 && selectedItems[0].write===true)?
-                  <MenuItem>
-                      <ExistShareItemModal isContextMenuButton="yes"/>
-                  </MenuItem>
-                : ""*/
-            }
             <MenuItem>
                 <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
                     <div style={{fontSize:'14px'}}>İndir</div>
                 </Button>
             </MenuItem>
             <MenuItem>
-            {
                 <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
                     <div style={{fontSize:'14px'}}>Drive'a Ekle</div>
                 </Button>
-            }
             </MenuItem>
             <MenuItem>
             {
@@ -53,7 +44,6 @@ function SharedWithMeContextMenu(props) {
                 : <RenameItemModal isContextMenuButton="yes" active={canWrite}/>
             }
             </MenuItem>
-            
             <MenuItem>
             {
                 (depth===0)

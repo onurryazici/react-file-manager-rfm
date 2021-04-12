@@ -14,27 +14,46 @@ import ExistShareItemModal from '../modals/existShareItemModal';
 function OnItemSelectedView() {
     const store = useStore();
     const rfmWindow = useSelector(state => state.rfmWindow);
+    const selectedItems = useSelector(state => state.selectedItems);
+    const selectedItemCount = useSelector(state => state.selectedItemCount)
+    const depth         = useSelector(state => state.depth);
+    const canWrite      = selectedItems.filter(item => item.write===false).length > 0 ? true : false;
     function clearSelection(){
         store.dispatch(CLEAR_SELECTED_ITEMS(null));
     }
     return (
         <div>
             {
-                rfmWindow === RFM_WindowType.DRIVE
+                (rfmWindow === RFM_WindowType.DRIVE && selectedItemCount === 1)
                 ? <NewShareItemModal isContextMenuButton="no" active={true}/>
                 : 
 
-                rfmWindow === RFM_WindowType.MY_SHARED
+                (rfmWindow === RFM_WindowType.MY_SHARED && depth===0 && selectedItemCount === 1)
                 ? <ExistShareItemModal isContextMenuButton="no" active={true}/>
-                :""
+                :
+
+                (rfmWindow === RFM_WindowType.SHARED_WITH_ME && depth===0 && selectedItemCount === 1)
+                ? <ExistShareItemModal isContextMenuButton="no" active={true}/>
+                : ""
             }
             
             
             
-            <RemoveItemModal isContextMenuButton="no"/>
-            <MoveItemModal isContextMenuButton="no"/>
-            <CopyItemModal isContextMenuButton="no"/>
-            <RenameItemModal isContextMenuButton="no"/> 
+            <RemoveItemModal isContextMenuButton="no" active={
+                selectedItems.filter(item => item.write===false).length > 0 ? false : true
+            }/>
+            <MoveItemModal isContextMenuButton="no" active={
+                selectedItems.filter(item => item.write===false).length > 0 ? false : true
+            }/>
+            {
+                (rfmWindow === RFM_WindowType.MY_SHARED || rfmWindow === RFM_WindowType.SHARED_WITH_ME) 
+                ? ""
+                : 
+                <CopyItemModal isContextMenuButton="no" active={
+                    selectedItems.filter(item => item.write===false).length > 0 ? false : true
+                }/>
+            }
+            <RenameItemModal isContextMenuButton="no" active={selectedItems[0].write && selectedItemCount === 1}/> 
             <ItemDetailModal isContextMenuButton="no"/>
             <Button variant="link" onClick={()=>clearSelection()}>Seçimi temizle</Button>
         </div>
