@@ -254,11 +254,22 @@ export function reducer (state,action){
                 depth:state.depth+1
             }
         }
-
+        case Actions.INCREASE_MODAL_DEPTH:{
+            return {
+                ...state,
+                modalDepth:state.modalDepth+1
+            }
+        }
         case Actions.SET_DEPTH:{
             return {
                 ...state,
                 depth:action.payload
+            }
+        }
+        case Actions.SET_MODAL_DEPTH:{
+            return {
+                ...state,
+                modalDepth:action.payload
             }
         }
         case Actions.SET_CURRENT_DIR_CAN_WRITE:{

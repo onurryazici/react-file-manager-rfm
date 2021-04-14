@@ -152,9 +152,19 @@ export function INCREASE_DEPTH(){
         dispatch({ type: Actions.INCREASE_DEPTH, payload: null })
     }
 }
+export function INCREASE_MODAL_DEPTH(){
+    return dispatch => {
+        dispatch({ type: Actions.INCREASE_MODAL_DEPTH, payload: null })
+    }
+}
 export function SET_DEPTH(_depth){
     return dispatch => {
         dispatch({ type: Actions.SET_DEPTH, payload: _depth })
+    }
+}
+export function SET_MODAL_DEPTH(_depth){
+    return dispatch => {
+        dispatch({ type: Actions.SET_MODAL_DEPTH, payload: _depth })
     }
 }
 export function SET_CURRENT_DIR_CAN_WRITE(_permission){

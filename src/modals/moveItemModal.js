@@ -5,7 +5,8 @@ import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions'
+import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions'
+import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
 function MoveItemModal(props) {
@@ -14,15 +15,30 @@ function MoveItemModal(props) {
   const active              = props.active;
   const store              = useStore();
   const loading            = useSelector((state) => state.modalLoading)
-  const currentLocation    = useSelector((state) => state.modalLocation)
+  const currentLocation    = useSelector((state) => state.location)
+  const modalLocation      = useSelector((state) => state.modalLocation)
   const mainDirectoryItems = useSelector((state) => state.directoryItems)
   const directoryItems     = useSelector((state) => state.modalDirectoryItems)
   const selectedItems      = useSelector((state) => state.selectedItems)
-
+  const modalDepth         = useSelector((state) => state.modalDepth)
+  const rfmWindow          = useSelector((state) => state.rfmWindow)
   const API_URL              = store.getState().config.API_URL;
   const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
   const API_URL_MoveItems    = store.getState().config.API_URL_MoveItems;
   const rfmTokenName         = store.getState().config.tokenName;
+
+  const canMove = (rfmWindow === RFM_WindowType.MY_SHARED && (modalDepth > 0) && currentLocation !== modalLocation)  
+    ? true 
+    : 
+    
+    (rfmWindow === RFM_WindowType.SHARED_WITH_ME && modalDepth > 0 && currentLocation !== modalLocation)
+    ? true
+    :
+
+    (rfmWindow === RFM_WindowType.DRIVE && currentLocation !== modalLocation)
+    ? true
+    : false
+  
 
   const disabledStyle={
     pointerEvents:'none',
@@ -30,9 +46,9 @@ function MoveItemModal(props) {
   }
 
   useEffect(() => {
-    if (currentLocation !== '' && modalShow) {
+    if (modalLocation !== '' && modalShow) {
       axios.post(API_URL + API_URL_GetDirectory, {
-         location: currentLocation,
+         location: modalLocation,
          token:localStorage.getItem(rfmTokenName)
         }).then((response) => {
           store.dispatch(SET_MODAL_LOADING(false));
@@ -49,12 +65,14 @@ function MoveItemModal(props) {
           store.dispatch(SET_ERROR(true));
         })
     } 
-  }, [modalShow, currentLocation])
+  }, [modalShow, modalLocation])
 
   function onItemDoubleClick(event, nameParam) {
-    let newLocation = currentLocation + '/' + nameParam
+    let newLocation = modalLocation + '/' + nameParam
     store.dispatch(SET_MODAL_LOADING(true));
     store.dispatch(SET_MODAL_LOCATION(newLocation));
+    store.dispatch(INCREASE_MODAL_DEPTH());
+
   }
 
   function MoveItems() {
@@ -67,7 +85,7 @@ function MoveItemModal(props) {
     })
     axios.post(API_URL + API_URL_MoveItems, {
           "items": items,
-          target: currentLocation,
+          target: modalLocation,
           token:localStorage.getItem(rfmTokenName)
       })
       .then((response) => {
@@ -146,7 +164,7 @@ function MoveItemModal(props) {
           <Button onClick={() => setModalShow(false)} variant='outline-dark'>
             Vazgeç
           </Button>
-          <Button onClick={() => MoveItems()} variant='primary'>
+          <Button onClick={() => MoveItems()} variant='primary' disabled={!canMove}>
             Taşı
           </Button>
         </Modal.Footer>

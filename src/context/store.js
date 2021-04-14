@@ -21,6 +21,7 @@ export const initialState = {
     previewData:[],         // Resim base64 verisi için
     config:[],              // RFM Api konfigurasyonu için
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
+    modalDepth:0,           // Modal klasör derinliği
     rfmWindow:"",           // RFM pencere değişimi için
     tokenName:"",           // RFM üzerinde token kullanabilmek için
     currentDirCanWrite:true // Aktif konumun yazma izni

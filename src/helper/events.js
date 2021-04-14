@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, INCREASE_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
+import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
 import { RFM_WindowType } from './global';
@@ -35,6 +35,7 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
         store.dispatch(SET_LOCATION(newLocation));
         store.dispatch(CLEAR_SELECTED_ITEMS());
         store.dispatch(INCREASE_DEPTH());
+        store.dispatch(INCREASE_MODAL_DEPTH());
         store.dispatch(SET_CURRENT_DIR_CAN_WRITE(canWrite))
         const element = document.getElementById(accessibleId);
         element.classList.add(styles.itemBlockGridViewActive);

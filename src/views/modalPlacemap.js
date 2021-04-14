@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight } from 'react-icons/fa'
 import {  useSelector, useStore } from 'react-redux';
-import { SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
+import { SET_DEPTH, SET_MODAL_DEPTH, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
 import { RFM_WindowType } from '../helper/global';
 import styles from '../styles.module.css'
 function ModalPlacemap() {
@@ -26,9 +26,14 @@ function ModalPlacemap() {
         var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
         var newLocation          = reducedLocationArray.join('/');
         var refreshRequest       = (currentLocation === newLocation) ? true : false;
+
+        var startIndex           = startLocation.split('/').length -1;
+        var currentIndex         = startIndex - key;
+        
         if(!refreshRequest) {
             store.dispatch(SET_MODAL_LOADING(true));
             store.dispatch(SET_MODAL_LOCATION(newLocation));
+            store.dispatch(SET_MODAL_DEPTH(currentIndex));
         }
     }
 
@@ -38,9 +43,9 @@ function ModalPlacemap() {
                 splittedPlacemaps.map((item, key) => {
                     if(key >= startLocation.split('/').length - 1)
                         if(key === startLocation.split('/').length - 1)
-                            return <a key={key}><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}> {parentName}</Button></a>
+                            return <a key={key}><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}> {parentName}</Button></a>
                         else 
-                            return <a key={key}><FaChevronRight/><Button variant="link" style={{color:'#000'}} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
+                            return <a key={key}><FaChevronRight/><Button variant="link" className={styles.placemapButtons} onClick={()=>changeCurrentLocation(key)}>{item}</Button></a>
                 })
             }
         </div>
