@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA } from '../context/functions';
+import { toast } from 'material-react-toastify';
+import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SUCCESS_UPLOAD_FILE } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
 import { RFM_WindowType } from './global';
-
 export function onItemSelected(event,accessibleId,itemName,itemObject){
     const selectedItems = store.getState().selectedItems;
     var exist = selectedItems.some((element)=>{ return element.name === itemName});
@@ -64,8 +64,8 @@ export function onItemContextMenu(accessibleId,itemName,itemObject){
     }
 }
 export function removePermanently(){
-    const selectedItems = store.getState().selectedItems;
-    const directoryItems = store.getState().directoryItems;
+    const selectedItems                 = store.getState().selectedItems;
+    const directoryItems                = store.getState().directoryItems;
     const API_URL                       = store.getState().config.API_URL;
     const API_URL_RemoveItemPermanently = store.getState().config.API_URL_RemoveItemPermanently;
     const rfmTokenName                  = store.getState().config.tokenName;
@@ -96,6 +96,91 @@ export function removePermanently(){
       });
     }
 }
+
+export function UploadService(files) {
+  const API_URL            = store.getState().config.API_URL;
+  const API_URL_UploadItem = store.getState().config.API_URL_UploadItem;
+  const rfmTokenName       = store.getState().config.tokenName;
+  const currentLocation    = store.getState().location;
+  Array.from(files).forEach(async (_file,_id) => {
+      const formPayload = new FormData();
+      formPayload.append('file', _file.file); 
+      const config  = { 
+          onUploadProgress: (ProgresEvent) => {
+              const {loaded, total} = ProgresEvent;
+              const percentage = Math.floor((loaded / total) * 100 );
+              store.dispatch(SET_UPLOAD_PROGRESS(_file.id, percentage));
+          },
+          headers:{
+            'x-access-token':localStorage.getItem(rfmTokenName),
+          },
+          params:{
+            targetLocation:currentLocation,
+          }
+      }
+      await axios.post(API_URL+API_URL_UploadItem,formPayload, config)
+          .then((response)=>{
+              console.log(response)
+              store.dispatch(SUCCESS_UPLOAD_FILE(_file.id));    
+          }).catch((error)=>{
+          alert("hata " + error)
+          store.dispatch(FAILURE_UPLOAD_FILE(_file.id))
+      })
+  });
+}
+
+export function DownloadItem(){
+  const selectedItems      = store.getState().selectedItems;
+  const API_URL            = store.getState().config.API_URL;
+  const API_URL_Download   = store.getState().config.API_URL_Download;
+  const rfmTokenName       = store.getState().config.tokenName;
+
+  let items=[];
+  
+  for(let i=0; i<selectedItems.length;i++){
+      items.push(selectedItems[i].absolutePath);
+  }
+  if(items.length > 0)
+  {
+    if(items.length > 1) 
+      toast.dark('Sıkıştırılıyor...')
+      const requestConfig = {
+        responseType: 'blob',
+        cancelToken: '',
+        onDownloadProgress: function(progressEvent) {
+          let complete = progressEvent.loaded / progressEvent.total;
+          console.log(complete)
+        },
+        headers:{
+          "x-access-token":localStorage.getItem(rfmTokenName)
+        },
+        params:{
+          "items":items,
+        }
+      }
+      axios.get(API_URL + API_URL_Download, requestConfig)
+      .then((response)=>{
+        console.log(response)
+        const headerContentDisp = response.headers["content-disposition"];
+        const filename =
+          headerContentDisp &&
+          headerContentDisp.split("filename=")[1].replace(/["']/g, ""); // TODO improve parcing
+        const contentType = response.headers["content-type"];
+
+        const blob = new Blob([response.data], { contentType });
+        const href = window.URL.createObjectURL(blob);
+
+        const tempLink = document.createElement("a");
+        tempLink.setAttribute("href", href);
+        tempLink.setAttribute("download", filename || (response && response.filename));
+        tempLink.click();
+        window.URL.revokeObjectURL(blob);
+        return response;
+      })
+  }
+}
+
+
 export function restoreItems(){
     let items          = [];
     let restoredItems  = [];
@@ -133,3 +218,25 @@ export function restoreItems(){
       });
     }
 } 
+
+
+
+/*const headerContentDisp = res.headers["Content-disposition"];
+      const filename =
+        headerContentDisp &&
+        headerContentDisp.split("filename=")[1].replace(/["']/g, ""); // TODO improve parcing
+      const contentType = res.headers["Content-type"];
+
+      const blob = new Blob([res.data], { contentType });
+      const href = window.URL.createObjectURL(blob);
+
+      const el = document.createElement("a");
+      el.setAttribute("href", href);
+      el.setAttribute(
+        "download",
+        filename || (res.config && res.config.filename) || "someFile"
+      );
+      el.click();
+
+      window.URL.revokeObjectURL(blob);
+      return res;*/

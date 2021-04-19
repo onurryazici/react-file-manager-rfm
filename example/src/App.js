@@ -24,6 +24,7 @@ const App = () =>{
           API_URL_RemoveSharedItem      = "/api/secured/removeSharedItem"
           API_URL_CreateCopy            = "/api/secured/createCopy"
           API_URL_CreateDirectory       = "/api/secured/createDirectory"
+          API_URL_Download              = "/api/secured/download"
           API_URL_EmptyTrash            = "/api/secured/emptyTrash"
           API_URL_GetDirectory          = "/api/secured/getDirectory"
           API_URL_GetImage              = "/api/getImage"

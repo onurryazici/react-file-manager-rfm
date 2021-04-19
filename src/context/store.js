@@ -23,11 +23,10 @@ export const initialState = {
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
     modalDepth:0,           // Modal klasör derinliği
     rfmWindow:"",           // RFM pencere değişimi için
-    tokenName:"",           // RFM üzerinde token kullanabilmek için
     currentDirCanWrite:true // Aktif konumun yazma izni
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // FOR DISABLE MAKE COMMENT LINE
   )
 export const store = createStore(reducer, initialState, allEnhancers)

@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { useSelector, useStore } from 'react-redux';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { DownloadItem } from '../helper/events';
 import CopyItemModal from '../modals/createCopyItemModal';
 import ExistShareItemModal from '../modals/existShareItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
@@ -27,6 +28,8 @@ function MySharedContextMenu(props) {
     const API_URL              = store.getState().config.API_URL;
     const API_URL_MoveToDrive  = store.getState().config.API_URL_MoveToDrive;
     const rfmTokenName         = store.getState().config.tokenName;
+
+
 
     function MoveToDrive(){
         let items      = []
@@ -64,7 +67,7 @@ function MySharedContextMenu(props) {
                 :""
             }
             <MenuItem>
-                <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
+                <Button variant="light" className={styles.contextMenuItem} onClick={()=>DownloadItem()}>
                     <div style={{fontSize:'14px'}}>İndir</div>
                 </Button>
             </MenuItem>
@@ -92,7 +95,7 @@ function MySharedContextMenu(props) {
             }
             </MenuItem>
             <MenuItem>
-            {////////////////// DEĞİŞECEK
+            {////////////////// canWrite değişkeni güncellenebilir..
                 (depth===0)
                 ? <RemoveSharedItemModal isContextMenuButton="yes" active={true}/>
                 : <RemoveSharedItemModal isContextMenuButton="yes" active={canWrite}/>
