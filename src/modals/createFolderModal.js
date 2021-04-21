@@ -104,6 +104,7 @@ function CreateFolderModal(props){
                 required
                 isInvalid = {!isAcceptable || isAlreadyExist}
                 isValid = {isAcceptable && !isAlreadyExist}
+                maxLength={100}
                 />
               {
                 !isAcceptable && DirectoryName.length > 0

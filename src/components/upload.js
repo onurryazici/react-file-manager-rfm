@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Accordion, Button, Card, Col, FormLabel, ProgressBar, Row } from 'react-bootstrap'
-import { FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaRedo, FaTimes, FaTimesCircle } from 'react-icons/fa'
+import { FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaRedo, FaTimes, FaTimesCircle, FaUpload } from 'react-icons/fa'
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 import { connect,  useStore } from 'react-redux'
@@ -49,6 +49,7 @@ function Upload(props) {
                                 return (
                                     <React.Fragment>
                                         <Row>
+                                            <Col sm={2}><Card.Text><FaUpload /></Card.Text></Col>
                                             <Col sm={9}><Card.Text>{filename}</Card.Text></Col>
                                             <Col sm={3}>
                                             {

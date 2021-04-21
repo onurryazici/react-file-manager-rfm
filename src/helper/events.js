@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
-import { ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SUCCESS_UPLOAD_FILE } from '../context/functions';
+import { ADD_DIRECTORY_ITEM, ADD_SELECTED_ITEM, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SUCCESS_UPLOAD_FILE } from '../context/functions';
 import {store} from '../context/store'
 import styles from '../styles.module.css'
 import { RFM_WindowType } from './global';
@@ -120,10 +120,10 @@ export function UploadService(files) {
       }
       await axios.post(API_URL+API_URL_UploadItem,formPayload, config)
           .then((response)=>{
-              console.log(response)
+              store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
               store.dispatch(SUCCESS_UPLOAD_FILE(_file.id));    
           }).catch((error)=>{
-          alert("hata " + error)
+          toast.error(err);
           store.dispatch(FAILURE_UPLOAD_FILE(_file.id))
       })
   });
