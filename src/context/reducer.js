@@ -1,6 +1,7 @@
 import { size } from 'lodash';
 import { Actions } from './actions';
 import styles from '../styles.module.css';
+import { FileProgressType } from '../helper/global';
 
 export function reducer (state,action){
    switch(action.type){
@@ -161,7 +162,7 @@ export function reducer (state,action){
                 selectedItems: newSelectedItems
             }
         }
-        case Actions.SET_UPLOAD_FILE:{
+        case Actions.ADD_UPLOAD_FILE:{
             const files = action.payload;
             let fileToUpload = state.fileProgress;
 
@@ -173,6 +174,7 @@ export function reducer (state,action){
                     [id]: {
                         id:id,
                         file: files[i],
+                        type: FileProgressType.UPLOAD,
                         progress: 0,
                         failure:false,
                         completed:false

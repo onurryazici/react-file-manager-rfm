@@ -142,14 +142,27 @@ export function DownloadItem(){
   }
   if(items.length > 0)
   {
-    if(items.length > 1) 
-      toast.dark('Sıkıştırılıyor...')
-      const requestConfig = {
+    var outputName="";
+    if(items.length > 1) {
+      toast.dark('Sıkıştırılıyor...');
+      outputName = `drive-${new Date().getTime()}.zip`;
+      // Arşiv ismini buradan oluşturup aşağıda bu ismi nodejse yolla 
+    }
+    else if(items.length===1)
+    {
+      let isDirectory = selectedItems.some((element)=>element.absolutePath===items[0] && element.type==="directory");
+      console.log(isDirectory)
+    }
+    // ardından burada da pencereye ekle
+
+
+      /*const requestConfig = {
         responseType: 'blob',
         cancelToken: '',
-        onDownloadProgress: function(progressEvent) {
-          let complete = progressEvent.loaded / progressEvent.total;
-          console.log(complete)
+        onDownloadProgress: (ProgressEvent) => {
+          const {loaded, total} = ProgressEvent;
+          const percentage      = Math.floor((loaded / total) * 100);
+          console.log(ProgressEvent);
         },
         headers:{
           "x-access-token":localStorage.getItem(rfmTokenName)
@@ -176,7 +189,7 @@ export function DownloadItem(){
         tempLink.click();
         window.URL.revokeObjectURL(blob);
         return response;
-      })
+      })*/
   }
 }
 

@@ -100,9 +100,9 @@ export function DELETE_SHARED_WITH(_itemName, _username){
     }
 }
 
-export function SET_UPLOAD_FILE(_files){
+export function ADD_UPLOAD_FILE(_files){
     return dispatch => {
-        dispatch({ type: Actions.SET_UPLOAD_FILE, payload: _files })
+        dispatch({ type: Actions.ADD_UPLOAD_FILE, payload: _files })
     }
 }
 

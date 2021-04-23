@@ -581,8 +581,8 @@ body{
   height: 30px;
 }
 .uploadIcons{
-  font-size: 15px;
-  line-height: 15px;
+  font-size: 25px;
+  vertical-align: middle;
   text-align: center;
 }
 .uploadLineProgressStyle{
@@ -593,6 +593,7 @@ body{
 .uploadInnerContainer{
   max-height: 350px;
   overflow-y: auto;
+  padding:0px;
 }
 
 .fileIconGrid{
@@ -629,12 +630,11 @@ body{
 }
 
 .fileProgressName{
-  width: 80%;
-  text-align: center;
+  width: 250px;
+  text-align: left;
   text-overflow: ellipsis;
   overflow: hidden;
   position: absolute;
-  bottom:15px;
   display: -webkit-box;
   -webkit-line-clamp: 1; /* number of lines to show */
   -webkit-box-orient: vertical;

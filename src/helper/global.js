@@ -13,3 +13,7 @@ export const RFM_WindowType = {
     SHARED_WITH_ME:"SHARED_WITH_ME",
     MY_SHARED:"MY_SHARED"
 }
+export const FileProgressType = {
+    DOWNLOAD:"DOWNLOAD",
+    UPLOAD:"UPLOAD"
+}

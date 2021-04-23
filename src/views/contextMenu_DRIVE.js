@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap';
 import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { useSelector, useStore } from 'react-redux';
+import { DownloadItem } from '../helper/events';
 import CopyItemModal from '../modals/createCopyItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
 import MoveItemModal from '../modals/moveItemModal';
@@ -26,7 +27,7 @@ function DriveContextMenu(props) {
                 : ""
             }
             <MenuItem>
-                <Button variant="light" className={styles.contextMenuItem} onClick={()=>alert("ok")}>
+                <Button variant="light" className={styles.contextMenuItem} onClick={()=>DownloadItem()}>
                     <div style={{fontSize:'14px'}}>İndir</div>
                 </Button>
             </MenuItem>

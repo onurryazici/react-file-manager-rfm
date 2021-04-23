@@ -4,18 +4,15 @@ import { FaChevronCircleUp } from 'react-icons/fa';
 import styles from '../styles.module.css'
 import { useSelector, useStore } from 'react-redux';
 import { size, toArray } from 'lodash';
-import {  SET_UPLOAD_FILE } from '../context/functions';
+import {  ADD_UPLOAD_FILE } from '../context/functions';
 export default function UploadButton(props) {
     const inputFileRef = useRef(null);
-    const toastId      = useRef(null);
-    const fileProgress = useSelector(state => state.fileProgress);
-    const currentDirCanWrite = useSelector(state => state.currentDirCanWrite)
     const active       = props.active;
     const store = useStore();
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     function onFileChange(event){
         const files = event.target.files;
-        store.dispatch(SET_UPLOAD_FILE(files));
+        store.dispatch(ADD_UPLOAD_FILE(files));
     }
     function handleClick(){
         inputFileRef.current.click();
