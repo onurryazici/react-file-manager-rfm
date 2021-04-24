@@ -100,9 +100,16 @@ export function DELETE_SHARED_WITH(_itemName, _username){
     }
 }
 
-export function ADD_UPLOAD_FILE(_files){
+export function ADD_UPLOAD_FILE(_fileId, _fileName){
+    let payload = {fileId:_fileId, fileName:_fileName}
     return dispatch => {
-        dispatch({ type: Actions.ADD_UPLOAD_FILE, payload: _files })
+        dispatch({ type: Actions.ADD_UPLOAD_FILE, payload: payload })
+    }
+}
+export function ADD_DOWNLOAD_FILE(_fileId, _fileName){
+    let payload = {fileId:_fileId, fileName:_fileName}
+    return dispatch => {
+        dispatch({ type: Actions.ADD_DOWNLOAD_FILE, payload: payload })
     }
 }
 
@@ -112,14 +119,36 @@ export function SET_UPLOAD_PROGRESS(_id, _progress){
         dispatch({ type: Actions.SET_UPLOAD_PROGRESS, payload: payload })
     }
 }
+export function SET_DOWNLOAD_PROGRESS(_id, _progress){
+    let payload = {id:_id, progress:_progress}
+    return dispatch => {
+        dispatch({ type: Actions.SET_DOWNLOAD_PROGRESS, payload: payload })
+    }
+}
 export function SUCCESS_UPLOAD_FILE(_id, ){
     return dispatch => {
         dispatch({ type: Actions.SUCCESS_UPLOAD_FILE, payload: _id })
     }
 }
+export function SUCCESS_DOWNLOAD_FILE(_id, ){
+    return dispatch => {
+        dispatch({ type: Actions.SUCCESS_DOWNLOAD_FILE, payload: _id })
+    }
+}
 export function FAILURE_UPLOAD_FILE(_id, ){
     return dispatch => {
         dispatch({ type: Actions.FAILURE_UPLOAD_FILE, payload: _id })
+    }
+}
+export function FAILURE_DOWNLOAD_FILE(_id, ){
+    return dispatch => {
+        dispatch({ type: Actions.FAILURE_DOWNLOAD_FILE, payload: _id })
+    }
+}
+
+export function SHOW_FILE_PROGRESS(show){
+    return dispatch => {
+        dispatch({ type: Actions.SHOW_FILE_PROGRESS, payload: show })
     }
 }
 

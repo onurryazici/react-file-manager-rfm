@@ -4,7 +4,8 @@ import { FaChevronCircleUp } from 'react-icons/fa';
 import styles from '../styles.module.css'
 import { useSelector, useStore } from 'react-redux';
 import { size, toArray } from 'lodash';
-import {  ADD_UPLOAD_FILE } from '../context/functions';
+import {  ADD_UPLOAD_FILE, SHOW_FILE_PROGRESS } from '../context/functions';
+import { UploadService } from '../helper/events';
 export default function UploadButton(props) {
     const inputFileRef = useRef(null);
     const active       = props.active;
@@ -12,7 +13,8 @@ export default function UploadButton(props) {
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     function onFileChange(event){
         const files = event.target.files;
-        store.dispatch(ADD_UPLOAD_FILE(files));
+        //console.log(files)
+        UploadService(files)
     }
     function handleClick(){
         inputFileRef.current.click();

@@ -163,27 +163,39 @@ export function reducer (state,action){
             }
         }
         case Actions.ADD_UPLOAD_FILE:{
-            const files = action.payload;
             let fileToUpload = state.fileProgress;
-
-            for (let i = 0; i < files.length; i++) {
-                
-                const id = size(state.fileProgress) + i +1;
-                fileToUpload = {
-                    ...fileToUpload,
-                    [id]: {
-                        id:id,
-                        file: files[i],
-                        type: FileProgressType.UPLOAD,
-                        progress: 0,
-                        failure:false,
-                        completed:false
-                        },
-                }
+            fileToUpload = {
+                ...fileToUpload,
+                [action.payload.fileId]: {
+                    id:action.payload.fileId,
+                    file: action.payload.fileName,
+                    type: FileProgressType.UPLOAD,
+                    progress: 0,
+                    failure:false,
+                    completed:false
+                },
             }
             return {
                 ...state,
                 fileProgress:fileToUpload
+            }
+        }
+        case Actions.ADD_DOWNLOAD_FILE:{
+            let fileProgressList = state.fileProgress;
+            fileProgressList = {
+                ...fileProgressList,
+                [action.payload.fileId]: {
+                    id:action.payload.fileId,
+                    file: action.payload.fileName,
+                    type: FileProgressType.DOWNLOAD,
+                    progress: 0,
+                    failure:false,
+                    completed:false
+                },
+            }        
+            return {
+                ...state,
+                fileProgress:fileProgressList
             }
         }
         case Actions.SET_UPLOAD_PROGRESS:{
@@ -198,7 +210,32 @@ export function reducer (state,action){
                 }
             }
         }
+        case Actions.SET_DOWNLOAD_PROGRESS:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload.id]:{
+                        ...state.fileProgress[action.payload.id],
+                        progress:action.payload.progress
+                    }
+                }
+            }
+        }
         case Actions.SUCCESS_UPLOAD_FILE:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload]:{
+                        ...state.fileProgress[action.payload],
+                        failure:false,
+                        completed:true,
+                    },
+                },
+            }
+        }
+        case Actions.SUCCESS_DOWNLOAD_FILE:{
             return {
                 ...state,
                 fileProgress:{
@@ -225,6 +262,26 @@ export function reducer (state,action){
                 }
             }
         }
+        case Actions.FAILURE_DOWNLOAD_FILE:{
+            return {
+                ...state,
+                fileProgress:{
+                    ...state.fileProgress,
+                    [action.payload]:{
+                        ...state.fileProgress[action.payload],
+                        failure:true,
+                        completed:false,
+                        progress:0,
+                    },
+                }
+            }
+        }
+        case Actions.SHOW_FILE_PROGRESS:{
+            return {
+                ...state,
+                showFileProgress:action.paylod
+            }
+        }
         case Actions.SET_RFM_WINDOW:{
             return {
                 ...state,
@@ -249,7 +306,6 @@ export function reducer (state,action){
                 config:action.payload
             }
         }
-
         case Actions.INCREASE_DEPTH:{
             return {
                 ...state,
