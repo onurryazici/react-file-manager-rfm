@@ -111,7 +111,6 @@ export function UploadService(fileList) {
       const formPayload = new FormData();
       store.dispatch(SHOW_FILE_PROGRESS(true));
       store.dispatch(ADD_UPLOAD_FILE(fileId, fileName))
-      console.log(_file)
       formPayload.append('file', _file); 
       const config  = { 
           onUploadProgress: (ProgresEvent) => {

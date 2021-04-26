@@ -277,11 +277,23 @@ export function reducer (state,action){
             }
         }
         case Actions.SHOW_FILE_PROGRESS:{
+            state.showFileProgress = action.payload;
+            return {...state}
+        }
+
+        case Actions.CLEAR_FILE_PROGRESS:{
+            const newFileProgress = state.fileProgress;
+            Object.keys(newFileProgress).map((element)=>{
+                if(newFileProgress[element]["completed"] === true)
+                    delete newFileProgress[element]
+            })
             return {
                 ...state,
-                showFileProgress:action.paylod
+                fileProgress:newFileProgress,
+                showFileProgress:(size(newFileProgress) === 0 ? false : true)
             }
         }
+
         case Actions.SET_RFM_WINDOW:{
             return {
                 ...state,

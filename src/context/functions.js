@@ -151,6 +151,12 @@ export function SHOW_FILE_PROGRESS(show){
         dispatch({ type: Actions.SHOW_FILE_PROGRESS, payload: show })
     }
 }
+export function CLEAR_FILE_PROGRESS(){
+    return dispatch => {
+        dispatch({ type: Actions.CLEAR_FILE_PROGRESS, payload: null })
+    }
+}
+
 
 export function SET_RFM_WINDOW(_window){
     return dispatch => {
