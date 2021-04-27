@@ -6,6 +6,7 @@ import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'reac
 import {  FaGgCircle, FaUserCircle,  } from 'react-icons/fa';
 import { useSelector, useStore } from 'react-redux';
 import { ADD_SHARED_WITH, CLEAR_SELECTED_ITEMS, DELETE_SHARED_WITH, SET_DIRECTORY_ITEMS, UPDATE_SHARED_WITH, CLEAR_SELECTED_SHARED_WITH} from '../context/functions';
+import { MoveToDrive } from '../helper/events';
 import styles from '../styles.module.css'
 //import NewShareView from '../views/newShareView';
 
@@ -91,6 +92,7 @@ function ExistShareItemModal(props){
       store.dispatch(UPDATE_SHARED_WITH(selectedItems[0].name,username,true,write,true))
   }
   function RemovePermission(username){
+
       axios.post(API_URL + API_URL_RemovePermission, {
         item:selectedItems[0].absolutePath,
         user:username,
@@ -98,9 +100,15 @@ function ExistShareItemModal(props){
       }).then((response)=>{
         if(response.data.statu === true){
           store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name,username))
+          if(selectedItems[0].sharedWith.length === 0){
+            setModalShow(false)
+            MoveToDrive();
+          }
         }
       })
   }
+
+
   function ClearData(){
     setNewUserName("");
     setModalShow(false); 

@@ -10,7 +10,6 @@ function ItemDetailModal(props) {
 
     const [name, setName]   = useState("");
     const [type, setType]   = useState("");
-    const [size, setSize]   = useState("");
     const [owner, setOwner] = useState("");
     const [read, setRead]   = useState("");
     const [write, setWrite] = useState("");
@@ -22,7 +21,6 @@ function ItemDetailModal(props) {
         setModalShow(true)
         setName(selectedItems[0].name);
         setType(selectedItems[0].type);
-        setSize(selectedItems[0].size);
         setOwner(selectedItems[0].owner);
         setRead(selectedItems[0].read);
         setWrite(selectedItems[0].write);
@@ -67,31 +65,27 @@ function ItemDetailModal(props) {
                  <tbody>
                    <tr>
                      <td>Tür</td>
-                     <td>{type}</td>
-                   </tr>
-                   <tr>
-                     <td>Boyut</td>
-                     <td>{size}</td>
+                     <td>: {(type==="directory") ? "Klasör" : "Dosya"}</td>
                    </tr>
                    <tr>
                      <td>Sahibi</td>
-                     <td>{owner}</td>
+                     <td>: {owner}</td>
                    </tr>
                    <tr>
                      <td>En son değiştirilme</td>
-                     <td>{lastModifyTime}</td>
+                     <td>: {lastModifyTime}</td>
                    </tr>
                    <tr>
                      <td>En son erişilme</td>
-                     <td>{lastAccessTime} </td>
+                     <td>: {lastAccessTime} </td>
                    </tr>
                    <tr>
                      <td>Okuma</td>
-                     <td>{read ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
+                     <td>: {read ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
                    </tr>
                    <tr>
                      <td>Yazma</td>
-                     <td>{write ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
+                     <td>: {write ? <FaCheckCircle color="#51CD54" /> : <FaTimesCircle color="#FF2907"/>}</td>
                    </tr>
                  </tbody>
                </Table>

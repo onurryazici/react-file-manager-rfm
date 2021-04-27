@@ -1,17 +1,12 @@
-import axios from 'axios';
 import { size } from 'lodash';
-import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { ContextMenu, MenuItem } from 'react-contextmenu';
 import { useSelector, useStore } from 'react-redux';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
-import { DownloadItem } from '../helper/events';
-import CopyItemModal from '../modals/createCopyItemModal';
+import { DownloadItem, MoveToDrive } from '../helper/events';
 import ExistShareItemModal from '../modals/existShareItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
 import MoveItemModal from '../modals/moveItemModal';
-import RemoveItemModal from '../modals/removeItemModal';
 import RemoveSharedItemModal from '../modals/removeSharedItemModal';
 import RenameItemModal from '../modals/renameItemModal';
 import styles from '../styles.module.css'
@@ -31,32 +26,7 @@ function MySharedContextMenu(props) {
 
 
 
-    function MoveToDrive(){
-        let items      = []
-        let movedItems = []
-        selectedItems.forEach((element) => {
-            items.push(element.absolutePath)
-            movedItems.push(element.name)
-        })
-        axios.post(API_URL + API_URL_MoveToDrive, {
-            "items": items,
-            token:localStorage.getItem(rfmTokenName)
-        })
-        .then((response) => {
-            if (response.data.statu) {
-                var reduced = directoryItems.filter((element)=> !movedItems.includes(element.name));
-                store.dispatch(CLEAR_SELECTED_ITEMS());
-                store.dispatch(SET_DIRECTORY_ITEMS(reduced));
-                toast.success('Paylaşım kaldırıldı.')
-            } 
-            else toast.error(response.data.message)
-        })
-        .catch((err) => {
-            alert(err)
-            store.dispatch(SET_ERROR(true));
-            store.dispatch(SET_LOADING(false));
-        })
-    }
+    
     return(
         <ContextMenu id={itemName} className={styles.contextMenuStage}>
             {

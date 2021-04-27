@@ -231,7 +231,39 @@ export function restoreItems(){
     }
 } 
 
+export function MoveToDrive(){
 
+  const selectedItems       = store.getState().selectedItems;
+  const rfmTokenName        = store.getState().config.tokenName;
+  const directoryItems      = store.getState().directoryItems;
+  const API_URL             = store.getState().config.API_URL;
+  const API_URL_MoveToDrive = store.getState().config.API_URL_MoveToDrive;
+
+  let items      = []
+  let movedItems = []
+  selectedItems.forEach((element) => {
+      items.push(element.absolutePath)
+      movedItems.push(element.name)
+  })
+  axios.post(API_URL + API_URL_MoveToDrive, {
+      "items": items,
+      token:localStorage.getItem(rfmTokenName)
+  })
+  .then((response) => {
+      if (response.data.statu) {
+          var reduced = directoryItems.filter((element)=> !movedItems.includes(element.name));
+          store.dispatch(CLEAR_SELECTED_ITEMS());
+          store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+          toast.success('Paylaşım kaldırıldı.')
+      } 
+      else toast.error(response.data.message)
+  })
+  .catch((err) => {
+      alert(err)
+      store.dispatch(SET_ERROR(true));
+      store.dispatch(SET_LOADING(false));
+  })
+}
 
 /*const headerContentDisp = res.headers["Content-disposition"];
       const filename =
