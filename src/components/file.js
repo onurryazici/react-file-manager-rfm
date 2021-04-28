@@ -53,11 +53,11 @@ function File(props){
             case 'xls':
                 return <FaFileExcel color="#1e7e34" className={`${selectedClass}`} style={fileStyles} />
             case 'png':
-                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&dimension=125`} style={imageStyles} className={`${selectedClass}`} />
+                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&width=150&height=100`} style={imageStyles} className={`${selectedClass}`} />
             case 'jpg':
-                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&dimension=125`} style={imageStyles} className={`${selectedClass}`} />
+                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&width=150&height=100`} style={imageStyles} className={`${selectedClass}`} />
             case 'jpeg':
-                 return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&dimension=125`} style={imageStyles} className={`${selectedClass}`} />
+                 return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&width=150&height=100`} style={imageStyles} className={`${selectedClass}`} />
             case 'js':
                 return <FaJava color="#36bae1" className={`${selectedClass}`} style={fileStyles}/>
             default:
