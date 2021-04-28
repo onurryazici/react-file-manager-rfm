@@ -9,7 +9,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { RFM_WindowType } from '../helper/global';
 import classNames from 'classnames';
@@ -34,8 +34,11 @@ function Content(props) {
                 token:localStorage.getItem(rfmTokenName)
             }).then((response)=>{
                 store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
+                store.dispatch(SET_CURRENT_DIR_CAN_WRITE(response.data.dirCanWrite));
                 store.dispatch(SET_LOADING(false))
             }).catch((err)=>{
+                console.log("hata var ")
+                console.log(err)
                 store.dispatch(SET_LOADING(false));
                 store.dispatch(SET_ERROR(true));
             })

@@ -20,7 +20,7 @@ function Placemap() {
         var refreshRequest       = (currentLocation === newLocation) ? true : false;
 
         var startIndex           = startLocation.split('/').length -1;
-        var currentIndex         = startIndex - key;
+        var currentIndex         = key - startIndex;
         if(!refreshRequest) {
             store.dispatch(SET_LOADING(true));
             store.dispatch(SET_LOCATION(newLocation));
@@ -39,7 +39,6 @@ function Placemap() {
                 return "Benimle Paylaşılanlar";
             case RFM_WindowType.RECYCLE_BIN:
                 return "Çöp Kutusu";
-
         }
     }
     return(
@@ -72,7 +71,6 @@ function Placemap() {
                         }
                         
                     </div>
-
                 )
             }
         </div>

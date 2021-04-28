@@ -30,7 +30,7 @@ function EmptyTrashModal(){
     }
     return (
       <React.Fragment>
-              <Button variant="danger" onClick={() => setModalShow(true)} style={{float:'right'}} disabled={modalDisabled}>
+              <Button variant="danger" onClick={() => setModalShow(true)} style={{float:'right',height:'45px'}} disabled={modalDisabled}>
                 <div className={styles.actionbarText}>Çöp Kutusunu Boşalt</div>
               </Button>
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
