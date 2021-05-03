@@ -23,7 +23,7 @@ export const initialState = {
     depth:0,                // Ana konumdan aktif konuma olan uzaklığın hesabı
     modalDepth:0,           // Modal klasör derinliği
     rfmWindow:"",           // RFM pencere değişimi için
-    currentDirCanWrite:true,// Aktif konumun yazma izni
+    currentDirCanWritable:true,// Aktif konumun yazma izni
     showFileProgress:false, // Yükleme ekranını göstermek için
 }
 const allEnhancers = compose( 

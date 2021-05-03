@@ -37,7 +37,7 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
         store.dispatch(CLEAR_SELECTED_ITEMS());
         store.dispatch(INCREASE_DEPTH());
         store.dispatch(INCREASE_MODAL_DEPTH());
-        store.dispatch(SET_CURRENT_DIR_CAN_WRITE(canWrite))
+        //store.dispatch(SET_CURRENT_DIR_CAN_WRITE(canWrite))
         const element = document.getElementById(accessibleId);
         element.classList.add(styles.itemBlockGridViewActive);
       }

@@ -345,7 +345,7 @@ export function reducer (state,action){
         case Actions.SET_CURRENT_DIR_CAN_WRITE:{
             return {
                 ...state,
-                currentDirCanWrite:action.payload
+                currentDirCanWritable:action.payload
             }
         }
         default:

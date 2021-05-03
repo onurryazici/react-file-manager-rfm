@@ -22,7 +22,7 @@ function Content(props) {
     const depth                 = useSelector(state => state.depth)
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
-    const currentDirCanWrite    = useSelector(state => state.currentDirCanWrite)
+    const currentDirCanWritable = useSelector(state => state.currentDirCanWritable)
     const store                 = useStore();
     const rfmTokenName          = store.getState().config.tokenName;
 
@@ -34,7 +34,7 @@ function Content(props) {
                 token:localStorage.getItem(rfmTokenName)
             }).then((response)=>{
                 store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
-                store.dispatch(SET_CURRENT_DIR_CAN_WRITE(response.data.dirCanWrite));
+                store.dispatch(SET_CURRENT_DIR_CAN_WRITE(response.data.dirCanWritable));
                 store.dispatch(SET_LOADING(false))
             }).catch((err)=>{
                 console.log("hata var ")
@@ -107,7 +107,7 @@ function Content(props) {
                         <ContextMenu id="mainTrigger">
                             <div className={styles.contextMenuStage}>
                                 {
-                                    (currentDirCanWrite)
+                                    (currentDirCanWritable)
                                     ?
                                     [<MenuItem>
                                         <CreateFolderModal isContextMenuButton="yes" active={true} />

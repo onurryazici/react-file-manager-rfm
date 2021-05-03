@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import CreateFolderModal from '../modals/createFolderModal';
 import UploadButton from './uploadButton';
 function OnStartView() {
-    const currentDirCanWrite = useSelector(state => state.currentDirCanWrite);
+    const currentDirCanWritable = useSelector(state => state.currentDirCanWritable);
     return (
         <React.Fragment>
-            <CreateFolderModal isContextMenuButton="no" active={currentDirCanWrite}/>
-            <UploadButton isContextMenuButton="no" active={currentDirCanWrite}/>
+            <CreateFolderModal isContextMenuButton="no" active={currentDirCanWritable}/>
+            <UploadButton isContextMenuButton="no" active={currentDirCanWritable}/>
         </React.Fragment>
     )
 }
