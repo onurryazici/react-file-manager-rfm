@@ -27,7 +27,7 @@ const App = () =>{
           API_URL_Download              = "/api/secured/download"
           API_URL_EmptyTrash            = "/api/secured/emptyTrash"
           API_URL_GetDirectory          = "/api/secured/getDirectory"
-          API_URL_GetImage              = "/api/getImage"
+          API_URL_GetImage              = "/api/secured/getImage"
           API_URL_MoveItems             = "/api/secured/moveItems"
           API_URL_MoveToTrash           = "/api/secured/moveToTrash"
           API_URL_MoveToDrive           = "/api/secured/moveToDrive"

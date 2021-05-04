@@ -25,8 +25,10 @@ export function onItemSelected(event,accessibleId,itemName,itemObject){
 export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,extension,canWrite){
     const rfmWindow        = store.getState().rfmWindow;
     const currentLocation  = store.getState().location;
+    const rfmTokenName     = store.getState().config.tokenName;
     const API_URL          = store.getState().config.API_URL;
     const API_URL_GetImage = store.getState().config.API_URL_GetImage;
+    const token            = localStorage.getItem(rfmTokenName)
 
     if(!(rfmWindow===RFM_WindowType.RECYCLE_BIN))
     {
@@ -44,7 +46,7 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
       else if (extension==="png" || extension === "jpg" || extension === "jpeg")
       {
         store.dispatch(SET_PREVIEW_ACTIVE(true))
-        store.dispatch(SET_PREVIEW_DATA(`${API_URL + API_URL_GetImage}?absolutePath=${_absolutePath}`));
+        store.dispatch(SET_PREVIEW_DATA(`${API_URL + API_URL_GetImage}?absolutePath=${_absolutePath}&jwt=${token}`));
          /*axios.post(API_URL + API_URL_GetImage,{
              absolutePath:_absolutePath
          }).then((response)=>{
