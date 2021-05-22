@@ -105,14 +105,19 @@ export function UploadService(fileList) {
   const rfmTokenName       = store.getState().config.tokenName;
   const currentLocation    = store.getState().location;
   const fileProgress       = store.getState().fileProgress;
+  console.log("liste")
+  console.log(fileList)
   Array.from(fileList).forEach(async (_file,_index) => {
       const fileId      = size(fileProgress) + _index + 1;
       const fileName    = _file.name;
       const formPayload = new FormData();
+      const CancelToken = axios.CancelToken
+      const source      = CancelToken.source()
       store.dispatch(SHOW_FILE_PROGRESS(true));
-      store.dispatch(ADD_UPLOAD_FILE(fileId, fileName))
+      store.dispatch(ADD_UPLOAD_FILE(fileId, fileName, source))
       formPayload.append('file', _file); 
       const config  = { 
+          cancelToken: source.token,
           onUploadProgress: (ProgresEvent) => {
               const { loaded, total } = ProgresEvent;
               const percentage        = Math.floor((loaded / total) * 100 );
@@ -123,7 +128,8 @@ export function UploadService(fileList) {
             targetLocation:currentLocation,
           }
       }
-      await axios.post(API_URL + API_URL_UploadItem,formPayload, config)
+      try{
+        await axios.post(API_URL + API_URL_UploadItem,formPayload, config)
           .then((response)=>{
               store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
               store.dispatch(SUCCESS_UPLOAD_FILE(fileId));    
@@ -131,6 +137,11 @@ export function UploadService(fileList) {
           toast.error(error);
           store.dispatch(FAILURE_UPLOAD_FILE(fileId))
       })
+    } catch(error) {
+      if(axios.isCancel(error)){
+        alert("iptal")
+      }
+    }
   });
 }
 

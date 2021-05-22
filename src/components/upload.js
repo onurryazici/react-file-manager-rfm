@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Accordion, Button, Card, FormLabel, ProgressBar } from 'react-bootstrap'
-import { FaArrowDown, FaArrowUp, FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaRedo, FaTimes, FaTimesCircle} from 'react-icons/fa'
+import { FaArrowDown, FaArrowUp, FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaExclamationTriangle, FaTimes, FaTimesCircle} from 'react-icons/fa'
 import { connect, useSelector, useStore } from 'react-redux'
-import { size } from 'lodash'
 import { FileProgressType } from '../helper/global'
 import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS } from '../context/functions'
 import classNames from 'classnames'
@@ -38,65 +37,53 @@ function Upload(props) {
                                 <FaTimesCircle color={"#ff0018"}/>
                             </Button>
                             <Accordion.Toggle as={Button} variant="link" eventKey="0" className={styles.uploadHeaderButtons} onClick={()=>setIsOpen(!isOpen)}>
-                            {
-                                isOpen 
-                                ? <FaChevronCircleDown color={"#f5e206"}/>
-                                : <FaChevronCircleUp color={"#f5e206"}/>
-                            }
+                            { isOpen 
+                              ? <FaChevronCircleDown color={"#f5e206"}/>
+                              : <FaChevronCircleUp color={"#f5e206"}/>    }
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                         <Card.Body className={styles.uploadInnerContainer}>
                         <React.Fragment>
-                            <Button variant="link" style={{float:'right'}} onClick={()=>{
-                                store.dispatch(CLEAR_FILE_PROGRESS());
-                            }}>Tamamlananları temizle</Button>
+                            <Button variant="link" style={{float:'right'}} onClick={()=>{store.dispatch(CLEAR_FILE_PROGRESS());}}>
+                                Listeyi temizle
+                            </Button>
                         <table>
-                        {
-                            Object.keys(props.fileProgress).map((i)=>{
-                                let id        = props.fileProgress[i].id;
-                                let type      = props.fileProgress[i].type;
-                                let filename  = props.fileProgress[i].file;
-                                let progress  = props.fileProgress[i].progress;
-                                let failure   = props.fileProgress[i].failure;
-                                let completed = props.fileProgress[i].completed;
+                        {   Object.keys(props.fileProgress).map((i)=>{
+                                let type       = props.fileProgress[i].type
+                                let filename   = props.fileProgress[i].file
+                                let progress   = props.fileProgress[i].progress
+                                let failure    = props.fileProgress[i].failure
+                                let completed  = props.fileProgress[i].completed
+                                let source     = props.fileProgress[i].source
                                 return (
                                     <React.Fragment>
                                             <tbody>
                                                 <tr style={{borderTop:'solid thin #dedede'}}>
                                                     <td style={{width:'50px',verticalAlign:'middle'}}>
-                                                        {
-                                                            type===FileProgressType.UPLOAD
-                                                            ? <div className={styles.uploadIcons}><FaArrowUp color="#0066CC"/></div>
-                                                            : <div className={styles.uploadIcons}><FaArrowDown color="#28a745"/></div>
-                                                        }
-                                                        
+                                                    {   type === FileProgressType.UPLOAD
+                                                        ? <div className={styles.uploadIcons}><FaArrowUp color="#0066CC"/></div>
+                                                        : <div className={styles.uploadIcons}><FaArrowDown color="#28a745"/></div>  }    
                                                     </td>
                                                     <td className={styles.fileProgressFileNameTD} rowspan={2}>
                                                         <span className={styles.fileProgressName}>{filename}</span><br/>
                                                         <ProgressBar now={progress} className={styles.uploadLineProgressStyle} variant="warning"/>
                                                     </td>
                                                     <td style={{width:'50px',verticalAlign:'middle'}}>
-                                                    {
-                                                        (failure) ? 
-                                                        (<Button variant="light" className={styles.uploadCancelButton} onClick={() =>alert("heyha")}>
-                                                            <div className={styles.uploadIcons}><FaRedo color="#0066CC"/></div>
-                                                        </Button>)
-                                                        : ((completed) ?
-                                                        (
-                                                            <div className={styles.uploadIcons}><FaCheckCircle color="#15b239"/></div>
-                                                        )
-                                                        :(<Button variant="light" className={styles.uploadCancelButton} onClick={() =>alert("heyha")}>
-                                                            <div className={styles.uploadIcons}><FaTimes color="#FF0000"/></div>
-                                                        </Button>))
-                                                    }
+                                                    {   failure 
+                                                        ? <div className={styles.uploadIcons}><FaExclamationTriangle color="#f10000"/></div>
+                                                        : 
+                                                        completed 
+                                                        ? <div className={styles.uploadIcons}><FaCheckCircle color="#15b239"/></div>
+                                                        : <Button variant="light" className={styles.uploadCancelButton} onClick={()=>source.cancel('cancelled by user')}>
+                                                                <div className={styles.uploadIcons}><FaTimes color="#FF0000"/></div>
+                                                          </Button> }
                                                     </td>                                     
                                                 </tr>
                                             </tbody>
                                     </React.Fragment>
                                 )
-                            })
-                        }
+                            })  }
                         </table>
                         </React.Fragment>
                         </Card.Body>

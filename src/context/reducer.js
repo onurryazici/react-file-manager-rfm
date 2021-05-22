@@ -171,6 +171,7 @@ export function reducer (state,action){
                     file: action.payload.fileName,
                     type: FileProgressType.UPLOAD,
                     progress: 0,
+                    source:action.payload.source,
                     failure:false,
                     completed:false
                 },
@@ -284,7 +285,7 @@ export function reducer (state,action){
         case Actions.CLEAR_FILE_PROGRESS:{
             const newFileProgress = state.fileProgress;
             Object.keys(newFileProgress).map((element)=>{
-                if(newFileProgress[element]["completed"] === true)
+                if(newFileProgress[element]["completed"] === true || newFileProgress[element]["failure"]===true)
                     delete newFileProgress[element]
             })
             return {

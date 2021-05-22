@@ -1,19 +1,14 @@
 import { Button } from 'react-bootstrap';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { FaChevronCircleUp } from 'react-icons/fa';
 import styles from '../styles.module.css'
-import { useSelector, useStore } from 'react-redux';
-import { size, toArray } from 'lodash';
-import {  ADD_UPLOAD_FILE, SHOW_FILE_PROGRESS } from '../context/functions';
 import { UploadService } from '../helper/events';
 export default function UploadButton(props) {
     const inputFileRef = useRef(null);
     const active       = props.active;
-    const store = useStore();
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     function onFileChange(event){
         const files = event.target.files;
-        //console.log(files)
         UploadService(files)
     }
     function handleClick(){
