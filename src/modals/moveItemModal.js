@@ -60,7 +60,7 @@ function MoveItemModal(props) {
           store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
         })
         .catch((err) => {
-          alert(err)
+          alert(localStorage.getItem(rfmTokenName)+ err)
           store.dispatch(SET_MODAL_LOADING(false));
           store.dispatch(SET_ERROR(true));
         })

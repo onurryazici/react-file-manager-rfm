@@ -6,20 +6,14 @@ const App = () =>{
   const testerr=(name)=>{
     alert("ok " + name);
   }
-  const testStyle = {
-    width: 'calc(100% - 245px)',
-    height: 'calc(100% - 60px)',
-    position: 'absolute',
-    right: '0px',
-    top:'60px',
-  }
     return(
       <div>
         <RFM 
-          location                      = "/home/main/drive"
+          location                      = "/home/user1/drive"
           rfmWindow                     = "DRIVE"
           API_URL                       = "http://192.168.91.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
+          API_URL_AddToDrive            = "/api/secured/addToDrive"
           API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"
           API_URL_RemoveSharedItem      = "/api/secured/removeSharedItem"
           API_URL_CreateCopy            = "/api/secured/createCopy"

@@ -1,27 +1,25 @@
-import axios from 'axios';
-import { toast } from 'material-react-toastify';
 import React from 'react'
-import { Button, Modal } from 'react-bootstrap';
-import { FaTimesCircle } from 'react-icons/fa';
-import { useSelector, useStore } from 'react-redux';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import axios from 'axios'
+import { toast } from 'material-react-toastify'
+import { Button, Modal } from 'react-bootstrap'
+import { FaTimesCircle } from 'react-icons/fa'
+import { useSelector, useStore } from 'react-redux'
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions'
 import styles from '../styles.module.css'
 function RemoveSharedItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const store             = useStore();
-    const currentLocation   = useSelector(state => state.location);
     const directoryItems    = useSelector(state => state.directoryItems);
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
     const API_URL = store.getState().config.API_URL;
-    const API_URL_MoveToTrash      = store.getState().config.API_URL_MoveToTrash;
-    const API_URL_RemoveSharedItem = store.getState().config.API_URL_RemoveSharedItem;
-    const rfmTokenName        = store.getState().config.tokenName;
-
+    
     function RemoveItem() {
       setModalShow(false);
+      const API_URL_RemoveSharedItem = store.getState().config.API_URL_RemoveSharedItem;
+      const rfmTokenName             = store.getState().config.tokenName;
       let items        = [];
       let removedItems = [];
       let cantRemove   = [] ;

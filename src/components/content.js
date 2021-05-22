@@ -13,6 +13,7 @@ import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, S
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { RFM_WindowType } from '../helper/global';
 import classNames from 'classnames';
+import { toast } from 'material-react-toastify';
 function Content(props) {
     const directoryItems        = props.directoryItems;
     const loading               = useSelector(state => state.loading);
@@ -39,6 +40,7 @@ function Content(props) {
             }).catch((err)=>{
                 console.log("hata var ")
                 console.log(err)
+                toast.error("Bu dizine şu anda erişim sağlanamıyor")
                 store.dispatch(SET_LOADING(false));
                 store.dispatch(SET_ERROR(true));
             })

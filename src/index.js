@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types'
 import { SET_RFM_WINDOW, SET_RFM_CONFIG } from './context/functions';
 import { store } from './context/store';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 const RFM = (props) =>{
     const _location        = props.location;
@@ -12,6 +13,7 @@ const RFM = (props) =>{
     const rfmConfigPayload = {
       API_URL                       : props.API_URL,
       API_URL_UserAuthentication    : props.API_URL_UserAuthentication,
+      API_URL_AddToDrive            : props.API_URL_AddToDrive,
       API_URL_RemoveItemPermanently : props.API_URL_RemoveItemPermanently,
       API_URL_RemoveSharedItem      : props.API_URL_RemoveSharedItem,
       API_URL_CreateCopy            : props.API_URL_CreateCopy,
@@ -41,7 +43,7 @@ const RFM = (props) =>{
       <Provider store={store}>
         <RFM_Core
           location={_location}
-          username="main"
+          username="user1"
           password="qweqweasd"
         />
       </Provider>
@@ -55,6 +57,7 @@ RFM.PropTypes = {
   rfmWindow                     : PropTypes.string,
   API_URL                       : PropTypes.string,
   API_URL_UserAuthtentication   : PropTypes.string,
+  API_URL_AddToDrive            : PropTypes.string,
   API_URL_RemoveItemPermanently : PropTypes.string,
   API_URL_RemoveSharedItem      : PropTypes.string,
   API_URL_CreateCopy            : PropTypes.string,

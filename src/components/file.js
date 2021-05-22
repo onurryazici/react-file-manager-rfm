@@ -11,10 +11,9 @@ function File(props){
     const rfmTokenName      = store.getState().config.tokenName;
     const API_URL           = store.getState().config.API_URL;
     const API_URL_GetImage  = store.getState().config.API_URL_GetImage;
-    const token             = localStorage.getItem(rfmTokenName);
+    const token     	    = localStorage.getItem(rfmTokenName);
     const selectedClass     = (viewMode === "grid") ? styles.fileIconGrid : styles.itemIconList; /// burada düzenleme ypmk gerekcek gibi
     const selectedNameClass = (viewMode === "grid") ? styles.itemNameGrid : styles.itemNameList; /// burada düzenleme ypmk gerekcek gibi
-
     const imageStyles={
         width     : "auto",
         height    : "auto",
