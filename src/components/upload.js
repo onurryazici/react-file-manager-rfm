@@ -3,7 +3,7 @@ import { Accordion, Button, Card, FormLabel, ProgressBar } from 'react-bootstrap
 import { FaArrowDown, FaArrowUp, FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaExclamationTriangle, FaTimes, FaTimesCircle} from 'react-icons/fa'
 import { connect, useSelector, useStore } from 'react-redux'
 import { FileProgressType } from '../helper/global'
-import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS } from '../context/functions'
+import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS, FAILURE_DOWNLOAD_FILE } from '../context/functions'
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 
@@ -20,6 +20,10 @@ function Upload(props) {
             store.dispatch(SHOW_FILE_PROGRESS(false));
             store.dispatch(CLEAR_FILE_PROGRESS());
         }
+    }
+    function cancelProgress(id,source){
+        source.cancel('cancelled by user')
+        store.dispatch(FAILURE_DOWNLOAD_FILE(id))
     }
 
     if(showFileProgress===false)
@@ -50,6 +54,7 @@ function Upload(props) {
                             </Button>
                         <table>
                         {   Object.keys(props.fileProgress).map((i)=>{
+                                let id         = i
                                 let type       = props.fileProgress[i].type
                                 let filename   = props.fileProgress[i].file
                                 let progress   = props.fileProgress[i].progress
@@ -75,7 +80,7 @@ function Upload(props) {
                                                         : 
                                                         completed 
                                                         ? <div className={styles.uploadIcons}><FaCheckCircle color="#15b239"/></div>
-                                                        : <Button variant="light" className={styles.uploadCancelButton} onClick={()=>source.cancel('cancelled by user')}>
+                                                        : <Button variant="light" className={styles.uploadCancelButton} onClick={()=>cancelProgress(id,source)}>
                                                                 <div className={styles.uploadIcons}><FaTimes color="#FF0000"/></div>
                                                           </Button> }
                                                     </td>                                     

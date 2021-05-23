@@ -9,8 +9,8 @@ const App = () =>{
     return(
       <div>
         <RFM 
-          location                      = "/home/user1/drive"
-          rfmWindow                     = "DRIVE"
+          location                      = "/home/user1/drive-sharedWithMe"
+          rfmWindow                     = "SHARED_WITH_ME"
           API_URL                       = "http://192.168.91.128:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
           API_URL_AddToDrive            = "/api/secured/addToDrive"

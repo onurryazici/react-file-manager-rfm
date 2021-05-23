@@ -106,8 +106,8 @@ export function ADD_UPLOAD_FILE(_fileId, _fileName,_source){
         dispatch({ type: Actions.ADD_UPLOAD_FILE, payload: payload })
     }
 }
-export function ADD_DOWNLOAD_FILE(_fileId, _fileName){
-    let payload = {fileId:_fileId, fileName:_fileName}
+export function ADD_DOWNLOAD_FILE(_fileId, _fileName,_source){
+    let payload = {fileId:_fileId, fileName:_fileName, source:_source}
     return dispatch => {
         dispatch({ type: Actions.ADD_DOWNLOAD_FILE, payload: payload })
     }

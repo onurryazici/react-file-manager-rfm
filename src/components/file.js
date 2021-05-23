@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '../styles.module.css'
-import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage, FaJava} from 'react-icons/fa';
+import { FaFilePdf, FaFileWord, FaFileAlt,  FaFile, FaFileExcel, FaFileImage, FaJava, FaArchive, FaFileArchive} from 'react-icons/fa';
 import { useStore } from 'react-redux';
 function File(props){
     const fileName          = props.fileName;
@@ -58,9 +58,13 @@ function File(props){
             case 'png':
             case 'jpg':
             case 'jpeg':
-                 return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&width=150&height=100&jwt=${token}`} style={imageStyles} className={`${selectedClass}`} />
+                return <img src={`${API_URL + API_URL_GetImage}?absolutePath=${absolutePath}&width=150&height=100&jwt=${token}`} style={imageStyles} className={`${selectedClass}`} />
             case 'js':
                 return <FaJava color="#36bae1" className={`${selectedClass}`} style={fileStyles}/>
+            case 'zip':
+            case 'rar':
+            case 'tgz':
+                return <FaFileArchive color="#651a6e" className={`${selectedClass}`} style={fileStyles} />
             default:
                 return <FaFile color="#777777" className={`${selectedClass}`}  style={fileStyles}/>;
 

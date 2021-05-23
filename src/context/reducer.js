@@ -190,6 +190,7 @@ export function reducer (state,action){
                     file: action.payload.fileName,
                     type: FileProgressType.DOWNLOAD,
                     progress: 0,
+                    source:action.payload.source,
                     failure:false,
                     completed:false
                 },

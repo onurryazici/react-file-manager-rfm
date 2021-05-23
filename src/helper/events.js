@@ -163,14 +163,16 @@ export function DownloadItem(){
       toast.dark('Sıkıştırılıyor...'),
       `archive-${new Date().getTime()}.zip`
     ) : ( selectedItems[0].name )
-
+    
     const fileId     = size(fileProgress) + 1;
     const fileName   = outputName;
+    const CancelToken = axios.CancelToken
+    const source      = CancelToken.source()
     store.dispatch(SHOW_FILE_PROGRESS(true));
-    store.dispatch(ADD_DOWNLOAD_FILE(fileId, fileName))
+    store.dispatch(ADD_DOWNLOAD_FILE(fileId, fileName, source))
     const requestConfig = {
         responseType: 'blob',
-        cancelToken: '',
+        cancelToken: source.token,
         onDownloadProgress: (ProgressEvent) => {
           const {loaded, total} = ProgressEvent;
           const percentage      = Math.floor((loaded / total) * 100);
