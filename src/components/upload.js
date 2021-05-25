@@ -3,27 +3,27 @@ import { Accordion, Button, Card, FormLabel, ProgressBar } from 'react-bootstrap
 import { FaArrowDown, FaArrowUp, FaCheckCircle, FaChevronCircleDown, FaChevronCircleUp, FaExclamationTriangle, FaTimes, FaTimesCircle} from 'react-icons/fa'
 import { connect, useSelector, useStore } from 'react-redux'
 import { FileProgressType } from '../helper/global'
-import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS, FAILURE_DOWNLOAD_FILE } from '../context/functions'
+import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS, FAILURE_DOWNLOAD_FILE } from '../redux/functions'
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 
 function Upload(props) {
     const [isOpen, setIsOpen] = useState(true);
-    const store = useStore();
+    const RFM_Store = useStore();
     const showFileProgress = useSelector(state => state.showFileProgress)
 
     function CheckFileProgress() {
-        const progressList = store.getState().fileProgress;
+        const progressList = RFM_Store.getState().fileProgress;
         var listIsNotEmpty = Object.keys(progressList).some((element)=>(progressList[element]["completed"] !== true))
         console.log(listIsNotEmpty);
         if(listIsNotEmpty===false){
-            store.dispatch(SHOW_FILE_PROGRESS(false));
-            store.dispatch(CLEAR_FILE_PROGRESS());
+            RFM_Store.dispatch(SHOW_FILE_PROGRESS(false));
+            RFM_Store.dispatch(CLEAR_FILE_PROGRESS());
         }
     }
     function cancelProgress(id,source){
         source.cancel('cancelled by user')
-        store.dispatch(FAILURE_DOWNLOAD_FILE(id))
+        RFM_Store.dispatch(FAILURE_DOWNLOAD_FILE(id))
     }
 
     if(showFileProgress===false)
@@ -49,7 +49,7 @@ function Upload(props) {
                         <Accordion.Collapse eventKey="0">
                         <Card.Body className={styles.uploadInnerContainer}>
                         <React.Fragment>
-                            <Button variant="link" style={{float:'right'}} onClick={()=>{store.dispatch(CLEAR_FILE_PROGRESS());}}>
+                            <Button variant="link" style={{float:'right'}} onClick={()=>{RFM_Store.dispatch(CLEAR_FILE_PROGRESS());}}>
                                 Listeyi temizle
                             </Button>
                         <table>

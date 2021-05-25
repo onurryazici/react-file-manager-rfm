@@ -5,10 +5,18 @@ import { FileProgressType } from '../helper/global';
 
 export function reducer (state,action){
    switch(action.type){
+        case Actions.SET_LOGGED_USER:{
+            state.loggedUser = action.payload;
+            return {...state}
+        }
         case Actions.SET_LOCATION:{
             state.location = action.payload;
             state.modalLocation = action.payload;
             state.modalLoading = true;
+            return {...state}
+        }
+        case Actions.SET_CURRENT_REAL_PATH:{
+            state.realPath = action.payload
             return {...state}
         }
         case Actions.SET_MODAL_LOCATION:{

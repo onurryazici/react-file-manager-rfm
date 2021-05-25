@@ -2,12 +2,12 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight, FaHistory, FaTrash } from 'react-icons/fa'
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { SET_DEPTH, SET_LOADING, SET_LOCATION } from '../context/functions';
+import { SET_DEPTH, SET_LOADING, SET_LOCATION } from '../redux/functions';
 import { RFM_WindowType } from '../helper/global';
 import EmptyTrashModal from '../modals/emptyTrashModal';
 import styles from '../styles.module.css'
 function Placemap() {
-    const store           = useStore();
+    const RFM_Store       = useStore();
     var currentLocation   = useSelector(state => state.location) + '';
     var startLocation     = useSelector(state => state.startLocation) + '';
     const selectedItemCount = useSelector(state => state.selectedItemCount);
@@ -22,9 +22,9 @@ function Placemap() {
         var startIndex           = startLocation.split('/').length -1;
         var currentIndex         = key - startIndex;
         if(!refreshRequest) {
-            store.dispatch(SET_LOADING(true));
-            store.dispatch(SET_LOCATION(newLocation));
-            store.dispatch(SET_DEPTH(currentIndex));
+            RFM_Store.dispatch(SET_LOADING(true));
+            RFM_Store.dispatch(SET_LOCATION(newLocation));
+            RFM_Store.dispatch(SET_DEPTH(currentIndex));
         }
 
     }

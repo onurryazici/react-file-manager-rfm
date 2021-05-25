@@ -10,7 +10,7 @@ import { toast } from 'material-react-toastify'
 import { Button } from 'react-bootstrap'
 import { ContextMenu, MenuItem } from 'react-contextmenu'
 import { useSelector } from 'react-redux'
-import { store } from '../context/store'
+import { RFM_Store } from '../redux/rfmStore'
 import { DownloadItem } from '../helper/events'
 import RemoveSharedItemModal from '../modals/removeSharedItemModal'
 
@@ -22,9 +22,9 @@ function SharedWithMeContextMenu(props) {
     const canWrite        = !selectedItems.some((element)=> element.write===false);
 
     function AddToDrive() {
-        const API_URL            = store.getState().config.API_URL;
-        const API_URL_AddToDrive = store.getState().config.API_URL_AddToDrive;
-        const rfmTokenName       = store.getState().config.tokenName;
+        const API_URL            = RFM_Store.getState().config.API_URL;
+        const API_URL_AddToDrive = RFM_Store.getState().config.API_URL_AddToDrive;
+        const rfmTokenName       = RFM_Store.getState().config.tokenName;
         let items = []
         selectedItems.forEach(element => {
           items.push(element.absolutePath)

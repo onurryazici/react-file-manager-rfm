@@ -5,7 +5,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
-import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions'
+import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions'
 import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
@@ -13,7 +13,7 @@ function MoveItemModal(props) {
   const [modalShow, setModalShow] = React.useState(false)
   const isContextMenuButton = props.isContextMenuButton === 'yes' ? true : false
   const active              = props.active;
-  const store              = useStore();
+  const RFM_Store           = useStore();
   const loading            = useSelector((state) => state.modalLoading)
   const currentLocation    = useSelector((state) => state.location)
   const modalLocation      = useSelector((state) => state.modalLocation)
@@ -22,10 +22,10 @@ function MoveItemModal(props) {
   const selectedItems      = useSelector((state) => state.selectedItems)
   const modalDepth         = useSelector((state) => state.modalDepth)
   const rfmWindow          = useSelector((state) => state.rfmWindow)
-  const API_URL              = store.getState().config.API_URL;
-  const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
-  const API_URL_MoveItems    = store.getState().config.API_URL_MoveItems;
-  const rfmTokenName         = store.getState().config.tokenName;
+  const API_URL              = RFM_Store.getState().config.API_URL;
+  const API_URL_GetDirectory = RFM_Store.getState().config.API_URL_GetDirectory;
+  const API_URL_MoveItems    = RFM_Store.getState().config.API_URL_MoveItems;
+  const rfmTokenName         = RFM_Store.getState().config.tokenName;
 
   const canMove = (rfmWindow === RFM_WindowType.MY_SHARED && (modalDepth > 0) && currentLocation !== modalLocation)  
     ? true 
@@ -51,27 +51,27 @@ function MoveItemModal(props) {
          location: modalLocation,
          token:localStorage.getItem(rfmTokenName)
         }).then((response) => {
-          store.dispatch(SET_MODAL_LOADING(false));
+          RFM_Store.dispatch(SET_MODAL_LOADING(false));
           var reduced = response.data.items.filter((element)=> {
               return !selectedItems.some((selectedElement)=>{
                 return selectedElement.absolutePath === element.absolutePath
             })
           });
-          store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
+          RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
         })
         .catch((err) => {
           alert(localStorage.getItem(rfmTokenName)+ err)
-          store.dispatch(SET_MODAL_LOADING(false));
-          store.dispatch(SET_ERROR(true));
+          RFM_Store.dispatch(SET_MODAL_LOADING(false));
+          RFM_Store.dispatch(SET_ERROR(true));
         })
     } 
   }, [modalShow, modalLocation])
 
   function onItemDoubleClick(event, nameParam) {
     let newLocation = modalLocation + '/' + nameParam
-    store.dispatch(SET_MODAL_LOADING(true));
-    store.dispatch(SET_MODAL_LOCATION(newLocation));
-    store.dispatch(INCREASE_MODAL_DEPTH());
+    RFM_Store.dispatch(SET_MODAL_LOADING(true));
+    RFM_Store.dispatch(SET_MODAL_LOCATION(newLocation));
+    RFM_Store.dispatch(INCREASE_MODAL_DEPTH());
 
   }
 
@@ -91,15 +91,15 @@ function MoveItemModal(props) {
       .then((response) => {
         if (response.data.statu) {
           var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
-          store.dispatch(CLEAR_SELECTED_ITEMS());
-          store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+          RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+          RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
           toast.success('Taşıma işlemi gerçekleştirlidi')
         } else toast.error(response.data.message)
       })
       .catch((err) => {
         alert(err)
-        store.dispatch(SET_ERROR(true));
-        store.dispatch(SET_LOADING(false));
+        RFM_Store.dispatch(SET_ERROR(true));
+        RFM_Store.dispatch(SET_LOADING(false));
       })
   }
   return (

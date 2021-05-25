@@ -9,24 +9,27 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
-import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_CURRENT_REAL_PATH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { RFM_WindowType } from '../helper/global';
 import classNames from 'classnames';
 import { toast } from 'material-react-toastify';
+import { RFM_Store } from '../redux/rfmStore';
+import RFM_Socket from '../rfmSocket';
 function Content(props) {
     const directoryItems        = props.directoryItems;
     const loading               = useSelector(state => state.loading);
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
+    const currentRealPath       = useSelector(state => state.realPath);
     const rfmWindow             = useSelector(state => state.rfmWindow);
     const depth                 = useSelector(state => state.depth)
     const API_URL               = useSelector(state => state.config.API_URL);
     const API_URL_GetDirectory  = useSelector(state => state.config.API_URL_GetDirectory);
     const currentDirCanWritable = useSelector(state => state.currentDirCanWritable)
-    const store                 = useStore();
-    const rfmTokenName          = store.getState().config.tokenName;
-
+    const RFM_Store             = useStore();
+    const rfmTokenName          = RFM_Store.getState().config.tokenName;
+    const loggedUser            = useSelector(state => state.loggedUser);
     useEffect(() => {
         if(currentLocation !== ""){
             axios.post(API_URL + API_URL_GetDirectory,{
@@ -34,22 +37,27 @@ function Content(props) {
                 rfmWindow: rfmWindow,
                 token:localStorage.getItem(rfmTokenName)
             }).then((response)=>{
-                store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
-                store.dispatch(SET_CURRENT_DIR_CAN_WRITE(response.data.dirCanWritable));
-                store.dispatch(SET_LOADING(false))
+                RFM_Store.dispatch(SET_DIRECTORY_ITEMS(response.data.items));
+                RFM_Store.dispatch(SET_CURRENT_DIR_CAN_WRITE(response.data.dirCanWritable));
+                RFM_Store.dispatch(SET_CURRENT_REAL_PATH(response.data.currentRealPath));
+                RFM_Store.dispatch(SET_LOADING(false))
+                if(rfmWindow !== RFM_WindowType.DRIVE && rfmWindow !== RFM_WindowType.RECYCLE_BIN && depth !== 0){
+                    const roomPath = response.data.currentRealPath
+                    RFM_Socket.emit("JOIN_ROOM", loggedUser, roomPath)
+                }
             }).catch((err)=>{
                 console.log("hata var ")
                 console.log(err)
                 toast.error("Bu dizine şu anda erişim sağlanamıyor")
-                store.dispatch(SET_LOADING(false));
-                store.dispatch(SET_ERROR(true));
+                RFM_Store.dispatch(SET_LOADING(false));
+                RFM_Store.dispatch(SET_ERROR(true));
             })
         }
     },[currentLocation]);
 
     function clearSelection(event){
         if(event.target.id === styles.contents)
-            store.dispatch(CLEAR_SELECTED_ITEMS(null));
+            RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
     }
 
     if(rfmError)

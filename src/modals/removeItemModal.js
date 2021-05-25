@@ -4,20 +4,20 @@ import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 import { useSelector, useStore } from 'react-redux';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
 import styles from '../styles.module.css'
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
-    const store             = useStore();
+    const RFM_Store         = useStore();
     const currentLocation   = useSelector(state => state.location);
     const directoryItems    = useSelector(state => state.directoryItems);
     const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
-    const API_URL = store.getState().config.API_URL;
-    const API_URL_MoveToTrash = store.getState().config.API_URL_MoveToTrash;
-    const rfmTokenName        = store.getState().config.tokenName;
+    const API_URL = RFM_Store.getState().config.API_URL;
+    const API_URL_MoveToTrash = RFM_Store.getState().config.API_URL_MoveToTrash;
+    const rfmTokenName        = RFM_Store.getState().config.tokenName;
 
     function RemoveItem() {
       setModalShow(false);
@@ -43,15 +43,15 @@ function RemoveItemModal(props){
         }).then((response)=>{
             if(response.data.statu === true) {
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
-              store.dispatch(CLEAR_SELECTED_ITEMS());
-              store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+              RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+              RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
               toast.success('Silme işlemi başarılı');
             }
             else
               toast.error(response.data.message);
         }).catch(()=>{
-          store.dispatch(SET_ERROR(true));
-          store.dispatch(SET_LOADING(false));
+          RFM_Store.dispatch(SET_ERROR(true));
+          RFM_Store.dispatch(SET_LOADING(false));
         });
       }
       if(cantRemove.length > 0){

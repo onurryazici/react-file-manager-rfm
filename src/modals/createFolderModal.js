@@ -4,10 +4,12 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import { useState } from 'react'
 import {  toast } from 'material-react-toastify'
-import { ADD_DIRECTORY_ITEM, SET_ERROR, SET_LOADING } from '../context/functions'
+import { ADD_DIRECTORY_ITEM, SET_ERROR, SET_LOADING } from '../redux/functions'
 import Axios from 'axios';
 import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { RFM_Store } from '../redux/rfmStore'
+import RFM_Socket from '../rfmSocket'
 
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName]   = useState("")
@@ -16,12 +18,12 @@ function CreateFolderModal(props){
   const [isAcceptable, setIsAcceptable]     = useState(false)
   const isContextMenuButton      = props.isContextMenuButton === "yes" ? true : false
   const active                   = props.active
-  const store                    = useStore()
   const currentLocation          = useSelector(state => state.location)
+  const currentRealPath          = useSelector(state => state.realPath);
   const directoryItems           = useSelector(state => state.directoryItems)
-  const API_URL                  = store.getState().config.API_URL
-  const API_URL_CreateDirectory  = store.getState().config.API_URL_CreateDirectory
-  const rfmTokenName             = store.getState().config.tokenName
+  const API_URL                  = RFM_Store.getState().config.API_URL
+  const API_URL_CreateDirectory  = RFM_Store.getState().config.API_URL_CreateDirectory
+  const rfmTokenName             = RFM_Store.getState().config.tokenName
 
   function onKeyPress(event) {
     var pattern       = ['/', '\\' ]
@@ -55,9 +57,12 @@ function CreateFolderModal(props){
         token:localStorage.getItem(rfmTokenName)
     }).then((response)=>{
       if(response.data.statu === true) {
-          store.dispatch(SET_LOADING(false))
-          store.dispatch(ADD_DIRECTORY_ITEM(response.data.item))
+          RFM_Store.dispatch(SET_LOADING(false))
+          RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item))
           toast.success("Dizin oluşturuldu")
+          const newFolder=DirectoryName
+          const roomPath = currentRealPath
+          RFM_Socket.emit("CREATE_FOLDER",newFolder,roomPath)
           setModalShow(false)
       }
       else             

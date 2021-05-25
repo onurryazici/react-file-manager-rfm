@@ -12,7 +12,7 @@ import RenameItemModal from '../modals/renameItemModal';
 import styles from '../styles.module.css'
 function MySharedContextMenu(props) {
     var itemName            = props.itemName;
-    const store             = useStore();
+    const RFM_Store             = useStore();
     const selectedItems     = useSelector(state => state.selectedItems);
     const depth             = useSelector(state => state.depth);
     const selectedItemCount = size(selectedItems);

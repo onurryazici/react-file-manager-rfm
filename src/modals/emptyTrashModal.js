@@ -3,29 +3,29 @@ import { size } from 'lodash';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useStore } from 'react-redux';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
+import { RFM_Store } from '../redux/rfmStore';
 import styles from '../styles.module.css'
 function EmptyTrashModal(){
     const [modalShow, setModalShow] = React.useState(false);
-    const store             = useStore();
     const directoryItems    = useSelector(state => state.directoryItems);
     const modalDisabled     = size(directoryItems) > 0 ? false : true;
 
-    const API_URL            = store.getState().config.API_URL;
-    const API_URL_EmptyTrash = store.getState().config.API_URL_EmptyTrash;
-    const rfmTokenName       = store.getState().config.tokenName;
+    const API_URL            = RFM_Store.getState().config.API_URL;
+    const API_URL_EmptyTrash = RFM_Store.getState().config.API_URL_EmptyTrash;
+    const rfmTokenName       = RFM_Store.getState().config.tokenName;
 
     function EmptyTrash() {
       setModalShow(false);
       axios.get(API_URL + API_URL_EmptyTrash,{params:{token:localStorage.getItem(rfmTokenName)}}).then((response)=>{
             if(response.data.statu === true) {
               const cleared = [];
-              store.dispatch(CLEAR_SELECTED_ITEMS());
-              store.dispatch(SET_DIRECTORY_ITEMS(cleared));
+              RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+              RFM_Store.dispatch(SET_DIRECTORY_ITEMS(cleared));
             }
         }).catch(()=>{
-          store.dispatch(SET_ERROR(true));
-          store.dispatch(SET_LOADING(false));
+          RFM_Store.dispatch(SET_ERROR(true));
+          RFM_Store.dispatch(SET_LOADING(false));
         });
     }
     return (

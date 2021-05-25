@@ -4,26 +4,26 @@ import { FaStumbleuponCircle } from 'react-icons/fa';
 import ModalPlacemap from '../views/modalPlacemap';
 import styles from '../styles.module.css'
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { Actions } from '../context/actions';
+import { Actions } from '../redux/actions';
 import Folder from '../components/folder';
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
-import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
+import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions';
+import { RFM_Store } from '../redux/rfmStore';
 
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
     const active                    = props.active;
-    const store              = useStore();
     const loading            = useSelector(state => state.modalLoading);
     const currentLocation    = useSelector(state => state.modalLocation);
     const rfmCurrentLocation = useSelector(state => state.location);
     const directoryItems     = useSelector(state => state.modalDirectoryItems);
     const selectedItems      = useSelector(state => state.selectedItems);
-    const API_URL            = store.getState().config.API_URL;
-    const API_URL_GetDirectory = store.getState().config.API_URL_GetDirectory;
-    const API_URL_CreateCopy   = store.getState().config.API_URL_CreateCopy;
-    const rfmTokenName         = store.getState().config.tokenName;
+    const API_URL            = RFM_Store.getState().config.API_URL;
+    const API_URL_GetDirectory = RFM_Store.getState().config.API_URL_GetDirectory;
+    const API_URL_CreateCopy   = RFM_Store.getState().config.API_URL_CreateCopy;
+    const rfmTokenName         = RFM_Store.getState().config.tokenName;
     const rfmWindow            = useSelector(state => state.rfmWindow);
 
     const disabledStyle={
@@ -34,19 +34,19 @@ function CopyItemModal(props){
         if(currentLocation !== "" && modalShow){
             axios.post(API_URL + API_URL_GetDirectory,{location:currentLocation,rfmWindow:rfmWindow,token:localStorage.getItem(rfmTokenName)})
               .then((response)=>{
-                store.dispatch(SET_MODAL_LOADING(false));
-                store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
+                RFM_Store.dispatch(SET_MODAL_LOADING(false));
+                RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
             }).catch((err)=>{
-                store.dispatch(SET_MODAL_LOADING(false));
-                store.dispatch(SET_ERROR(true));
+                RFM_Store.dispatch(SET_MODAL_LOADING(false));
+                RFM_Store.dispatch(SET_ERROR(true));
             })
         }
     },[modalShow,currentLocation]);
     
     function onItemDoubleClick (event,nameParam){
         let newLocation = currentLocation + "/" + nameParam;
-        store.dispatch(SET_MODAL_LOADING(true));
-        store.dispatch(SET_MODAL_LOCATION(newLocation));
+        RFM_Store.dispatch(SET_MODAL_LOADING(true));
+        RFM_Store.dispatch(SET_MODAL_LOCATION(newLocation));
     } 
     function CreateCopyItem(){
       setModalShow(false);
@@ -67,8 +67,8 @@ function CopyItemModal(props){
           else
                 toast.error(response.data.message);
         }).catch((err)=>{
-          store.dispatch(SET_ERROR(true));
-          store.dispatch(SET_LOADING(false));
+          RFM_Store.dispatch(SET_ERROR(true));
+          RFM_Store.dispatch(SET_LOADING(false));
         });
 
     }

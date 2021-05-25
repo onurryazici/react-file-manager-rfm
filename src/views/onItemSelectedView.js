@@ -6,21 +6,21 @@ import MoveItemModal from '../modals/moveItemModal'
 import RenameItemModal from '../modals/renameItemModal'
 import CopyItemModal from '../modals/createCopyItemModal';
 import ItemDetailModal from '../modals/itemDetailModal';
-import { CLEAR_SELECTED_ITEMS } from '../context/functions';
+import { CLEAR_SELECTED_ITEMS } from '../redux/functions';
 import { useSelector, useStore } from 'react-redux';
 import { RFM_WindowType } from '../helper/global';
 import ExistShareItemModal from '../modals/existShareItemModal';
 import RemoveSharedItemModal from '../modals/removeSharedItemModal';
 
 function OnItemSelectedView() {
-    const store             = useStore();
+    const RFM_Store             = useStore();
     const rfmWindow         = useSelector(state => state.rfmWindow);
     const selectedItems     = useSelector(state => state.selectedItems);
     const selectedItemCount = useSelector(state => state.selectedItemCount)
     const depth             = useSelector(state => state.depth);
     const canWrite          = !selectedItems.some((element)=> element.write===false);
     function clearSelection(){
-        store.dispatch(CLEAR_SELECTED_ITEMS(null));
+        RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
     }
     return (
         <div>

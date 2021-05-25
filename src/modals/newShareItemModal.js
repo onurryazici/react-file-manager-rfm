@@ -5,12 +5,12 @@ import React, { useState } from 'react'
 import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap';
 import {  FaGgCircle, FaUserCircle,  } from 'react-icons/fa';
 import { useSelector, useStore } from 'react-redux';
-import { ADD_SHARED_WITH, CLEAR_SELECTED_ITEMS, DELETE_SHARED_WITH, SET_DIRECTORY_ITEMS, UPDATE_SHARED_WITH, CLEAR_SELECTED_SHARED_WITH} from '../context/functions';
+import { ADD_SHARED_WITH, CLEAR_SELECTED_ITEMS, DELETE_SHARED_WITH, SET_DIRECTORY_ITEMS, UPDATE_SHARED_WITH, CLEAR_SELECTED_SHARED_WITH} from '../redux/functions';
 import styles from '../styles.module.css'
 //import NewShareView from '../views/newShareView';
 
 function NewShareItemModal(props){
-    const store                     = useStore();
+    const RFM_Store                 = useStore();
     const [modalShow, setModalShow] = useState(false);
     const directoryItems            = useSelector((state) => state.directoryItems)
     const selectedItems             = useSelector((state) => state.selectedItems);
@@ -20,10 +20,10 @@ function NewShareItemModal(props){
     const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
     const [newUserName, setNewUserName]             = useState("");
     const [usersToAdd, setusersToAdd]               = useState([]);
-    const API_URL               = store.getState().config.API_URL;
-    const API_URL_NewShareItem  = store.getState().config.API_URL_NewShareItem;
-    const API_URL_IsUserExist   = store.getState().config.API_URL_IsUserExist;
-    const rfmTokenName          = store.getState().config.tokenName;
+    const API_URL               = RFM_Store.getState().config.API_URL;
+    const API_URL_NewShareItem  = RFM_Store.getState().config.API_URL_NewShareItem;
+    const API_URL_IsUserExist   = RFM_Store.getState().config.API_URL_IsUserExist;
+    const rfmTokenName          = RFM_Store.getState().config.tokenName;
   const PermissionType={
       FULL_ACCESS:"rwx",
       READ_ONLY:"r-x"
@@ -37,8 +37,8 @@ function NewShareItemModal(props){
               if(response.data.statu === true){
                 var reduced = directoryItems.filter((element) => element.name !== selectedItems[0].name);
                 toast.dark(`${selectedItems[0].name} öğesi "Paylaştıklarım" klasörüne taşındı.`);
-                store.dispatch(CLEAR_SELECTED_ITEMS());
-                store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+                RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+                RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
                 setModalShow(false);
               }
               else{
@@ -57,7 +57,7 @@ function NewShareItemModal(props){
                   let newUserPermission = newUserFullAccess ? PermissionType.FULL_ACCESS : PermissionType.READ_ONLY;
                   let write   = (newUserPermission === PermissionType.FULL_ACCESS) ? true : false;
                   usersToAdd.push(newUserName+":"+newUserPermission);
-                  store.dispatch(ADD_SHARED_WITH(selectedItems[0].name,newUserName,true,write,true))
+                  RFM_Store.dispatch(ADD_SHARED_WITH(selectedItems[0].name,newUserName,true,write,true))
               }
           })
   }
@@ -86,7 +86,7 @@ function NewShareItemModal(props){
         }
       });
       setusersToAdd(newUsers);
-      store.dispatch(UPDATE_SHARED_WITH(selectedItems[0].name,username,true,write,true))
+      RFM_Store.dispatch(UPDATE_SHARED_WITH(selectedItems[0].name,username,true,write,true))
   }
   function RemoveUserFromList(username){
       var users = usersToAdd.filter((element)=>{
@@ -98,12 +98,12 @@ function NewShareItemModal(props){
           return true
       });
       setusersToAdd(users)
-      store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name,username))
+      RFM_Store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name,username))
   }
   function ClearData(){
     setusersToAdd([]);
     setNewUserName("");
-    store.dispatch(CLEAR_SELECTED_SHARED_WITH());
+    RFM_Store.dispatch(CLEAR_SELECTED_SHARED_WITH());
     setModalShow(false); 
   }
 

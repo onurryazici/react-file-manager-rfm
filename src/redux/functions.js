@@ -1,8 +1,20 @@
 import { Actions } from "./actions"
 
+export function SET_LOGGED_USER(username) {
+    return dispatch => {
+        dispatch({ type: Actions.SET_LOGGED_USER, payload:username })
+    }
+}
+
 export function SET_LOCATION(location){
     return dispatch => {
         dispatch({ type: Actions.SET_LOCATION, payload:location })
+    }
+}
+
+export function SET_CURRENT_REAL_PATH(path){
+    return dispatch => {
+        dispatch({ type: Actions.SET_CURRENT_REAL_PATH, payload:path })
     }
 }
 

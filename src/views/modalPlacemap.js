@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FaChevronRight } from 'react-icons/fa'
 import {  useSelector, useStore } from 'react-redux';
-import { SET_DEPTH, SET_MODAL_DEPTH, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../context/functions';
+import { SET_DEPTH, SET_MODAL_DEPTH, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions';
 import { RFM_WindowType } from '../helper/global';
 import styles from '../styles.module.css'
 function ModalPlacemap() {
@@ -20,7 +20,7 @@ function ModalPlacemap() {
                         ? "Benimle paylaşılanlar"
                         : ""
     
-    const store           = useStore();
+    const RFM_Store           = useStore();
 
     function changeCurrentLocation(key) {
         var reducedLocationArray = splittedPlacemaps.slice(0, key + 1);
@@ -31,9 +31,9 @@ function ModalPlacemap() {
         var currentIndex         = startIndex - key;
         
         if(!refreshRequest) {
-            store.dispatch(SET_MODAL_LOADING(true));
-            store.dispatch(SET_MODAL_LOCATION(newLocation));
-            store.dispatch(SET_MODAL_DEPTH(currentIndex));
+            RFM_Store.dispatch(SET_MODAL_LOADING(true));
+            RFM_Store.dispatch(SET_MODAL_LOCATION(newLocation));
+            RFM_Store.dispatch(SET_MODAL_DEPTH(currentIndex));
         }
     }
 

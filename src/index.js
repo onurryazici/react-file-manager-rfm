@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import RFM_Core from './core';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types'
-import { SET_RFM_WINDOW, SET_RFM_CONFIG } from './context/functions';
-import { store } from './context/store';
+import { SET_RFM_WINDOW, SET_RFM_CONFIG, SET_LOGGED_USER } from './redux/functions';
+import { RFM_Store } from './redux/rfmStore';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 const RFM = (props) =>{
@@ -36,11 +36,11 @@ const RFM = (props) =>{
       tokenName                     : props.tokenName,
       seri:props.seri
     }
-
-    store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
-    store.dispatch(SET_RFM_WINDOW(_rfmWindow));
+    RFM_Store.dispatch(SET_LOGGED_USER(prompt("kullanıcı ? ", "user1")))
+    RFM_Store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
+    RFM_Store.dispatch(SET_RFM_WINDOW(_rfmWindow));
     return(
-      <Provider store={store}>
+      <Provider store={RFM_Store}>
         <RFM_Core
           location={_location}
           username="user1"
@@ -55,6 +55,7 @@ export default RFM;
 RFM.PropTypes = {
   location                      : PropTypes.string,
   rfmWindow                     : PropTypes.string,
+  username                      : PropTypes.string,
   API_URL                       : PropTypes.string,
   API_URL_UserAuthtentication   : PropTypes.string,
   API_URL_AddToDrive            : PropTypes.string,

@@ -13,7 +13,7 @@ import RenameItemModal from '../modals/renameItemModal';
 import styles from '../styles.module.css'
 function DriveContextMenu(props) {
     var itemName          = props.itemName;
-    const store           = useStore();
+    const RFM_Store           = useStore();
     const selectedItems   = useSelector(state => state.selectedItems);
     const rfmWindow       = useSelector(state => state.rfmWindow);
     var selectedItemCount = size(selectedItems);

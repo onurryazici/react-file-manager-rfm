@@ -1,50 +1,57 @@
 import React, { useEffect } from 'react'
+import { useSelector, useStore } from 'react-redux'
+import { Messages } from './helper/message'
+import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_RFM_WINDOW, SET_START_LOCATION } from './redux/functions'
+import { ToastContainer } from 'material-react-toastify'
 import styles from './styles.module.css'
 import Content from './components/content'
 import Placemap from './components/placemap'
 import FolderDetails from './components/folderDetails'
 import Actionbar from './components/actionbar'
-import { useDispatch, useSelector, useStore } from 'react-redux'
-import { Messages } from './helper/message'
 import Axios from 'axios'
-import 'bootstrap/dist/css/bootstrap.css'
-import { ToastContainer } from 'material-react-toastify'
 import Upload from './components/Upload'
-import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_START_LOCATION } from './context/functions'
-import 'material-react-toastify/dist/ReactToastify.css';
-import { RFM_WindowType } from './helper/global'
+import 'material-react-toastify/dist/ReactToastify.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import RFM_Socket from './rfmSocket'
+
 function RFM_Core(props) {
-  const store = useStore();
-  const rfmWindow = useSelector(state=>state.rfmWindow);
+  const RFM_Store = useStore();
 
   const API_URL                     = useSelector(state => state.config.API_URL);
   const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
-  const rfmTokenName                = store.getState().config.tokenName;
- /* var fun = store.getState().config.seri("awda");
+  const loggedUser                  = useSelector(state => state.loggedUser);
+  const rfmTokenName                = RFM_Store.getState().config.tokenName;
+ /* var fun = RFM_Store.getState().config.seri("awda");
   fun;*///##########################3
-  /*useEffect(() => {
+  useEffect(() => {
     Axios.post(API_URL + API_URL_UserAuthentication , {
-      username: "user1",
+      username: loggedUser,
       password: "qweqweasd"
-    })
-      .then((response) => {
+    }).then((response) => {
         if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
             localStorage.setItem(rfmTokenName, response.data.token);
-            store.dispatch(SET_LOCATION(props.location));
-            store.dispatch(SET_START_LOCATION(props.location));
+            var location = prompt("konum","/home/user1/drive-shared")
+            var window = prompt("window","MY_SHARED")
+            RFM_Store.dispatch(SET_RFM_WINDOW(window))
+            RFM_Store.dispatch(SET_LOCATION(location));
+            RFM_Store.dispatch(SET_START_LOCATION(location));
+            RFM_Socket.auth = { loggedUser }
+            RFM_Socket.connect()
+            RFM_Socket.emit("USER_CONNECTED",loggedUser)
         }
         else{
           console.log(JSON.stringify(response.data))
         }
       })
       .catch((err) => {
-        store.dispatch(SET_ERROR(true));
-        store.dispatch(SET_LOADING(false));
+        RFM_Store.dispatch(SET_ERROR(true));
+        RFM_Store.dispatch(SET_LOADING(false));
       })
-  }, []) /// BURASI GERİ AÇILACAK*/
+  }, []) /// BURASI GERİ AÇILACAK
   /*useEffect(() => {
-        store.dispatch(SET_LOCATION(props.location));
-        store.dispatch(SET_START_LOCATION(props.location));
+    // SOCKET girişi yapmayı unutma
+        RFM_Store.dispatch(SET_LOCATION(props.location));
+        RFM_Store.dispatch(SET_START_LOCATION(props.location));
   }, [])*/
 
   return (

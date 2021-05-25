@@ -7,13 +7,13 @@ import { useSelector, useStore } from 'react-redux'
 import { Messages } from '../helper/message'
 import axios from 'axios'
 import { toast } from 'material-react-toastify'
-import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../context/functions'
+import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../redux/functions'
 
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
   const isContextMenuButton             = props.isContextMenuButton === 'yes' ? true : false;
   const active                          = props.active;
-  const store                           = useStore();
+  const RFM_Store                       = useStore();
   const [isAcceptable, setIsAcceptable] = useState(false);
   const [newItemName, setNewItemName]   = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,9 +23,9 @@ function RenameItemModal(props) {
   const name               = selectedItems.length > 0 && selectedItems[0].name;
   const type               = selectedItems.length > 0 && selectedItems[0].type;
   const extension          = selectedItems.length > 0 && selectedItems[0].extension;
-  const API_URL            = store.getState().config.API_URL;
-  const API_URL_RenameItem = store.getState().config.API_URL_RenameItem;
-  const rfmTokenName       = store.getState().config.tokenName;
+  const API_URL            = RFM_Store.getState().config.API_URL;
+  const API_URL_RenameItem = RFM_Store.getState().config.API_URL_RenameItem;
+  const rfmTokenName       = RFM_Store.getState().config.tokenName;
 
 
   function onKeyPress(event) {
@@ -72,8 +72,8 @@ function RenameItemModal(props) {
         if (response.data.statu === true) {
           var item = directoryItems.find((element) => element.name === selectedItems[0].name)
           if (item) {
-            store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
-            store.dispatch(CLEAR_SELECTED_ITEMS(null));
+            RFM_Store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
+            RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
           }
         } 
         else
