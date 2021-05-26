@@ -1,6 +1,8 @@
 import  io  from "socket.io-client";
 import { RFM_Store } from "./redux/rfmStore";
-
+import { ADD_DIRECTORY_ITEM, CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, RENAME_ITEM } from './redux/functions'
+import axios from "axios";
+import { toast } from "material-react-toastify";
 const URL    = "http://192.168.91.128:3030";
 const RFM_Socket = io(URL, { autoConnect:false, query:{token:"token gelecek buraya"} });
 
@@ -9,16 +11,41 @@ RFM_Socket.onAny((event, ...args) => {
 });
 
 RFM_Socket.on("SOMEONE_HAS_CREATED_FOLDER", (newFolderName)=>{
-  const API_URL  = RFM_Store.getState().config.API_URL;
-  const API_URL_
-  axios.post(API_URL + API_URL_UploadItem,formPayload, config)
-          .then((response)=>{
-              RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
-              RFM_Store.dispatch(SUCCESS_UPLOAD_FILE(fileId));    
-          }).catch((error)=>{
-          toast.error(error);
-          RFM_Store.dispatch(FAILURE_UPLOAD_FILE(fileId))
-      })
+    const API_URL               = RFM_Store.getState().config.API_URL;
+    const API_URL_GetDataSingle = RFM_Store.getState().config.API_URL_GetDataSingle;
+    const currentLocation       = RFM_Store.getState().location
+    const rfmTokenName          = RFM_Store.getState().config.tokenName;
+    axios.post(API_URL + API_URL_GetDataSingle, {
+      targetPath: currentLocation + "/" + newFolderName,
+      token:localStorage.getItem(rfmTokenName)
+    }).then((response)=>{
+      console.log("-----------")
+      console.log(response.data)
+      if(response.data.statu){
+        RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
+        consoel.log(response.data.item)
+      }
+      else
+        toast.error(response.data.message)
+    }).catch((error)=>{
+        toast.error(error);
+    })
+})
+
+RFM_Socket.on("SOMEONE_HAS_DELETED_ITEMS", (deletedItems)=>{
+  const directoryItems = RFM_Store.getState().directoryItems
+  var reduced = directoryItems.filter((element)=> !deletedItems.includes(element.name));
+  RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+  RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+})
+
+RFM_Socket.on("SOMEONE_HAS_RENAMED_ITEM", (oldName,type,newName)=>{
+
+  // REMOVE_SPECIFIC_ITEM
+  // ADD_DIRECTORY_ITEM(datasingle)
+  // CLEAR_SELECTED_ITEMS
+  RFM_Store.dispatch(RENAME_ITEM(oldName, type, newName));
+  RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
 })
 /*RFM_Socket.on("INCOMING_MESSAGE", (data)=>{
   const loggedUser       = RFM_Store.getState().loggedUser

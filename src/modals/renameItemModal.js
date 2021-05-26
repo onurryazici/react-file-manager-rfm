@@ -8,6 +8,7 @@ import { Messages } from '../helper/message'
 import axios from 'axios'
 import { toast } from 'material-react-toastify'
 import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../redux/functions'
+import RFM_Socket from '../rfmSocket'
 
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
@@ -20,6 +21,7 @@ function RenameItemModal(props) {
   const directoryItems     = useSelector((state) => state.directoryItems);
   const currentLocation    = useSelector((state) => state.location);
   const selectedItems      = useSelector((state) => state.selectedItems);
+  const currentRealPath    = useSelector((state) => state.realPath)
   const name               = selectedItems.length > 0 && selectedItems[0].name;
   const type               = selectedItems.length > 0 && selectedItems[0].type;
   const extension          = selectedItems.length > 0 && selectedItems[0].extension;
@@ -74,6 +76,11 @@ function RenameItemModal(props) {
           if (item) {
             RFM_Store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
             RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
+            const oldName  = item.name 
+            const type     = item.type
+            const newName  = response.data.newItemName
+            const roomPath = currentRealPath
+            RFM_Socket.emit("RENAME_ITEM", oldName, type, newName, roomPath)
           }
         } 
         else

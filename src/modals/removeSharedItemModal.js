@@ -6,6 +6,7 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions'
 import styles from '../styles.module.css'
+import RFM_Socket from '../rfmSocket'
 function RemoveSharedItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const RFM_Store             = useStore();
@@ -20,6 +21,7 @@ function RemoveSharedItemModal(props){
       setModalShow(false);
       const API_URL_RemoveSharedItem = RFM_Store.getState().config.API_URL_RemoveSharedItem;
       const rfmTokenName             = RFM_Store.getState().config.tokenName;
+      const currentRealPath          = RFM_Store.getState().realPath;
       let items        = [];
       let removedItems = [];
       let cantRemove   = [] ;
@@ -43,6 +45,9 @@ function RemoveSharedItemModal(props){
               var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
               RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
               RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+              const deletedItems = removedItems
+              const roomPath     = currentRealPath
+              RFM_Socket.emit("DELETE_ITEMS", deletedItems,roomPath)
               toast.success('Silme işlemi başarılı');
             }
             else
