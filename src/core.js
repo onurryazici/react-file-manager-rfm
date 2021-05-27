@@ -9,10 +9,10 @@ import Placemap from './components/placemap'
 import FolderDetails from './components/folderDetails'
 import Actionbar from './components/actionbar'
 import Axios from 'axios'
-import Upload from './components/Upload'
+import Upload from './components/fileProgress'
+import RFM_Socket from './rfmSocket'
 import 'material-react-toastify/dist/ReactToastify.css'
 import 'bootstrap/dist/css/bootstrap.css'
-import RFM_Socket from './rfmSocket'
 
 function RFM_Core(props) {
   const RFM_Store = useStore();

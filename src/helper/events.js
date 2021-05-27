@@ -3,6 +3,7 @@ import { size } from 'lodash';
 import { toast } from 'material-react-toastify';
 import { ADD_DIRECTORY_ITEM, ADD_DOWNLOAD_FILE, ADD_SELECTED_ITEM, ADD_UPLOAD_FILE, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_DOWNLOAD_PROGRESS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SHOW_FILE_PROGRESS, SUCCESS_DOWNLOAD_FILE, SUCCESS_UPLOAD_FILE } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore'
+import RFM_Socket from '../rfmSocket';
 import styles from '../styles.module.css'
 import { RFM_WindowType } from './global';
 export function onItemSelected(event,accessibleId,itemName,itemObject){
@@ -100,13 +101,13 @@ export function removePermanently(){
 }
 
 export function UploadService(fileList) {
-  const API_URL            = RFM_Store.getState().config.API_URL;
-  const API_URL_UploadItem = RFM_Store.getState().config.API_URL_UploadItem;
-  const rfmTokenName       = RFM_Store.getState().config.tokenName;
-  const currentLocation    = RFM_Store.getState().location;
-  const fileProgress       = RFM_Store.getState().fileProgress;
-  console.log("liste")
-  console.log(fileList)
+  const API_URL            = RFM_Store.getState().config.API_URL
+  const API_URL_UploadItem = RFM_Store.getState().config.API_URL_UploadItem
+  const rfmTokenName       = RFM_Store.getState().config.tokenName
+  const currentLocation    = RFM_Store.getState().location
+  const fileProgress       = RFM_Store.getState().fileProgress
+  const rfmWindow          = RFM_Store.getState().rfmWindow
+  const currentRealPath    = RFM_Store.getState().realPath
   Array.from(fileList).forEach(async (_file,_index) => {
       const fileId      = size(fileProgress) + _index + 1;
       const fileName    = _file.name;
@@ -117,22 +118,27 @@ export function UploadService(fileList) {
       RFM_Store.dispatch(ADD_UPLOAD_FILE(fileId, fileName, source))
       formPayload.append('file', _file); 
       const config  = { 
-          cancelToken: source.token,
-          onUploadProgress: (ProgresEvent) => {
-              const { loaded, total } = ProgresEvent;
-              const percentage        = Math.floor((loaded / total) * 100 );
-              RFM_Store.dispatch(SET_UPLOAD_PROGRESS(fileId, percentage));
-          }, headers : {
-            'x-access-token':localStorage.getItem(rfmTokenName),
-          }, params  : {
-            targetLocation:currentLocation,
-          }
+          	cancelToken: source.token,
+          	onUploadProgress: (ProgresEvent) => {
+              	const { loaded, total } = ProgresEvent;
+              	const percentage        = Math.floor((loaded / total) * 100 );
+              	RFM_Store.dispatch(SET_UPLOAD_PROGRESS(fileId, percentage));
+          	}, headers : {
+            	'x-access-token':localStorage.getItem(rfmTokenName),
+          	}, params  : {
+            	targetLocation:currentLocation,
+          	}
       }
       try{
         await axios.post(API_URL + API_URL_UploadItem,formPayload, config)
-          .then((response)=>{
-              RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
-              RFM_Store.dispatch(SUCCESS_UPLOAD_FILE(fileId));    
+          	.then((response)=>{
+              	RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item));
+              	RFM_Store.dispatch(SUCCESS_UPLOAD_FILE(fileId));
+              	if(rfmWindow !== RFM_WindowType.DRIVE){
+					const itemName = response.data.item.name
+					const roomPath = currentRealPath
+					RFM_Socket.emit("UPLOAD_ITEM", itemName, roomPath)
+				}
           }).catch((error)=>{
           toast.error(error);
           RFM_Store.dispatch(FAILURE_UPLOAD_FILE(fileId))

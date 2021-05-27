@@ -10,22 +10,22 @@ import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
 function MoveItemModal(props) {
-  const [modalShow, setModalShow] = React.useState(false)
-  const isContextMenuButton = props.isContextMenuButton === 'yes' ? true : false
-  const active              = props.active;
-  const RFM_Store           = useStore();
-  const loading            = useSelector((state) => state.modalLoading)
-  const currentLocation    = useSelector((state) => state.location)
-  const modalLocation      = useSelector((state) => state.modalLocation)
-  const mainDirectoryItems = useSelector((state) => state.directoryItems)
-  const directoryItems     = useSelector((state) => state.modalDirectoryItems)
-  const selectedItems      = useSelector((state) => state.selectedItems)
-  const modalDepth         = useSelector((state) => state.modalDepth)
-  const rfmWindow          = useSelector((state) => state.rfmWindow)
+  const isContextMenuButton  = props.isContextMenuButton === 'yes' ? true : false
+  const active               = props.active;
+  const RFM_Store            = useStore();
+  const loading              = useSelector((state) => state.modalLoading)
+  const currentLocation      = useSelector((state) => state.location)
+  const modalLocation        = useSelector((state) => state.modalLocation)
+  const mainDirectoryItems   = useSelector((state) => state.directoryItems)
+  const directoryItems       = useSelector((state) => state.modalDirectoryItems)
+  const selectedItems        = useSelector((state) => state.selectedItems)
+  const modalDepth           = useSelector((state) => state.modalDepth)
+  const rfmWindow            = useSelector((state) => state.rfmWindow)
   const API_URL              = RFM_Store.getState().config.API_URL;
   const API_URL_GetDirectory = RFM_Store.getState().config.API_URL_GetDirectory;
   const API_URL_MoveItems    = RFM_Store.getState().config.API_URL_MoveItems;
   const rfmTokenName         = RFM_Store.getState().config.tokenName;
+  const [modalShow, setModalShow] = React.useState(false)
 
   const canMove = (rfmWindow === RFM_WindowType.MY_SHARED && (modalDepth > 0) && currentLocation !== modalLocation)  
     ? true 

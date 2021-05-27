@@ -7,7 +7,7 @@ import { CLEAR_FILE_PROGRESS, SHOW_FILE_PROGRESS, FAILURE_DOWNLOAD_FILE } from '
 import classNames from 'classnames'
 import styles from '../styles.module.css'
 
-function Upload(props) {
+function FileProgress(props) {
     const [isOpen, setIsOpen] = useState(true);
     const RFM_Store = useStore();
     const showFileProgress = useSelector(state => state.showFileProgress)
@@ -105,4 +105,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps)(Upload)
+export default connect(mapStateToProps)(FileProgress)
