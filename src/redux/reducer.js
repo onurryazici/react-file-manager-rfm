@@ -1,12 +1,11 @@
 import { size } from 'lodash';
 import { Actions } from './actions';
 import styles from '../styles.module.css';
-import { FileProgressType } from '../helper/global';
 
 export function reducer (state,action){
    switch(action.type){
         case Actions.SET_LOGGED_USER:{
-            state.loggedUser = action.payload;
+            state.loggedUser = action.payload
             return {...state}
         }
         case Actions.SET_LOCATION:{
@@ -177,7 +176,7 @@ export function reducer (state,action){
                 [action.payload.fileId]: {
                     id:action.payload.fileId,
                     file: action.payload.fileName,
-                    type: FileProgressType.UPLOAD,
+                    type: "UPLOAD",
                     progress: 0,
                     source:action.payload.source,
                     failure:false,
@@ -196,7 +195,7 @@ export function reducer (state,action){
                 [action.payload.fileId]: {
                     id:action.payload.fileId,
                     file: action.payload.fileName,
-                    type: FileProgressType.DOWNLOAD,
+                    type: "DOWNLOAD",
                     progress: 0,
                     source:action.payload.source,
                     failure:false,

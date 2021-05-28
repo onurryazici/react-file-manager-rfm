@@ -73,6 +73,31 @@ RFM_Socket.on("SOMEONE_HAS_UPLOADED_ITEM", (itemName) => {
   	    	toast.error(response.data.message)
   	}).catch((error)=>{
       	toast.error(error)
-  })
+  	})
+})
+
+RFM_Socket.on("SOMEONE_HAS_MOVED_FROM_HERE", (itemName) => {
+	const directoryItems = RFM_Store.getState().directoryItems
+	var reduced = directoryItems.filter((element)=> element.name !== itemName);
+    RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+    RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+})
+
+RFM_Socket.on("SOMEONE_HAS_MOVED_TO_HERE", (itemName) => {
+	const API_URL               = RFM_Store.getState().config.API_URL
+    const API_URL_GetDataSingle = RFM_Store.getState().config.API_URL_GetDataSingle
+    const currentLocation       = RFM_Store.getState().location
+    const rfmTokenName          = RFM_Store.getState().config.tokenName
+    axios.post(API_URL + API_URL_GetDataSingle, {
+      targetPath: currentLocation + "/" + itemName,
+      token:localStorage.getItem(rfmTokenName)
+    }).then((response)=>{
+      	if(response.data.statu)
+        	RFM_Store.dispatch(ADD_DIRECTORY_ITEM(response.data.item))
+      	else
+	        toast.error(response.data.message)
+    }).catch((error)=>{
+        toast.error(error)
+    })
 })
 export default RFM_Socket

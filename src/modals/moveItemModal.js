@@ -9,12 +9,14 @@ import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ER
 import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
+import RFM_Socket from '../rfmSocket'
 function MoveItemModal(props) {
   const isContextMenuButton  = props.isContextMenuButton === 'yes' ? true : false
   const active               = props.active;
   const RFM_Store            = useStore();
   const loading              = useSelector((state) => state.modalLoading)
   const currentLocation      = useSelector((state) => state.location)
+  const currentRealPath      = useSelector(state => state.realPath)
   const modalLocation        = useSelector((state) => state.modalLocation)
   const mainDirectoryItems   = useSelector((state) => state.directoryItems)
   const directoryItems       = useSelector((state) => state.modalDirectoryItems)
@@ -60,7 +62,6 @@ function MoveItemModal(props) {
           RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
         })
         .catch((err) => {
-          alert(localStorage.getItem(rfmTokenName)+ err)
           RFM_Store.dispatch(SET_MODAL_LOADING(false));
           RFM_Store.dispatch(SET_ERROR(true));
         })
@@ -72,7 +73,6 @@ function MoveItemModal(props) {
     RFM_Store.dispatch(SET_MODAL_LOADING(true));
     RFM_Store.dispatch(SET_MODAL_LOCATION(newLocation));
     RFM_Store.dispatch(INCREASE_MODAL_DEPTH());
-
   }
 
   function MoveItems() {
@@ -90,11 +90,17 @@ function MoveItemModal(props) {
       })
       .then((response) => {
         if (response.data.statu) {
-          var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
-          RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
-          RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
-          toast.success('Taşıma işlemi gerçekleştirlidi')
-        } else toast.error(response.data.message)
+          	var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
+          	RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+          	RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+          	toast.success('Taşıma işlemi gerçekleştirlidi')
+          	if(rfmWindow !== RFM_WindowType.DRIVE){
+            	const fromPath = currentRealPath
+            	const toPath   = modalLocation
+            	RFM_Socket.emit("MOVE_ITEM", fromPath, toPath, movedItems)
+          	}
+        } 
+        else toast.error(response.data.message)
       })
       .catch((err) => {
         alert(err)

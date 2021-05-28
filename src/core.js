@@ -23,7 +23,7 @@ function RFM_Core(props) {
   const rfmTokenName                = RFM_Store.getState().config.tokenName;
  /* var fun = RFM_Store.getState().config.seri("awda");
   fun;*///##########################3
-  /*useEffect(() => {
+  useEffect(() => {
     Axios.post(API_URL + API_URL_UserAuthentication , {
       username: loggedUser,
       password: "qweqweasd"
@@ -47,14 +47,11 @@ function RFM_Core(props) {
         RFM_Store.dispatch(SET_ERROR(true));
         RFM_Store.dispatch(SET_LOADING(false));
       })
-  }, []) /// BURASI GERİ AÇILACAK*/
-  useEffect(() => {
-		/*RFM_Socket.auth = { loggedUser }
-		RFM_Socket.connect()
-        RFM_Socket.emit("USER_CONNECTED",loggedUser)*/
+  }, []) /// BURASI GERİ AÇILACAK
+  /*useEffect(() => {
         RFM_Store.dispatch(SET_LOCATION(props.location));
         RFM_Store.dispatch(SET_START_LOCATION(props.location));
-  }, [])
+  }, [])*/
 
   return (
     <div className={styles.container}>
