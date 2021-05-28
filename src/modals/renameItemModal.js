@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, Alert, InputGroup, FormControl } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
 import styles from '../styles.module.css'
 import { FaPenSquare } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
@@ -10,6 +9,7 @@ import { toast } from 'material-react-toastify'
 import { CLEAR_SELECTED_ITEMS, RENAME_ITEM, SET_ERROR, SET_LOADING } from '../redux/functions'
 import RFM_Socket from '../rfmSocket'
 import { RFM_WindowType } from '../helper/global'
+import 'bootstrap/dist/css/bootstrap.css'
 
 function RenameItemModal(props) {
   const [modalShow, setModalShow]       = React.useState(false);
