@@ -18,6 +18,10 @@ export function reducer (state,action){
             state.realPath = action.payload
             return {...state}
         }
+        case Actions.SET_MODAL_CURRENT_REAL_PATH:{
+            state.modalRealPath = action.payload
+            return {...state}
+        }
         case Actions.SET_MODAL_LOCATION:{
             state.modalLocation = action.payload;
             return {...state}

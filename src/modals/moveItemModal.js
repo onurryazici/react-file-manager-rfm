@@ -5,7 +5,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
-import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions'
+import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION, SET_MODAL_CURRENT_REAL_PATH } from '../redux/functions'
 import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
@@ -18,6 +18,7 @@ function MoveItemModal(props) {
   const currentLocation      = useSelector((state) => state.location)
   const currentRealPath      = useSelector(state => state.realPath)
   const modalLocation        = useSelector((state) => state.modalLocation)
+  const modalRealPath        = useSelector((state) => state.modalRealPath)
   const mainDirectoryItems   = useSelector((state) => state.directoryItems)
   const directoryItems       = useSelector((state) => state.modalDirectoryItems)
   const selectedItems        = useSelector((state) => state.selectedItems)
@@ -30,16 +31,16 @@ function MoveItemModal(props) {
   const [modalShow, setModalShow] = React.useState(false)
 
   const canMove = (rfmWindow === RFM_WindowType.MY_SHARED && (modalDepth > 0) && currentLocation !== modalLocation)  
-    ? true 
-    : 
+    	? true 
+    	: 
     
-    (rfmWindow === RFM_WindowType.SHARED_WITH_ME && modalDepth > 0 && currentLocation !== modalLocation)
-    ? true
-    :
-
-    (rfmWindow === RFM_WindowType.DRIVE && currentLocation !== modalLocation)
-    ? true
-    : false
+    	(rfmWindow === RFM_WindowType.SHARED_WITH_ME && modalDepth > 0 && currentLocation !== modalLocation)
+    	? true
+    	:
+	
+    	(rfmWindow === RFM_WindowType.DRIVE && currentLocation !== modalLocation)
+    	? true
+    	: false
   
 
   const disabledStyle={
@@ -60,6 +61,7 @@ function MoveItemModal(props) {
             })
           });
           RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
+		  RFM_Store.dispatch(SET_MODAL_CURRENT_REAL_PATH(response.data.currentRealPath))
         })
         .catch((err) => {
           RFM_Store.dispatch(SET_MODAL_LOADING(false));
@@ -84,11 +86,10 @@ function MoveItemModal(props) {
       movedItems.push(element.name)
     })
     axios.post(API_URL + API_URL_MoveItems, {
-          "items": items,
-          target: modalLocation,
-          token:localStorage.getItem(rfmTokenName)
-      })
-      .then((response) => {
+          	"items": items,
+          	target: modalLocation,
+          	token:localStorage.getItem(rfmTokenName)
+      	}).then((response) => {
         if (response.data.statu) {
           	var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
           	RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
@@ -96,7 +97,7 @@ function MoveItemModal(props) {
           	toast.success('Taşıma işlemi gerçekleştirlidi')
           	if(rfmWindow !== RFM_WindowType.DRIVE){
             	const fromPath = currentRealPath
-            	const toPath   = modalLocation
+            	const toPath   = modalRealPath
             	RFM_Socket.emit("MOVE_ITEM", fromPath, toPath, movedItems)
           	}
         } 

@@ -17,6 +17,11 @@ export function SET_CURRENT_REAL_PATH(path){
         dispatch({ type: Actions.SET_CURRENT_REAL_PATH, payload:path })
     }
 }
+export function SET_MODAL_CURRENT_REAL_PATH(path){
+    return dispatch => {
+        dispatch({ type: Actions.SET_MODAL_CURRENT_REAL_PATH, payload:path })
+    }
+}
 
 export function SET_MODAL_LOCATION(location){
     return dispatch => {

@@ -10,6 +10,7 @@ export const initialState = {
     startLocation:"",     // İlk belirtilen dizin
     location:"",          // Aktif olarak bulunan konumun adresi
     realPath:"",          // Shortcut tam yolu bulmak için
+    modalRealPath:"",     // Modal için tam yol
     modalLocation:"",     // Modal üzerinde ayriyeten dizin gösterebilmek için
     modalSelectedItem:"", // Copy and Move modal için seçilecek klasörün adı
     selectedItems:[],     // Seçilen öğeler
