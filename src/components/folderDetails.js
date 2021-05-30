@@ -1,8 +1,9 @@
+import { size } from 'lodash';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 function FolderDetails(){
-    const selectedItemCount = useSelector(state => state.selectedItemCount);
+    const selectedItems     = useSelector(state => state.selectedItems)
     const directoryItems    = useSelector(state => state.directoryItems);
     const loading    = useSelector(state => state.loading);
     
@@ -29,8 +30,8 @@ function FolderDetails(){
         <div className={styles.folderDetails}>
             {
                 loading ?  <div id={styles.detailLoadingSpinner}>Loading...</div> :
-                    selectedItemCount > 0
-                        ? selectedItemCount + " öğe seçildi."
+                    size(selectedItems) > 0
+                        ? size(selectedItems) + " öğe seçildi."
                         : message
             }
         </div>

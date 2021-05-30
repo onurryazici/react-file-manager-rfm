@@ -1,31 +1,28 @@
-import axios from 'axios';
-import classNames from 'classnames';
-import { toast } from 'material-react-toastify';
 import React, { useState } from 'react'
-import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap';
-import {  FaGgCircle, FaUserCircle,  } from 'react-icons/fa';
-import { useSelector, useStore } from 'react-redux';
-import { ADD_SHARED_WITH, CLEAR_SELECTED_ITEMS, DELETE_SHARED_WITH, SET_DIRECTORY_ITEMS, UPDATE_SHARED_WITH, CLEAR_SELECTED_SHARED_WITH} from '../redux/functions';
-import { MoveToDrive } from '../helper/events';
+import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap'
+import { FaGgCircle, FaUserCircle } from 'react-icons/fa'
+import { useSelector, useStore } from 'react-redux'
+import { ADD_SHARED_WITH, DELETE_SHARED_WITH, UPDATE_SHARED_WITH } from '../redux/functions'
+import { MoveToDrive } from '../helper/events'
+import { size } from 'lodash'
 import styles from '../styles.module.css'
-//import NewShareView from '../views/newShareView';
+import axios from 'axios'
+import classNames from 'classnames'
 
 function ExistShareItemModal(props){
-    const RFM_Store                 = useStore();
-    const [modalShow, setModalShow] = useState(false);
-    const directoryItems            = useSelector((state) => state.directoryItems)
-    const selectedItems             = useSelector((state) => state.selectedItems);
-    const selectedItemCount         = useSelector((state) => state.selectedItemCount);
-    const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
-    const [newUserFullAccess, setNewUserFullAccess] = useState(true);
-    const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
-    const [newUserName, setNewUserName]             = useState("");
-    const API_URL                  = RFM_Store.getState().config.API_URL;
-    const API_URL_ExistShareItem   = RFM_Store.getState().config.API_URL_ExistShareItem;
-    const API_URL_IsUserExist      = RFM_Store.getState().config.API_URL_IsUserExist;
-    const API_URL_RemovePermission = RFM_Store.getState().config.API_URL_RemovePermission;
-    const API_URL_UpdatePermission = RFM_Store.getState().config.API_URL_UpdatePermission;
-    const rfmTokenName           = RFM_Store.getState().config.tokenName;
+    const RFM_Store                 = useStore()
+    const [modalShow, setModalShow] = useState(false)
+    const selectedItems             = useSelector((state) => state.selectedItems)
+    const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false
+    const [newUserFullAccess, setNewUserFullAccess] = useState(true)
+    const [newUserReadOnly, setNewUserReadOnly]     = useState(false)
+    const [newUserName, setNewUserName]             = useState("")
+    const API_URL                  = RFM_Store.getState().config.API_URL
+    const API_URL_ExistShareItem   = RFM_Store.getState().config.API_URL_ExistShareItem
+    const API_URL_IsUserExist      = RFM_Store.getState().config.API_URL_IsUserExist
+    const API_URL_RemovePermission = RFM_Store.getState().config.API_URL_RemovePermission
+    const API_URL_UpdatePermission = RFM_Store.getState().config.API_URL_UpdatePermission
+    const rfmTokenName           = RFM_Store.getState().config.tokenName
     const PermissionType={
         FULL_ACCESS:"rwx",
         READ_ONLY:"r-x"
@@ -33,18 +30,18 @@ function ExistShareItemModal(props){
 
 
   async function ExistShareItem(event){
-    event.preventDefault();
-    let newUserPermission = newUserFullAccess ? PermissionType.FULL_ACCESS : PermissionType.READ_ONLY;
+    event.preventDefault()
+    let newUserPermission = newUserFullAccess ? PermissionType.FULL_ACCESS : PermissionType.READ_ONLY
     
 
-    var exist = (selectedItems[0].sharedWith.some((item)=>item.username === newUserName) || selectedItems[0].owner === newUserName);
+    var exist = (selectedItems[0].sharedWith.some((item)=>item.username === newUserName) || selectedItems[0].owner === newUserName)
     var userFound = await axios.post(API_URL + API_URL_IsUserExist,{ user:newUserName, token:localStorage.getItem(rfmTokenName)})
         .then((response)=>{
             if(response.data.statu === true && !exist && newUserName.trim(' ').length > 0 ){
-                return true;
+                return true
             }
             else{
-                return false;
+                return false
             }
         })
 
@@ -57,7 +54,7 @@ function ExistShareItemModal(props){
         token:localStorage.getItem(rfmTokenName)
       }).then((response)=>{
           if(response.data.statu === true && !exist && newUserName.trim(' ').length > 0 ){
-              let write   = (newUserPermission === PermissionType.FULL_ACCESS) ? true : false;
+              let write   = (newUserPermission === PermissionType.FULL_ACCESS) ? true : false
               RFM_Store.dispatch(ADD_SHARED_WITH(selectedItems[0].name,newUserName,true,write,true))
           }
           else{
@@ -72,17 +69,17 @@ function ExistShareItemModal(props){
   function ToggleNewUserPermission(eventKey){
       if(eventKey===PermissionType.FULL_ACCESS)
       {
-          setNewUserFullAccess(true);
-          setNewUserReadOnly(false);
+          setNewUserFullAccess(true)
+          setNewUserReadOnly(false)
       }
       else{
-          setNewUserFullAccess(false);
-          setNewUserReadOnly(true);
+          setNewUserFullAccess(false)
+          setNewUserReadOnly(true)
       }
   }
   function TogglePermissionExistUser(eventKey,username){
-      let newPermission = eventKey;
-      let write   = (newPermission === PermissionType.FULL_ACCESS) ? true : false;
+      let newPermission = eventKey
+      let write   = (newPermission === PermissionType.FULL_ACCESS) ? true : false
       axios.post(API_URL + API_URL_UpdatePermission,{
           user:username,
           permission:newPermission,
@@ -102,7 +99,7 @@ function ExistShareItemModal(props){
           RFM_Store.dispatch(DELETE_SHARED_WITH(selectedItems[0].name,username))
           if(selectedItems[0].sharedWith.length === 0){
             setModalShow(false)
-            MoveToDrive();
+            MoveToDrive()
           }
         }
       })
@@ -110,8 +107,8 @@ function ExistShareItemModal(props){
 
 
   function ClearData(){
-    setNewUserName("");
-    setModalShow(false); 
+    setNewUserName("")
+    setModalShow(false) 
   }
 
   return (
@@ -137,7 +134,7 @@ function ExistShareItemModal(props){
           </Modal.Header>
           <Modal.Body>
             {
-              (selectedItems !== undefined && selectedItemCount === 1)
+              (selectedItems !== undefined && size(selectedItems) === 1)
               ? 
               <Form autoComplete="off" onSubmit={ExistShareItem}>
                   <div className={styles.flex}>
@@ -163,9 +160,9 @@ function ExistShareItemModal(props){
                       </div>
                       {       
                       selectedItems[0].sharedWith.map((userElement,index) => {
-                          let fullAccess = (userElement.read === true && userElement.write === true) ? true : false;
-                          let readOnly   = (userElement.read === true && userElement.write === false) ? true : false;
-                          let selectedTitle = fullAccess ? "Tam Erişim" : "Salt Okunur";
+                          let fullAccess = (userElement.read === true && userElement.write === true) ? true : false
+                          let readOnly   = (userElement.read === true && userElement.write === false) ? true : false
+                          let selectedTitle = fullAccess ? "Tam Erişim" : "Salt Okunur"
                           return (
                               <div className={styles.flex} key={index}>
                                   <div className={styles.shareUICol1}>
@@ -189,6 +186,6 @@ function ExistShareItemModal(props){
             </Modal.Body>
           </Modal>
       </React.Fragment>
-    );
+    )
   }
-export default ExistShareItemModal;
+export default ExistShareItemModal

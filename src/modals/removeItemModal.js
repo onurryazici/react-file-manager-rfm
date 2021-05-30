@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { size } from 'lodash';
 import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
@@ -11,7 +12,6 @@ function RemoveItemModal(props){
     const RFM_Store         = useStore();
     const currentLocation   = useSelector(state => state.location);
     const directoryItems    = useSelector(state => state.directoryItems);
-    const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
@@ -81,8 +81,8 @@ function RemoveItemModal(props){
         <Modal.Body>
           <p>
             {
-              selectedItemCount > 1 
-                ? "Seçili " + selectedItemCount + " öğeyi silmek istediğinize emin misiniz?"
+              size(selectedItems) > 1 
+                ? "Seçili " + size(selectedItems) + " öğeyi silmek istediğinize emin misiniz?"
                 : (selectedItems.length > 0) && (selectedItems[0].name) + " öğesi silinecektir onaylıyor musunuz?" 
             }
           </p>

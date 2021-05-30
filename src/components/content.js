@@ -9,7 +9,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import { FaDizzy } from 'react-icons/fa';
 import { Alert } from 'react-bootstrap';
 import Upload from '../views/uploadButton';
-import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_CURRENT_REAL_PATH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
+import { CLEAR_SELECTED_ITEMS, SET_CURRENT_DIR_CAN_WRITE, SET_CURRENT_REAL_PATH, SET_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_LOCATION } from '../redux/functions';
 import ItemPreviewModal from '../modals/itemPreviewModal';
 import { RFM_WindowType } from '../helper/global';
 import classNames from 'classnames';
@@ -21,7 +21,7 @@ function Content(props) {
     const loading               = useSelector(state => state.loading);
     const rfmError              = useSelector(state => state.hasError);
     const currentLocation       = useSelector(state => state.location);
-    const currentRealPath       = useSelector(state => state.realPath);
+    const startLocation         = useSelector(state => state.startLocation);
     const rfmWindow             = useSelector(state => state.rfmWindow);
     const depth                 = useSelector(state => state.depth)
     const API_URL               = useSelector(state => state.config.API_URL);
@@ -46,11 +46,10 @@ function Content(props) {
                     RFM_Socket.emit("JOIN_ROOM", loggedUser, roomPath)
                 }
             }).catch((err)=>{
-                console.log("hata var ")
-                console.log(err)
                 toast.error("Bu dizine şu anda erişim sağlanamıyor")
-                RFM_Store.dispatch(SET_LOADING(false));
-                RFM_Store.dispatch(SET_ERROR(true));
+                RFM_Store.dispatch(SET_LOCATION(startLocation))
+                RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+                RFM_Store.dispatch(SET_DEPTH(0))
             })
         }
     },[currentLocation]);

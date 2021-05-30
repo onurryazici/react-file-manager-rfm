@@ -4,7 +4,7 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import { useState } from 'react'
 import {  toast } from 'material-react-toastify'
-import { ADD_DIRECTORY_ITEM, SET_ERROR, SET_LOADING } from '../redux/functions'
+import { ADD_DIRECTORY_ITEM, CLEAR_SELECTED_ITEMS, SET_DEPTH, SET_ERROR, SET_LOADING, SET_LOCATION } from '../redux/functions'
 import Axios from 'axios';
 import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -21,6 +21,7 @@ function CreateFolderModal(props){
   const currentLocation          = useSelector(state => state.location)
   const currentRealPath          = useSelector(state => state.realPath);
   const directoryItems           = useSelector(state => state.directoryItems)
+  const startLocation            = useSelector(state => state.startLocation)
   const API_URL                  = RFM_Store.getState().config.API_URL
   const API_URL_CreateDirectory  = RFM_Store.getState().config.API_URL_CreateDirectory
   const rfmTokenName             = RFM_Store.getState().config.tokenName
@@ -65,11 +66,14 @@ function CreateFolderModal(props){
           RFM_Socket.emit("CREATE_FOLDER",newFolder,roomPath)
           setModalShow(false)
       }
-      else             
-        toast.error("Bir hata oluştu " + response.data.message)
+      else
+        toast.error("Bir hata ile karşılaştık : " + response.data.message)
       
     }).catch((error)=>{
-      toast.error("Bir hata oluştu " + error)
+      toast.error("Bu dizine erişim sağlanamamaktadır")
+      RFM_Store.dispatch(SET_LOCATION(startLocation))
+      RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+      RFM_Store.dispatch(SET_DEPTH(0))
     });
   }
   return (

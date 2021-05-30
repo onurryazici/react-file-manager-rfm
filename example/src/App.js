@@ -12,7 +12,7 @@ const App = () =>{
           location                      = "/home/user1/drive-sharedWithMe"
           rfmWindow                     = "SHARED_WITH_ME"
           username                      = "user1"
-          API_URL                       = "http://192.168.91.128:3030"
+          API_URL                       = "http://192.168.91.131:3030"
           API_URL_UserAuthentication    = "/api/open-service/userAuthentication"
           API_URL_AddToDrive            = "/api/secured/addToDrive"
           API_URL_RemoveItemPermanently = "/api/secured/removeItemPermanently"

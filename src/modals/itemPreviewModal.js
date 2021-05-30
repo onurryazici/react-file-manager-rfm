@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Form, Button, Modal, Table } from 'react-bootstrap';
-import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from 'react-icons/fa';
-import { connect, useSelector, useStore } from 'react-redux';
+import React, { useEffect } from 'react'
+import { Modal } from 'react-bootstrap';
+import { connect, useStore } from 'react-redux';
 import { SET_PREVIEW_ACTIVE } from '../redux/functions';
 import styles from '../styles.module.css'
 function ItemPreviewModal(props) {

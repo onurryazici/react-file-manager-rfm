@@ -1,17 +1,19 @@
 import React from 'react'
 import axios from 'axios'
+import styles from '../styles.module.css'
+import RFM_Socket from '../rfmSocket'
 import { toast } from 'material-react-toastify'
 import { Button, Modal } from 'react-bootstrap'
 import { FaTimesCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions'
-import styles from '../styles.module.css'
-import RFM_Socket from '../rfmSocket'
+import { size } from 'lodash'
+
+
 function RemoveSharedItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
     const RFM_Store             = useStore();
     const directoryItems    = useSelector(state => state.directoryItems);
-    const selectedItemCount = useSelector(state => state.selectedItemCount);
     const selectedItems     = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
@@ -85,7 +87,7 @@ function RemoveSharedItemModal(props){
           <p>
             {[
                 <b>Bu işlemin ardından silinen öğeler geri alınamaz ve paylaşımda olan kullanıcılar erişemeyecektir.</b>,
-                " Seçili " + selectedItemCount + " öğeyi silmek istediğinize emin misiniz?"
+                " Seçili " + size(selectedItems) + " öğeyi silmek istediğinize emin misiniz?"
             ]}
           </p>
           

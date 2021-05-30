@@ -13,14 +13,11 @@ import RenameItemModal from '../modals/renameItemModal';
 import styles from '../styles.module.css'
 function DriveContextMenu(props) {
     var itemName          = props.itemName;
-    const RFM_Store           = useStore();
     const selectedItems   = useSelector(state => state.selectedItems);
-    const rfmWindow       = useSelector(state => state.rfmWindow);
-    var selectedItemCount = size(selectedItems);
     return(
         <ContextMenu id={itemName} className={styles.contextMenuStage}>
             {
-                selectedItemCount === 1 ?
+                size(selectedItems) === 1 ?
                   <MenuItem>
                       <NewShareItemModal isContextMenuButton="yes"/>
                   </MenuItem>
@@ -38,7 +35,7 @@ function DriveContextMenu(props) {
                 <MoveItemModal isContextMenuButton="yes" active={true}/>
             </MenuItem>
             {
-                selectedItemCount === 1 ?
+                size(selectedItems) === 1 ?
                 <MenuItem>
                     <RenameItemModal isContextMenuButton="yes" active={true}/>
                 </MenuItem>
@@ -48,7 +45,7 @@ function DriveContextMenu(props) {
                 <RemoveItemModal isContextMenuButton="yes" active={true}/>
             </MenuItem>
             {
-                selectedItemCount === 1 ?
+                size(selectedItems) === 1 ?
                 <MenuItem>
                     <ItemDetailModal isContextMenuButton="yes"/>
                 </MenuItem>

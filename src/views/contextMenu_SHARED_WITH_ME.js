@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import ItemDetailModal from '../modals/itemDetailModal'
 import MoveItemModal from '../modals/moveItemModal'
-import RemoveItemModal from '../modals/removeItemModal'
 import RenameItemModal from '../modals/renameItemModal'
 import styles from '../styles.module.css'
 import { size } from 'lodash'
@@ -18,7 +17,6 @@ function SharedWithMeContextMenu(props) {
     var itemName          = props.itemName;
     const selectedItems   = useSelector(state => state.selectedItems);
     const depth           = useSelector(state => state.depth);
-    var selectedItemCount = size(selectedItems);
     const canWrite        = !selectedItems.some((element)=> element.write===false);
 
     function AddToDrive() {
@@ -67,7 +65,7 @@ function SharedWithMeContextMenu(props) {
               ? <RemoveSharedItemModal isContextMenuButton="yes" active={true}/>
               : <RemoveSharedItemModal isContextMenuButton="yes" active={canWrite}/> }
             </MenuItem>
-            { selectedItemCount === 1 
+            { size(selectedItems) === 1 
               ? <MenuItem><ItemDetailModal isContextMenuButton="yes"/></MenuItem>
               : "" }
         </ContextMenu>       

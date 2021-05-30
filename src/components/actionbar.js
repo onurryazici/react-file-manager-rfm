@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux';
 import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { RFM_WindowType } from '../helper/global';
+import { size } from 'lodash';
 const Actionbar = () => {
-    const selectedItemCount = useSelector(state => state.selectedItemCount);
-    const rfmWindow         = useSelector(state=> state.rfmWindow);
+    const selectedItems     = useSelector(state => state.selectedItems)
+    const rfmWindow         = useSelector(state => state.rfmWindow);
     const depth             = useSelector(state => state.depth)
     return (
         !(rfmWindow === RFM_WindowType.RECYCLE_BIN) ?
@@ -17,7 +18,7 @@ const Actionbar = () => {
             <div id={styles.actionbarStage}>   
             {
                 !(rfmWindow === RFM_WindowType.RECYCLE_BIN)?
-                    (selectedItemCount>0)
+                    (size(selectedItems)>0)
                         ? <OnItemSelectedView/>
                         : <OnStartView/>
                 : ""

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import classNames from 'classnames';
+import { size } from 'lodash';
 import { toast } from 'material-react-toastify';
 import React, { useState } from 'react'
 import { Button, Dropdown, DropdownButton, Form, FormControl, Modal } from 'react-bootstrap';
@@ -7,14 +8,12 @@ import {  FaGgCircle, FaUserCircle,  } from 'react-icons/fa';
 import { useSelector, useStore } from 'react-redux';
 import { ADD_SHARED_WITH, CLEAR_SELECTED_ITEMS, DELETE_SHARED_WITH, SET_DIRECTORY_ITEMS, UPDATE_SHARED_WITH, CLEAR_SELECTED_SHARED_WITH} from '../redux/functions';
 import styles from '../styles.module.css'
-//import NewShareView from '../views/newShareView';
 
 function NewShareItemModal(props){
     const RFM_Store                 = useStore();
     const [modalShow, setModalShow] = useState(false);
     const directoryItems            = useSelector((state) => state.directoryItems)
     const selectedItems             = useSelector((state) => state.selectedItems);
-    const selectedItemCount         = useSelector((state) => state.selectedItemCount);
     const isContextMenuButton       = props.isContextMenuButton === "yes" ? true : false;
     const [newUserFullAccess, setNewUserFullAccess] = useState(true);
     const [newUserReadOnly, setNewUserReadOnly]     = useState(false);
@@ -130,7 +129,7 @@ function NewShareItemModal(props){
           </Modal.Header>
           <Modal.Body>
             {
-              (selectedItems !== undefined && selectedItemCount === 1)
+              (selectedItems !== undefined && size(selectedItems) === 1)
               ? 
               <Form autoComplete="off" onSubmit={AddUserToList}>
                   <div className={styles.flex}>

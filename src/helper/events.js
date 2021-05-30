@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { size } from 'lodash';
 import { toast } from 'material-react-toastify';
-import { ADD_DIRECTORY_ITEM, ADD_DOWNLOAD_FILE, ADD_SELECTED_ITEM, ADD_UPLOAD_FILE, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_CURRENT_DIR_CAN_WRITE, SET_DIRECTORY_ITEMS, SET_DOWNLOAD_PROGRESS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SHOW_FILE_PROGRESS, SUCCESS_DOWNLOAD_FILE, SUCCESS_UPLOAD_FILE } from '../redux/functions';
+import { ADD_DIRECTORY_ITEM, ADD_DOWNLOAD_FILE, ADD_SELECTED_ITEM, ADD_UPLOAD_FILE, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_DOWNLOAD_PROGRESS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SHOW_FILE_PROGRESS, SUCCESS_DOWNLOAD_FILE, SUCCESS_UPLOAD_FILE } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore'
+import { RFM_WindowType } from './global';
 import RFM_Socket from '../rfmSocket';
 import styles from '../styles.module.css'
-import { RFM_WindowType } from './global';
-export function onItemSelected(event,accessibleId,itemName,itemObject){
+
+export function onItemSelected(event, accessibleId, itemName, itemObject){
     const selectedItems = RFM_Store.getState().selectedItems;
     var exist = selectedItems.some((element)=>{ return element.name === itemName});
     const element = document.getElementById(accessibleId);

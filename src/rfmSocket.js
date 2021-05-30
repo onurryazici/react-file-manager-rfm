@@ -4,7 +4,7 @@ import { toast } from "material-react-toastify"
 import axios from "axios"
 import  io  from "socket.io-client"
 
-const URL    = "http://192.168.91.128:3030"
+const URL    = "http://192.168.91.131:3030"
 const RFM_Socket = io(URL, { autoConnect:false, query:{token:"token gelecek buraya"} })
 
 RFM_Socket.onAny((event, ...args) => {

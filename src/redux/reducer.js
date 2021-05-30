@@ -61,14 +61,12 @@ export function reducer (state,action){
             return {
                 ...state,
                 selectedItems:[],
-                selectedItemCount:0
             }
         }
         case Actions.ADD_SELECTED_ITEM:{
             return {
                 ...state,
                 selectedItems: state.selectedItems.concat(action.payload),
-                selectedItemCount: state.selectedItemCount + 1
             }
         }
         case Actions.REMOVE_SELECTED_ITEM:{
@@ -78,7 +76,6 @@ export function reducer (state,action){
                     ...state.selectedItems.slice(0,action.payload),
                     ...state.selectedItems.slice(action.payload + 1)
                 ],
-                selectedItemCount:state.selectedItemCount -  1
             }
         }
         case Actions.CLEAR_SELECTED_SHARED_WITH:{

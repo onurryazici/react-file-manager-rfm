@@ -51,8 +51,6 @@ function Item(props){
     }
     var accessibleId          = itemName + "-" + itemType
     const [_image, set_image] = useState("")
-
-    const selectedItemCount = useSelector(state=>state.selectedItemCount);
     const rfmWindow         = useSelector(state => state.rfmWindow);
     const [ref, inView] = useInView({
       threshold: 0,
