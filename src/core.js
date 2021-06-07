@@ -49,6 +49,9 @@ function RFM_Core(props) {
       	})
   	}, []) /// BURASI GERİ AÇILACAK*/
   	useEffect(() => {
+		RFM_Socket.auth = { loggedUser }
+		RFM_Socket.connect()
+		RFM_Socket.emit("USER_CONNECTED",loggedUser)
         RFM_Store.dispatch(SET_LOCATION(props.location));
         RFM_Store.dispatch(SET_START_LOCATION(props.location));
   }, [])
