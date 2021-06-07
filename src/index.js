@@ -37,9 +37,9 @@ export default function RFM (props) {
       	tokenName                     : props.tokenName,
       	seri:props.seri
     }
-    RFM_Store.dispatch(SET_LOGGED_USER(prompt("kullanıcı ? ", "user1")))
+    //RFM_Store.dispatch(SET_LOGGED_USER(prompt("kullanıcı ? ", "user1")))
     RFM_Store.dispatch(SET_LOGGED_USER(props.username))
-    //RFM_Store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
+    RFM_Store.dispatch(SET_RFM_CONFIG(rfmConfigPayload));
     RFM_Store.dispatch(SET_RFM_WINDOW(_rfmWindow));
     return(
       <Provider store={RFM_Store}>
