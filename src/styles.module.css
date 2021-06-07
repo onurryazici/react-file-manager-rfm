@@ -526,6 +526,12 @@ body{
   padding: 8px;
   position: absolute;
 }
+.shareUserLogo2{
+  color: #0066cc;
+  height: 65px;
+  width: 65px;
+  padding: 8px;
+}
 .textCentered{
   text-align: center;
   line-height: 50px;

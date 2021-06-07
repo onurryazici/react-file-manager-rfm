@@ -152,7 +152,7 @@ function NewShareItemModal(props){
                   
                       <div className={styles.flex}>
                           <div className={styles.shareUICol1}>
-                              <FaUserCircle className={styles.shareUserLogo}/>
+                              <FaUserCircle className={styles.shareUserLogo2}/>
                               <span>{selectedItems[0].owner}</span>
                           </div>
                           <div className={styles.shareUICol2}>
@@ -167,7 +167,7 @@ function NewShareItemModal(props){
                           return (
                               <div className={styles.flex} key={index}>
                                   <div className={styles.shareUICol1}>
-                                      <FaUserCircle className={styles.shareUserLogo}/>
+                                      <FaUserCircle className={styles.shareUserLogo2}/>
                                       <span>{userElement.username}</span>
                                   </div>
                                   <DropdownButton className={classNames(styles.noRadius,styles.shareUICol2,styles.mt10)} variant="" title={selectedTitle} >
