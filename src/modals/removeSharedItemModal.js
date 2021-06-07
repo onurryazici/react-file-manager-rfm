@@ -8,17 +8,20 @@ import { FaTimesCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions'
 import { size } from 'lodash'
+import { useMediaQuery } from 'react-responsive'
 
 
 function RemoveSharedItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
-    const RFM_Store             = useStore();
-    const directoryItems    = useSelector(state => state.directoryItems);
-    const selectedItems     = useSelector(state => state.selectedItems);
+    const RFM_Store           = useStore();
+    const directoryItems      = useSelector(state => state.directoryItems);
+    const selectedItems       = useSelector(state => state.selectedItems);
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
-    const API_URL = RFM_Store.getState().config.API_URL;
-    
+    const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
+    const API_URL 			  = RFM_Store.getState().config.API_URL;
+
     function RemoveItem() {
       setModalShow(false);
       const API_URL_RemoveSharedItem = RFM_Store.getState().config.API_URL_RemoveSharedItem;
@@ -30,10 +33,10 @@ function RemoveSharedItemModal(props){
       
       for(let i=0; i<selectedItems.length;i++){
         if(selectedItems[i].write===false)
-          cantRemove.push(selectedItems[i].name);
+          	cantRemove.push(selectedItems[i].name);
         else{
-          items.push(selectedItems[i].absolutePath);
-          removedItems.push(selectedItems[i].name);
+          	items.push(selectedItems[i].absolutePath);
+          	removedItems.push(selectedItems[i].name);
         }
       }
       
@@ -72,7 +75,10 @@ function RemoveSharedItemModal(props){
             :
               <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaTimesCircle color="#e04f5f"/></div>
-                <div className={styles.actionbarText}>Sil</div>
+                {isDesktopOrLaptop || isBigScreen 
+					? <div className={styles.actionbarText}>Sil</div>
+					: ""
+				}
               </Button>
         }
         <Modal show={modalShow} onHide={()=>setModalShow(false) } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>

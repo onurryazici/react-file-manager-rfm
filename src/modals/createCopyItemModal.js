@@ -10,6 +10,7 @@ import axios from 'axios';
 import { toast } from 'material-react-toastify';
 import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore';
+import { useMediaQuery } from 'react-responsive';
 
 function CopyItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
@@ -25,7 +26,8 @@ function CopyItemModal(props){
     const API_URL_CreateCopy   = RFM_Store.getState().config.API_URL_CreateCopy;
     const rfmTokenName         = RFM_Store.getState().config.tokenName;
     const rfmWindow            = useSelector(state => state.rfmWindow);
-
+	const isDesktopOrLaptop    = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		   = useMediaQuery({ query: '(min-device-width: 1824px)' })
     const disabledStyle={
       pointerEvents:'none',
       opacity:'0.4'
@@ -75,7 +77,10 @@ function CopyItemModal(props){
               </Button>
             : <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaStumbleuponCircle color="#ab91ea"/></div>
-                <div className={styles.actionbarText}>Kopya oluştur</div>
+                {isDesktopOrLaptop || isBigScreen 
+					? <div className={styles.actionbarText}>Kopya oluştur</div>
+					: ""
+				}
             </Button>
         } 
         

@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { RFM_Store } from '../redux/rfmStore'
 import RFM_Socket from '../rfmSocket'
 import { RedirectToStart } from '../helper/events'
+import { useMediaQuery } from 'react-responsive'
 
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName]   = useState("")
@@ -26,6 +27,8 @@ function CreateFolderModal(props){
   const API_URL                  = RFM_Store.getState().config.API_URL
   const API_URL_CreateDirectory  = RFM_Store.getState().config.API_URL_CreateDirectory
   const rfmTokenName             = RFM_Store.getState().config.tokenName
+  const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+  const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
 
   function onKeyPress(event) {
     var pattern       = ['/', '\\' ]
@@ -83,7 +86,10 @@ function CreateFolderModal(props){
             </Button>
           : <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
                 <div className={styles.actionbarIcon}><FaPlusCircle color="#28a745"/></div>
-                <div className={styles.actionbarText}>Yeni klasör</div>
+                {isDesktopOrLaptop || isBigScreen 
+					? <div className={styles.actionbarText}>Yeni Klasör</div>
+					: ""
+				}
             </Button> }  
       <Modal show={modalShow} onHide={()=> { setModalShow(false); setDirectoryName("");} } size="s" aria-labelledby="contained-modal-title-vcenter" centered className={styles.noselect}>
       <Form noValidate validated={isAcceptable} autoComplete="off" onSubmit={CreateFolder}>

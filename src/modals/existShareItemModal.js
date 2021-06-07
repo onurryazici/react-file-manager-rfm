@@ -8,6 +8,7 @@ import { size } from 'lodash'
 import styles from '../styles.module.css'
 import axios from 'axios'
 import classNames from 'classnames'
+import { useMediaQuery } from 'react-responsive'
 
 function ExistShareItemModal(props){
     const RFM_Store                 = useStore()
@@ -23,6 +24,8 @@ function ExistShareItemModal(props){
     const API_URL_RemovePermission = RFM_Store.getState().config.API_URL_RemovePermission
     const API_URL_UpdatePermission = RFM_Store.getState().config.API_URL_UpdatePermission
     const rfmTokenName           = RFM_Store.getState().config.tokenName
+	const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
     const PermissionType={
         FULL_ACCESS:"rwx",
         READ_ONLY:"r-x"
@@ -122,7 +125,10 @@ function ExistShareItemModal(props){
             :
               <Button variant="light" className={styles.actionbarButton} onClick={() => setModalShow(true)}>
                 <div className={styles.actionbarIcon}><FaGgCircle color="#25b7d3"/></div>
-                <div className={styles.actionbarText}>Paylaş</div>
+                {isDesktopOrLaptop || isBigScreen 
+					? <div className={styles.actionbarText}>Paylaş</div>
+					: ""
+				}
               </Button>
         }
         

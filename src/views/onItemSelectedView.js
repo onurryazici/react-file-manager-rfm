@@ -54,7 +54,11 @@ function OnItemSelectedView() {
                 : <CopyItemModal isContextMenuButton="no" active={canWrite}/>
             }
             <RenameItemModal isContextMenuButton="no" active={selectedItems[0].write && size(selectedItems) === 1}/> 
-            <ItemDetailModal isContextMenuButton="no"/>
+            {
+                (size(selectedItems)===1)
+                ? <ItemDetailModal isContextMenuButton="no"/>   
+                : ""
+            }
             <Button variant="link" onClick={()=>clearSelection()}>Seçimi temizle</Button>
         </div>
     )

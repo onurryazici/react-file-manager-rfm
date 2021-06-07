@@ -10,6 +10,7 @@ import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
 import RFM_Socket from '../rfmSocket'
+import { useMediaQuery } from 'react-responsive'
 function MoveItemModal(props) {
   const isContextMenuButton  = props.isContextMenuButton === 'yes' ? true : false
   const active               = props.active;
@@ -30,6 +31,8 @@ function MoveItemModal(props) {
   const API_URL_MoveItems    = RFM_Store.getState().config.API_URL_MoveItems;
   const rfmTokenName         = RFM_Store.getState().config.tokenName;
   const [modalShow, setModalShow] = React.useState(false)
+  const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+  const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
 
   const canMove = (rfmWindow === RFM_WindowType.MY_SHARED && (modalDepth > 0) && currentLocation !== modalLocation)  
     	? true 
@@ -116,10 +119,11 @@ function MoveItemModal(props) {
       ) : 
       (
         <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
-          <div className={styles.actionbarIcon}>
-            <FaChevronCircleRight color='#4abc96' />
-          </div>
-          <div className={styles.actionbarText}>Taşı</div>
+          <div className={styles.actionbarIcon}><FaChevronCircleRight color='#4abc96' /></div>
+		  	{ isDesktopOrLaptop || isBigScreen 
+				? <div className={styles.actionbarText}>Taşı</div>
+				: ""
+			}
         </Button>
       )}
 

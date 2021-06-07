@@ -4,6 +4,7 @@ import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useStore } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import { RedirectToStart } from '../helper/events';
 import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore';
@@ -16,7 +17,8 @@ function EmptyTrashModal(){
     const API_URL            = RFM_Store.getState().config.API_URL;
     const API_URL_EmptyTrash = RFM_Store.getState().config.API_URL_EmptyTrash;
     const rfmTokenName       = RFM_Store.getState().config.tokenName;
-
+	const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
     function EmptyTrash() {
       setModalShow(false);
       axios.get(API_URL + API_URL_EmptyTrash,{params:{token:localStorage.getItem(rfmTokenName)}}).then((response)=>{

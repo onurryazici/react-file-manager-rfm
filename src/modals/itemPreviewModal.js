@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import { Modal } from 'react-bootstrap';
-import { connect, useStore } from 'react-redux';
-import { SET_PREVIEW_ACTIVE } from '../redux/functions';
+import { Modal } from 'react-bootstrap'
+import { connect, useStore } from 'react-redux'
+import { SET_PREVIEW_ACTIVE } from '../redux/functions'
 import styles from '../styles.module.css'
 function ItemPreviewModal(props) {
-    const isPreviewActive = props.isPreviewActive;
-    const previewData     = props.previewData;
-    const RFM_Store = useStore();
+    const isPreviewActive = props.isPreviewActive
+    const previewData     = props.previewData
+    const RFM_Store = useStore()
     useEffect(() => {
         setModalShow(isPreviewActive)
     }, [isPreviewActive])
 
-    const [modalShow, setModalShow] = React.useState(isPreviewActive);
+    const [modalShow, setModalShow] = React.useState(isPreviewActive)
     return (
         modalShow ?
       <React.Fragment>
@@ -29,11 +29,11 @@ function ItemPreviewModal(props) {
       </Modal>
       </React.Fragment>
       :""
-    );
+    )
 }
 
 const mapStateToProps = state => ({
     isPreviewActive: state.isPreviewActive,
     previewData:state.previewData
 })
-export default connect(mapStateToProps)(ItemPreviewModal);
+export default connect(mapStateToProps)(ItemPreviewModal)

@@ -1,47 +1,48 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, Alert, InputGroup, FormControl } from 'react-bootstrap'
-import styles from '../styles.module.css'
 import { FaPenSquare } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
-import { Messages } from '../helper/message'
-import axios from 'axios'
-import { toast } from 'material-react-toastify'
 import { CLEAR_SELECTED_ITEMS, RENAME_ITEM } from '../redux/functions'
-import RFM_Socket from '../rfmSocket'
 import { RFM_WindowType } from '../helper/global'
+import { useMediaQuery } from 'react-responsive'
+import { toast } from 'material-react-toastify'
+import axios from 'axios'
+import RFM_Socket from '../rfmSocket'
+import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
 function RenameItemModal(props) {
-  const [modalShow, setModalShow]       = React.useState(false);
-  const isContextMenuButton             = props.isContextMenuButton === 'yes' ? true : false;
-  const active                          = props.active;
-  const RFM_Store                       = useStore();
-  const [isAcceptable, setIsAcceptable] = useState(false);
-  const [newItemName, setNewItemName]   = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const directoryItems     = useSelector((state) => state.directoryItems);
-  const currentLocation    = useSelector((state) => state.location);
-  const selectedItems      = useSelector((state) => state.selectedItems);
-  const currentRealPath    = useSelector((state) => state.realPath)
-  const rfmWindow          = useSelector((state) => state.rfmWindow)
-  const name               = selectedItems.length > 0 && selectedItems[0].name;
-  const type               = selectedItems.length > 0 && selectedItems[0].type;
-  const extension          = selectedItems.length > 0 && selectedItems[0].extension;
-  const API_URL            = RFM_Store.getState().config.API_URL;
-  const API_URL_RenameItem = RFM_Store.getState().config.API_URL_RenameItem;
-  const rfmTokenName       = RFM_Store.getState().config.tokenName;
-
+  	const [modalShow, setModalShow]       = React.useState(false)
+  	const isContextMenuButton             = props.isContextMenuButton === 'yes' ? true : false
+  	const active                          = props.active
+  	const RFM_Store                       = useStore()
+  	const [isAcceptable, setIsAcceptable] = useState(false)
+  	const [newItemName, setNewItemName]   = useState("")
+  	const [errorMessage, setErrorMessage] = useState("")
+  	const directoryItems     = useSelector((state) => state.directoryItems)
+  	const currentLocation    = useSelector((state) => state.location)
+  	const selectedItems      = useSelector((state) => state.selectedItems)
+  	const currentRealPath    = useSelector((state) => state.realPath)
+  	const rfmWindow          = useSelector((state) => state.rfmWindow)
+  	const name               = selectedItems.length > 0 && selectedItems[0].name
+  	const type               = selectedItems.length > 0 && selectedItems[0].type
+  	const extension          = selectedItems.length > 0 && selectedItems[0].extension
+  	const API_URL            = RFM_Store.getState().config.API_URL
+  	const API_URL_RenameItem = RFM_Store.getState().config.API_URL_RenameItem
+  	const rfmTokenName       = RFM_Store.getState().config.tokenName
+  	const isDesktopOrLaptop  = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 	     = useMediaQuery({ query: '(min-device-width: 1824px)' })
 
   function onKeyPress(event) {
     var value         = event.value
     var pattern       = ['/', '\\' ]
     var wrongPattern  = pattern.some((element) => value.includes(element))
     var exist         = directoryItems.some(item => {
-      if(item.type==="directory")
-        return item.name===value
-      else
-        return item.name===(value+"."+extension)
-    });
+      	if(item.type==="directory")
+        	return item.name===value
+      	else
+        	return item.name===(value+"."+extension)
+    })
     
     if (wrongPattern) {
       setIsAcceptable(false)
@@ -60,8 +61,6 @@ function RenameItemModal(props) {
       setIsAcceptable(true)
       setErrorMessage("")
     }
-
-
   }
 
   function RenameItem(event) {
@@ -76,8 +75,8 @@ function RenameItemModal(props) {
         if (response.data.statu === true) {
           var item = directoryItems.find((element) => element.name === selectedItems[0].name)
           if (item) {
-            RFM_Store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName));
-            RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null));
+            RFM_Store.dispatch(RENAME_ITEM(item.name, item.type,response.data.newItemName))
+            RFM_Store.dispatch(CLEAR_SELECTED_ITEMS(null))
             const oldName  = item.name 
             const newName  = response.data.newItemName
             const roomPath = currentRealPath
@@ -88,7 +87,7 @@ function RenameItemModal(props) {
         else
           	toast.error(response.data.message)
      }).catch((err) => {
-        toast.error("Bir hata oluştu " + err);
+        toast.error("Bir hata oluştu " + err)
     })
   }
 
@@ -104,7 +103,10 @@ function RenameItemModal(props) {
         :
         <Button variant='light' className={styles.actionbarButton} onClick={() => setModalShow(true)} disabled={!active}>
           <div className={styles.actionbarIcon}><FaPenSquare color='#28a745' /></div>
-          <div className={styles.actionbarText}>Yeniden adlandır</div>
+		  	{ isDesktopOrLaptop || isBigScreen 
+				? <div className={styles.actionbarText}>Yeniden adlandır</div>
+				: ""
+			}
         </Button>
       }
 

@@ -27,7 +27,7 @@ function RFM_Core(props) {
       		username: loggedUser,
       		password: "qweqweasd"
     	}).then((response) => {
-      	  	if (response.data.message === Messages.LOGIN_SUCCESSFULL) {
+      	  	if (response.data.statu) {
       	      	localStorage.setItem(rfmTokenName, response.data.token);
       	      	var location = prompt("konum","/home/user1/drive-shared")
       	      	var window = prompt("window","MY_SHARED")
@@ -43,6 +43,7 @@ function RFM_Core(props) {
       	  	}
       	})
       	.catch((err) => {
+			  alert(err)
       		RFM_Store.dispatch(SET_ERROR(true));
       	  	RFM_Store.dispatch(SET_LOADING(false));
       	})

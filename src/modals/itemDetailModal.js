@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Form, Button, Modal, Table } from 'react-bootstrap';
 import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import styles from '../styles.module.css'
 function ItemDetailModal(props) {
     const [modalShow, setModalShow] = React.useState(false);
@@ -16,7 +17,8 @@ function ItemDetailModal(props) {
     const [lastAccessTime, setLastAccessTime] = useState("");
     const [lastModifyTime, setLastModifyTime] = useState("");
     const [sharedUsers, setSharedUsers]       = useState("");
-
+	const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
     function ItemDetail(){
         setModalShow(true)
         setName(selectedItems[0].name);
@@ -40,7 +42,10 @@ function ItemDetailModal(props) {
             :
               <Button variant="light" className={styles.actionbarButton} onClick={() => ItemDetail()}>
                 <div className={styles.actionbarIcon}><FaInfoCircle color="#ff9933"/></div>
-                <div className={styles.actionbarText}>Ayrıntılar</div>
+                {isDesktopOrLaptop || isBigScreen 
+					? <div className={styles.actionbarText}>Ayrıntılar</div>
+					: ""
+				}
               </Button>
         }
         
