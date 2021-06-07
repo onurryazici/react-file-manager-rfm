@@ -5,7 +5,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { FaChevronCircleRight } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
 import Folder from '../components/folder'
-import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION, SET_MODAL_CURRENT_REAL_PATH } from '../redux/functions'
+import { CLEAR_SELECTED_ITEMS, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION, SET_MODAL_CURRENT_REAL_PATH } from '../redux/functions'
 import { RFM_WindowType } from '../helper/global'
 import styles from '../styles.module.css'
 import ModalPlacemap from '../views/modalPlacemap'
@@ -16,7 +16,8 @@ function MoveItemModal(props) {
   const RFM_Store            = useStore();
   const loading              = useSelector((state) => state.modalLoading)
   const currentLocation      = useSelector((state) => state.location)
-  const currentRealPath      = useSelector(state => state.realPath)
+  const startLocation  		 = useSelector((state) => state.startLocation)
+  const currentRealPath      = useSelector((state) => state.realPath)
   const modalLocation        = useSelector((state) => state.modalLocation)
   const modalRealPath        = useSelector((state) => state.modalRealPath)
   const mainDirectoryItems   = useSelector((state) => state.directoryItems)
@@ -51,21 +52,21 @@ function MoveItemModal(props) {
   useEffect(() => {
     if (modalLocation !== '' && modalShow) {
       axios.post(API_URL + API_URL_GetDirectory, {
-         location: modalLocation,
-         token:localStorage.getItem(rfmTokenName)
+         	location: modalLocation,
+         	token:localStorage.getItem(rfmTokenName)
         }).then((response) => {
-          RFM_Store.dispatch(SET_MODAL_LOADING(false));
-          var reduced = response.data.items.filter((element)=> {
-              return !selectedItems.some((selectedElement)=>{
-                return selectedElement.absolutePath === element.absolutePath
-            })
-          });
+          	RFM_Store.dispatch(SET_MODAL_LOADING(false));
+          	var reduced = response.data.items.filter((element)=> {
+              	return !selectedItems.some((selectedElement)=>{
+                	return selectedElement.absolutePath === element.absolutePath
+            	})
+          	});
           RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(reduced));
 		  RFM_Store.dispatch(SET_MODAL_CURRENT_REAL_PATH(response.data.currentRealPath))
         })
         .catch((err) => {
-          RFM_Store.dispatch(SET_MODAL_LOADING(false));
-          RFM_Store.dispatch(SET_ERROR(true));
+			RFM_Store.dispatch(SET_MODAL_LOCATION(startLocation))
+          	RFM_Store.dispatch(SET_MODAL_LOADING(true));
         })
     } 
   }, [modalShow, modalLocation])
@@ -89,7 +90,7 @@ function MoveItemModal(props) {
           	"items": items,
           	target: modalLocation,
           	token:localStorage.getItem(rfmTokenName)
-      	}).then((response) => {
+    }).then((response) => {
         if (response.data.statu) {
           	var reduced = mainDirectoryItems.filter((element)=> !movedItems.includes(element.name));
           	RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
@@ -101,15 +102,11 @@ function MoveItemModal(props) {
             	RFM_Socket.emit("MOVE_ITEM", fromPath, toPath, movedItems)
           	}
         } 
-        else toast.error(response.data.message)
-      })
-      .catch((err) => {
-        alert(err)
-        RFM_Store.dispatch(SET_ERROR(true));
-        RFM_Store.dispatch(SET_LOADING(false));
-      })
-  }
-  return (
+      	}).catch((err) => {
+		  	toast.error("Öğe taşınırken bir sorunla karşılaştık")
+      	})
+  	}
+  	return (
     <React.Fragment>
       {isContextMenuButton 
       ? (

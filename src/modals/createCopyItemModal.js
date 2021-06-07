@@ -49,28 +49,22 @@ function CopyItemModal(props){
         RFM_Store.dispatch(SET_MODAL_LOCATION(newLocation));
     } 
     function CreateCopyItem(){
-      setModalShow(false);
-      toast.dark("Kopyalama başlatılıyor...")
-      let items=[];
-      selectedItems.forEach(element => {
-        items.push(element.absolutePath);
-      });
-      axios.post(API_URL + API_URL_CreateCopy,{
-            "items":items,
-            target:currentLocation,
-            token:localStorage.getItem(rfmTokenName)
-        })
-        .then((response)=>{
-          if(response.data.statu){
-              toast.success("Kopyalama işlemi gerçekleştirlidi");
-          }
-          else
-                toast.error(response.data.message);
-        }).catch((err)=>{
-          RFM_Store.dispatch(SET_ERROR(true));
-          RFM_Store.dispatch(SET_LOADING(false));
-        });
-
+		setModalShow(false);
+		toast.dark("Kopyalama başlatılıyor...")
+		let items=[];
+		selectedItems.forEach(element => {
+			items.push(element.absolutePath);
+		});
+		axios.post(API_URL + API_URL_CreateCopy,{
+			"items":items,
+			target:currentLocation,
+			token:localStorage.getItem(rfmTokenName)
+		}).then((response)=>{
+		if(response.data.statu)
+			toast.success("Kopyalama işlemi gerçekleştirlidi");
+		}).catch((err)=>{
+			toast.error("Kopyalama işlemi gerçekleştirilemedi")
+		});
     }
     return (
       <React.Fragment>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useSelector, useStore } from 'react-redux'
-import { Messages } from './helper/message'
 import { SET_ERROR, SET_LOADING, SET_LOCATION, SET_RFM_WINDOW, SET_START_LOCATION } from './redux/functions'
 import { ToastContainer } from 'material-react-toastify'
 import styles from './styles.module.css'
@@ -16,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 function RFM_Core(props) {
   	const RFM_Store = useStore();
-	
+
   	const API_URL                     = useSelector(state => state.config.API_URL);
   	const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
   	const loggedUser                  = useSelector(state => state.loggedUser);

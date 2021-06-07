@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { size } from 'lodash';
 import { toast } from 'material-react-toastify';
-import { ADD_DIRECTORY_ITEM, ADD_DOWNLOAD_FILE, ADD_SELECTED_ITEM, ADD_UPLOAD_FILE, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_DIRECTORY_ITEMS, SET_DOWNLOAD_PROGRESS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SHOW_FILE_PROGRESS, SUCCESS_DOWNLOAD_FILE, SUCCESS_UPLOAD_FILE } from '../redux/functions';
+import { ADD_DIRECTORY_ITEM, ADD_DOWNLOAD_FILE, ADD_SELECTED_ITEM, ADD_UPLOAD_FILE, CLEAR_SELECTED_ITEMS, FAILURE_UPLOAD_FILE, INCREASE_DEPTH, INCREASE_MODAL_DEPTH, SET_DEPTH, SET_DIRECTORY_ITEMS, SET_DOWNLOAD_PROGRESS, SET_ERROR, SET_LOADING, SET_LOCATION, SET_PREVIEW_ACTIVE, SET_PREVIEW_DATA, SET_UPLOAD_PROGRESS, SHOW_FILE_PROGRESS, SUCCESS_DOWNLOAD_FILE, SUCCESS_UPLOAD_FILE } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore'
 import { RFM_WindowType } from './global';
 import RFM_Socket from '../rfmSocket';
@@ -59,8 +59,8 @@ export function onItemDoubleClick(accessibleId,itemType,itemName,_absolutePath,e
 }
 export function onItemContextMenu(accessibleId,itemName,itemObject){
     const selectedItems = RFM_Store.getState().selectedItems;
-    var exist = selectedItems.some((element)=>{return element.name === itemName});
-    const element = document.getElementById(accessibleId);
+    const exist 		= selectedItems.some((element)=>{return element.name === itemName});
+    const element 		= document.getElementById(accessibleId);
     if(!exist){
       RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
       RFM_Store.dispatch(ADD_SELECTED_ITEM(itemObject));
@@ -73,30 +73,28 @@ export function removePermanently(){
     const API_URL                       = RFM_Store.getState().config.API_URL;
     const API_URL_RemoveItemPermanently = RFM_Store.getState().config.API_URL_RemoveItemPermanently;
     const rfmTokenName                  = RFM_Store.getState().config.tokenName;
-    let items=[];
-    let removedItems=[];
+    let items		 = []
+    let removedItems = []
     
-    for(let i=0; i<selectedItems.length;i++){
+    for(let i=0; i<selectedItems.length; i++){
         items.push(selectedItems[i].name);
         removedItems.push(selectedItems[i].name);
     }
     if(items.length > 0)
     {
-      axios.post(API_URL + API_URL_RemoveItemPermanently,{
+      	axios.post(API_URL + API_URL_RemoveItemPermanently,{
           "items":items,
           token:localStorage.getItem(rfmTokenName)
-      }).then((response)=>{
-          if(response.data.statu === true) {
-            var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
-            RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
-            RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
-          }
-          else
-            toast.error(response.data.message);
+      	}).then((response)=>{
+			if(response.data.statu === true) {
+				var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
+				RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+				RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+			}
+			else
+				toast.error(response.data.message);
       }).catch((err)=>{
-        alert(err)
-        RFM_Store.dispatch(SET_ERROR(true));
-        RFM_Store.dispatch(SET_LOADING(false)); 
+		  	RedirectToStart()
       });
     }
 }
@@ -245,62 +243,44 @@ export function restoreItems(){
           else
             toast.error(response.data.message);
       }).catch((err)=>{
-        RFM_Store.dispatch(SET_ERROR(true));
-        RFM_Store.dispatch(SET_LOADING(false)); 
+			RedirectToStart()
       });
     }
 } 
 
 export function MoveToDrive(){
 
-  const selectedItems       = RFM_Store.getState().selectedItems;
-  const rfmTokenName        = RFM_Store.getState().config.tokenName;
-  const directoryItems      = RFM_Store.getState().directoryItems;
-  const API_URL             = RFM_Store.getState().config.API_URL;
-  const API_URL_MoveToDrive = RFM_Store.getState().config.API_URL_MoveToDrive;
+  	const selectedItems       = RFM_Store.getState().selectedItems;
+  	const rfmTokenName        = RFM_Store.getState().config.tokenName;
+  	const directoryItems      = RFM_Store.getState().directoryItems;
+  	const API_URL             = RFM_Store.getState().config.API_URL;
+  	const API_URL_MoveToDrive = RFM_Store.getState().config.API_URL_MoveToDrive;
 
-  let items      = []
-  let movedItems = []
-  selectedItems.forEach((element) => {
-      items.push(element.absolutePath)
-      movedItems.push(element.name)
-  })
-  axios.post(API_URL + API_URL_MoveToDrive, {
-      "items": items,
-      token:localStorage.getItem(rfmTokenName)
-  })
-  .then((response) => {
-      if (response.data.statu) {
-          var reduced = directoryItems.filter((element)=> !movedItems.includes(element.name));
-          RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
-          RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
-          toast.success('Paylaşım kaldırıldı.')
-      } 
-      else toast.error(response.data.message)
-  })
-  .catch((err) => {
-      alert(err)
-      RFM_Store.dispatch(SET_ERROR(true));
-      RFM_Store.dispatch(SET_LOADING(false));
-  })
+  	let items      = []
+  	let movedItems = []
+  	selectedItems.forEach((element) => {
+  	    items.push(element.absolutePath)
+  	    movedItems.push(element.name)
+  	})
+  	axios.post(API_URL + API_URL_MoveToDrive, {
+      	"items": items,
+      	token:localStorage.getItem(rfmTokenName)
+  	}).then((response) => {
+    	if (response.data.statu) {
+          	var reduced = directoryItems.filter((element)=> !movedItems.includes(element.name));
+          	RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+          	RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+          	toast.success('Paylaşım kaldırıldı.')
+      	} 
+      	else toast.error(response.data.message)
+  	}).catch((err) => {
+      	RedirectToStart()
+ 	})
 }
 
-/*const headerContentDisp = res.headers["Content-disposition"];
-      const filename =
-        headerContentDisp &&
-        headerContentDisp.split("filename=")[1].replace(/["']/g, ""); // TODO improve parcing
-      const contentType = res.headers["Content-type"];
-
-      const blob = new Blob([res.data], { contentType });
-      const href = window.URL.createObjectURL(blob);
-
-      const el = document.createElement("a");
-      el.setAttribute("href", href);
-      el.setAttribute(
-        "download",
-        filename || (res.config && res.config.filename) || "someFile"
-      );
-      el.click();
-
-      window.URL.revokeObjectURL(blob);
-      return res;*/
+export function RedirectToStart(){
+	const startLocation = RFM_Store.getState().startLocation
+	RFM_Store.dispatch(SET_LOCATION(startLocation))
+    RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+    RFM_Store.dispatch(SET_DEPTH(0))
+}

@@ -1,15 +1,16 @@
 import React from 'react'
 import { Button, Modal,Form, InputGroup } from 'react-bootstrap'
 import { FaPlusCircle } from 'react-icons/fa'
-import { useSelector, useStore } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import {  toast } from 'material-react-toastify'
-import { ADD_DIRECTORY_ITEM, CLEAR_SELECTED_ITEMS, SET_DEPTH, SET_ERROR, SET_LOADING, SET_LOCATION } from '../redux/functions'
+import { ADD_DIRECTORY_ITEM, SET_LOADING } from '../redux/functions'
 import Axios from 'axios';
 import styles from '../styles.module.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { RFM_Store } from '../redux/rfmStore'
 import RFM_Socket from '../rfmSocket'
+import { RedirectToStart } from '../helper/events'
 
 function CreateFolderModal(props){
   const [DirectoryName, setDirectoryName]   = useState("")
@@ -70,10 +71,8 @@ function CreateFolderModal(props){
         toast.error("Bir hata ile karşılaştık : " + response.data.message)
       
     }).catch((error)=>{
-      toast.error("Bu dizine erişim sağlanamamaktadır")
-      RFM_Store.dispatch(SET_LOCATION(startLocation))
-      RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
-      RFM_Store.dispatch(SET_DEPTH(0))
+      	toast.error("Bu dizine erişim sağlanamamaktadır")
+      	RedirectToStart()
     });
   }
   return (

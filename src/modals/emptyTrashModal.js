@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { size } from 'lodash';
+import { toast } from 'material-react-toastify';
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useStore } from 'react-redux';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
+import { RedirectToStart } from '../helper/events';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore';
 import styles from '../styles.module.css'
 function EmptyTrashModal(){
@@ -24,8 +26,8 @@ function EmptyTrashModal(){
               RFM_Store.dispatch(SET_DIRECTORY_ITEMS(cleared));
             }
         }).catch(()=>{
-          RFM_Store.dispatch(SET_ERROR(true));
-          RFM_Store.dispatch(SET_LOADING(false));
+			toast.error("Silme işlemi başarısız")
+			RedirectToStart()
         });
     }
     return (

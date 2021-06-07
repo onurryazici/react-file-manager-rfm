@@ -52,8 +52,6 @@ function RemoveSharedItemModal(props){
               RFM_Socket.emit("DELETE_ITEMS", deletedItems,roomPath)
               toast.success('Silme işlemi başarılı');
             }
-            else
-              toast.error(response.data.message);
         }).catch(()=>{
           RFM_Store.dispatch(SET_ERROR(true));
           RFM_Store.dispatch(SET_LOADING(false));

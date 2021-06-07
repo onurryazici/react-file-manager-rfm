@@ -29,6 +29,8 @@ export const initialState = {
 }
 const allEnhancers = compose( 
     applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // FOR DISABLE MAKE COMMENT LINE
+    typeof window.__REDUX_DEVTOOLS_EXTENSION__ === "undefined"                     // FOR DISABLE STORE VIEW MAKE COMMENT LINE
+    ? a => a																	   // FOR DISABLE STORE VIEW MAKE COMMENT LINE
+	: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // FOR DISABLE STORE VIEW MAKE COMMENT LINE
   )
 export const RFM_Store = createStore(reducer, initialState, allEnhancers)
