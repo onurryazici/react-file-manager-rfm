@@ -6,7 +6,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { FaTimesCircle } from 'react-icons/fa';
 import { useSelector, useStore } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions';
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_LOADING } from '../redux/functions';
 import styles from '../styles.module.css'
 function RemoveItemModal(props){
     const [modalShow, setModalShow] = React.useState(false);
@@ -51,8 +51,8 @@ function RemoveItemModal(props){
             }
             else
               toast.error(response.data.message);
-        }).catch(()=>{
-          RFM_Store.dispatch(SET_ERROR(true));
+        }).catch((err)=>{
+          toast.error("Bir hata oluştu : " + err)
           RFM_Store.dispatch(SET_LOADING(false));
         });
       }

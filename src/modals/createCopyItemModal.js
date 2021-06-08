@@ -8,7 +8,7 @@ import { Actions } from '../redux/actions';
 import Folder from '../components/folder';
 import axios from 'axios';
 import { toast } from 'material-react-toastify';
-import { SET_ERROR, SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions';
+import { SET_LOADING, SET_MODAL_DIRECTORY_ITEMS, SET_MODAL_LOADING, SET_MODAL_LOCATION } from '../redux/functions';
 import { RFM_Store } from '../redux/rfmStore';
 import { useMediaQuery } from 'react-responsive';
 
@@ -40,7 +40,7 @@ function CopyItemModal(props){
                 RFM_Store.dispatch(SET_MODAL_DIRECTORY_ITEMS(response.data.items));
             }).catch((err)=>{
                 RFM_Store.dispatch(SET_MODAL_LOADING(false));
-                RFM_Store.dispatch(SET_ERROR(true));
+                toast.error("Bir hata oluştu : " + err)
             })
         }
     },[modalShow,currentLocation]);

@@ -6,7 +6,7 @@ import { toast } from 'material-react-toastify'
 import { Button, Modal } from 'react-bootstrap'
 import { FaTimesCircle } from 'react-icons/fa'
 import { useSelector, useStore } from 'react-redux'
-import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_ERROR, SET_LOADING } from '../redux/functions'
+import { CLEAR_SELECTED_ITEMS, SET_DIRECTORY_ITEMS, SET_LOADING } from '../redux/functions'
 import { size } from 'lodash'
 import { useMediaQuery } from 'react-responsive'
 
@@ -19,42 +19,42 @@ function RemoveSharedItemModal(props){
     const isContextMenuButton = props.isContextMenuButton === "yes" ? true : false;
     const active              = props.active;
     const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
-    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
-    const API_URL 			  = RFM_Store.getState().config.API_URL;
+    const isBigScreen 		    = useMediaQuery({ query: '(min-device-width: 1824px)' })
+    const API_URL 			      = RFM_Store.getState().config.API_URL;
+    const rfmTokenName        = RFM_Store.getState().config.tokenName;
 
     function RemoveItem() {
-      setModalShow(false);
-      const API_URL_RemoveSharedItem = RFM_Store.getState().config.API_URL_RemoveSharedItem;
-      const rfmTokenName             = RFM_Store.getState().config.tokenName;
-      const currentRealPath          = RFM_Store.getState().realPath;
-      let items        = [];
-      let removedItems = [];
+        setModalShow(false);
+        const API_URL_RemoveSharedItem = RFM_Store.getState().config.API_URL_RemoveSharedItem;
+        const currentRealPath          = RFM_Store.getState().realPath;
+        let items        = [];
+        let removedItems = [];
+        
+        for(let i=0; i<selectedItems.length;i++){
+            items.push(selectedItems[i].absolutePath);
+            removedItems.push(selectedItems[i].name);
+        }
       
-      for(let i=0; i<selectedItems.length;i++){
-          	items.push(selectedItems[i].absolutePath);
-          	removedItems.push(selectedItems[i].name);
-      }
-      
-      if(items.length > 0)
-      {
-        axios.post(API_URL + API_URL_RemoveSharedItem,{
-            "items":items,
-            token:localStorage.getItem(rfmTokenName)
-        }).then((response)=>{
-            if(response.data.statu === true) {
-              var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
-              RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
-              RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
-              const deletedItems = removedItems
-              const roomPath     = currentRealPath
-              RFM_Socket.emit("DELETE_ITEMS", deletedItems,roomPath)
-              toast.success('Silme işlemi başarılı');
-            }
-        }).catch(()=>{
-          RFM_Store.dispatch(SET_ERROR(true));
-          RFM_Store.dispatch(SET_LOADING(false));
-        });
-      }
+        if(items.length > 0)
+        {
+            axios.post(API_URL + API_URL_RemoveSharedItem,{
+              "items":items,
+              token:localStorage.getItem(rfmTokenName)
+            }).then((response)=>{
+                if(response.data.statu === true) {
+                    var reduced = directoryItems.filter((element)=> !removedItems.includes(element.name));
+                    RFM_Store.dispatch(CLEAR_SELECTED_ITEMS());
+                    RFM_Store.dispatch(SET_DIRECTORY_ITEMS(reduced));
+                    const deletedItems = removedItems
+                    const roomPath     = currentRealPath
+                    RFM_Socket.emit("DELETE_ITEMS", deletedItems,roomPath)
+                    toast.success('Silme işlemi başarılı');
+                }
+            }).catch((err)=>{
+                toast.error("Bir hata oluştu : " + err)
+                RFM_Store.dispatch(SET_LOADING(false));
+            });
+        }
     }
     return (
       <React.Fragment>
