@@ -58,7 +58,7 @@ function Placemap() {
                         <a><Button variant="link" className={styles.placemapButtons}> Çöp Kutusu</Button></a>
                         <a><EmptyTrashModal/></a>
                         {
-                            size(selectedItems) > 0 
+                            /*size(selectedItems) > 0 
                             ?([
                                 <Button variant="light" className={styles.actionbarButton} style={{float:'right',fontSize:'18px'}}>
                                     <div className={styles.trashButtons}><FaTrash color="#555555"/></div>
@@ -66,7 +66,7 @@ function Placemap() {
                                 <Button variant="light" className={styles.actionbarButton} style={{float:'right',fontSize:'18px'}}>
                                     <div className={styles.trashButtons}><FaHistory color="#555555"/></div>
                                 </Button>
-                            ]):""
+                            ]):""*/
                         }
                     </div>
                 )
