@@ -29,15 +29,10 @@ function RemoveSharedItemModal(props){
       const currentRealPath          = RFM_Store.getState().realPath;
       let items        = [];
       let removedItems = [];
-      let cantRemove   = [] ;
       
       for(let i=0; i<selectedItems.length;i++){
-        if(selectedItems[i].write===false)
-          	cantRemove.push(selectedItems[i].name);
-        else{
           	items.push(selectedItems[i].absolutePath);
           	removedItems.push(selectedItems[i].name);
-        }
       }
       
       if(items.length > 0)
@@ -59,9 +54,6 @@ function RemoveSharedItemModal(props){
           RFM_Store.dispatch(SET_ERROR(true));
           RFM_Store.dispatch(SET_LOADING(false));
         });
-      }
-      if(cantRemove.length > 0){
-        toast.error(cantRemove, 'Silmek için yetkiniz yok');
       }
     }
     return (
