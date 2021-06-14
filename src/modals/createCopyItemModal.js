@@ -26,7 +26,7 @@ function CopyItemModal(props){
     const API_URL_CreateCopy   = RFM_Store.getState().config.API_URL_CreateCopy;
     const rfmTokenName         = RFM_Store.getState().config.tokenName;
     const rfmWindow            = useSelector(state => state.rfmWindow);
-	const isDesktopOrLaptop    = useMediaQuery({ query: '(min-device-width: 1224px)' })
+	  const isDesktopOrLaptop    = useMediaQuery({ query: '(min-device-width: 1224px)' })
     const isBigScreen 		   = useMediaQuery({ query: '(min-device-width: 1824px)' })
     const disabledStyle={
       pointerEvents:'none',

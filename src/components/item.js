@@ -21,6 +21,7 @@ import RecycleBinContextMenu from '../views/contextMenu_RECYCLE_BIN';
 import DriveContextMenu from '../views/contextMenu_DRIVE';
 import SharedWithMeContextMenu from '../views/contextMenu_SHARED_WITH_ME';
 import MySharedContextMenu from '../views/contextMenu_MY_SHARED';
+import { useMediaQuery } from 'react-responsive';
 
 function Item(props){
     var itemName  = props.name;
@@ -55,13 +56,15 @@ function Item(props){
     const [ref, inView] = useInView({
       threshold: 0,
     })
-
+	const isDesktopOrLaptop   = useMediaQuery({ query: '(min-device-width: 1224px)' })
+    const isBigScreen 		  = useMediaQuery({ query: '(min-device-width: 1824px)' })
 
     return(
       <React.Fragment>
           <div ref={ref} id={accessibleId} className={classNames(styles.itemBlockGridView)}>
             {
-              <ContextMenuTrigger id={itemName} >
+				isDesktopOrLaptop ?
+              	<ContextMenuTrigger id={itemName} >
                 <div onContextMenu={()=>onItemContextMenu(accessibleId,itemName,itemObject)} 
                      onClick={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
                      onDoubleClick={()=>onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension,write)}>
@@ -70,8 +73,18 @@ function Item(props){
                     : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
                   }
                   <span className={styles.tooltiptext}>{itemName}</span>
-                  </div>
-              </ContextMenuTrigger>
+                </div>
+              	</ContextMenuTrigger>
+				:
+				<div 
+                     onTouchEnd={(event)=>onItemSelected(event,accessibleId,itemName,itemObject)} 
+                     onClick={()=>onItemDoubleClick(accessibleId,itemType,itemName,absolutePath,extension,write)}>
+                  {(itemType==="file")
+                    ? <File fileName={itemName} extension={extension} viewMode="grid" image={_image} absolutePath={absolutePath}/>
+                    : <Folder folderName={itemName} folderType={itemType} viewMode="grid"/> 
+                  }
+                  <span className={styles.tooltiptext}>{itemName}</span>
+                </div>
             }
               
           </div>
