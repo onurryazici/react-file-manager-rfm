@@ -87,9 +87,9 @@ render() {
 
 ![enter image description here](https://github.com/onurryazici/react-file-manager-rfm/blob/main/screenshots/scr1.png)
   
-![enter image description here](https://github.com/onurryazici/react-file-manager-rfm/tree/main/screenshots/scr2.png)
+![enter image description here](https://github.com/onurryazici/react-file-manager-rfm/blob/main/screenshots/scr2.png)
 
-![enter image description here](https://github.com/onurryazici/react-file-manager-rfm/tree/main/screenshots/scr3.png)
+![enter image description here](https://github.com/onurryazici/react-file-manager-rfm/blob/main/screenshots/scr3.png)
 
 
 ## License
