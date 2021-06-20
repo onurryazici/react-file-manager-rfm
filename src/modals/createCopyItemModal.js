@@ -106,10 +106,15 @@ function CopyItemModal(props){
                       ? directoryItems.map((item,key)=>{
                           if(item.type==="directory")
                               return (
-                                <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}
-                                  style={(item.write===false) ? disabledStyle : null}>
-                                    <Folder viewMode="list" folderName={item.name} folderType={item.type} canWrite={item.write}/>
-                                </div>   
+                                isDesktopOrLaptop 
+                                ?   <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}
+                                        style={(item.write===false) ? disabledStyle : null}>
+                                        <Folder viewMode="list" folderName={item.name} folderType={item.type} canWrite={item.write}/>
+                                    </div>   
+                                :   <div key={key} className={styles.itemBlockListView} onClick={(event)=>onItemDoubleClick(event,item.name)}
+                                        style={(item.write===false) ? disabledStyle : null}>
+                                        <Folder viewMode="list" folderName={item.name} folderType={item.type} canWrite={item.write}/>
+                                    </div>   
                           )
                         })
                       : ""

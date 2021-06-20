@@ -17,7 +17,7 @@ function MoveItemModal(props) {
   const RFM_Store            = useStore();
   const loading              = useSelector((state) => state.modalLoading)
   const currentLocation      = useSelector((state) => state.location)
-  const startLocation  		 = useSelector((state) => state.startLocation)
+  const startLocation  		   = useSelector((state) => state.startLocation)
   const currentRealPath      = useSelector((state) => state.realPath)
   const modalLocation        = useSelector((state) => state.modalLocation)
   const modalRealPath        = useSelector((state) => state.modalRealPath)
@@ -156,10 +156,15 @@ function MoveItemModal(props) {
                       ? directoryItems.map((item,key)=>{
                           if(item.type==="directory")
                               return (
-                                <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}
-                                  style={(item.write===false) ? disabledStyle : null}>
-                                    <Folder viewMode="list" folderName={item.name} folderType={item.type}/>
-                                </div>   
+                                isDesktopOrLaptop 
+                                ?   <div key={key} className={styles.itemBlockListView} onDoubleClick={(event)=>onItemDoubleClick(event,item.name)}
+                                        style={(item.write===false) ? disabledStyle : null}>
+                                        <Folder viewMode="list" folderName={item.name} folderType={item.type}/>
+                                    </div>   
+                                :   <div key={key} className={styles.itemBlockListView} onClick={(event)=>onItemDoubleClick(event,item.name)}
+                                        style={(item.write===false) ? disabledStyle : null}>
+                                        <Folder viewMode="list" folderName={item.name} folderType={item.type}/>
+                                    </div>   
                           )
                         })
                       : ""

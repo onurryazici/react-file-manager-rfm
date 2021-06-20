@@ -189,7 +189,7 @@ function NewShareItemModal(props){
               <Button onClick={() => ClearData()} variant='outline-dark'>
                 Vazgeç
               </Button>
-              <Button onClick={() => MoveItems()} variant='primary' 
+              <Button variant='primary' 
                   disabled={(usersToAdd.length === 0) ? true : false}
                   onClick={()=>NewShareItem()}>
                 Paylaşımı Tamamla
