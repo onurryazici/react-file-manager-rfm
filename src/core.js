@@ -16,11 +16,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 function RFM_Core(props) {
   	const RFM_Store = useStore();
 
-  	/*const API_URL                     = useSelector(state => state.config.API_URL);
+  	const API_URL                     = useSelector(state => state.config.API_URL);
   	const API_URL_UserAuthentication  = useSelector(state => state.config.API_URL_UserAuthentication);
   	const loggedUser                  = useSelector(state => state.loggedUser);
   	const rfmTokenName                = RFM_Store.getState().config.tokenName;
-  	useEffect(() => {
+  	/*useEffect(() => {
     	Axios.post(API_URL + API_URL_UserAuthentication , {
       		username: loggedUser,
       		password: "qweqweasd"
