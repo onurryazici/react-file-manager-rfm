@@ -1,5 +1,5 @@
 
-# react-file-manager-rfm
+# Rest-api based file manager on browser
 
   
 
