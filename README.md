@@ -15,6 +15,8 @@
 
 This project builded for viewing data(folders, images, etc.) on cloud storage. You can import this file manager component to your project. You can create, upload or remove file with this component. Also we are using the rest api for processing request with jwt. So we must create rest api for this project. And this api request details explained on <a href="https://github.com/onurryazici/react-file-manager-rfm/blob/main/docs/api.md">this windows page</a>.
 
+And also this repository is front side of file manager. You can use this repo for back-end <a href="https://github.com/onurryazici/react-file-manager-rfm-api">react-file-manager-api</a>.
+
   
 
 ## Installation
